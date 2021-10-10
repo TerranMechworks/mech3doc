@@ -1,0 +1,7 @@
+site_name: MechWarrior 3 file format description
+nav:
+- Home: index.md
+theme: readthedocs
+markdown_extensions:
+- admonition
+- footnotes
