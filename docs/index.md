@@ -1,6 +1,6 @@
 # MechWarrior 3 file format description
 
-A project to describe the file formats used in the 1998 game MechWarrior 3. This documentation can be used as a whitepaper for a clean room implementation to extract most MechWarrior 3 assets, or for reference for existing projects.
+A project to describe the file formats used in the 1998 game MechWarrior 3. This documentation can be used as a whitepaper for a clean room implementation to extract most MechWarrior 3 assets, or for reference for existing projects. Note that this project discusses the file structures, and not necessarily the contents of the files.
 
 ## Terms and abbreviations
 

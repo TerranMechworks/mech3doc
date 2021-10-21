@@ -1,6 +1,26 @@
 site_name: MechWarrior 3 file format description
 nav:
 - Home: index.md
+- conventions.md
+- introduction.md
+- versions.md
+- overview.md
+- ambient-tracks.md
+- avi-files.md
+- archive-files.md
+- sound-archives.md
+- reader-archives.md
+- motion-archives.md
+- interpreter-scripts.md
+- mech3msg.md
+- texture-packages.md
+- mechlib-archives.md
+- gamez-files.md
+- nodes.md
+- anim-files.md
+- events.md
+- beginner-guide.md
+
 theme: readthedocs
 markdown_extensions:
 - admonition
