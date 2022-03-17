@@ -41,6 +41,8 @@ As you can see, for signed integers, the sign is encoded in the top-most bit (mo
 
 In general, unless you see an obviously signed value (for example, anything above 0x80000000 where > 2147483647 would be too large), it's impossible to tell if the type is signed or unsigned from the reverse engineering. Also, due to little endian storage, if you see the bytes `[0x7F, 0x00, 0x00, 0x00]` (`7F000000`), you cannot tell if this is a) a 32-bit integer with the value 127, b) two 16-bit integers with the values 127 and 0, or even c) four 8-bit integers with the values 127, 0, 0, 0.
 
+For this reason, if you write any parsing code, you may want to strictly check the bounds of values. This then makes it easier to catch unexpected values earlier.
+
 ### Quiz
 
 The [quiz001](quiz001.bin) file contains some values, all of the same type. Can you tell what type of integer (and therefore how many they are), and what the values are?
