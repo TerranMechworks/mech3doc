@@ -1,6 +1,8 @@
-# Reader archives
+# Reader archives / binary reader files
 
-Reader archives hold most of the games configuration in a Lisp-like list structure. Fair warning though that some of this information is duplicated inside `anim.zbd` files! Reader files have the file extension `.zrd`, which could stand for Zipper Reader.
+Reader archives hold most of the games configuration in a Lisp-like list structure. Fair warning though that some of this information is duplicated inside `anim.zbd` files!
+
+Binary and text reader files have the file extension `.zrd`, which could stand for Zipper Reader. Until 2022, I only knew of binary reader files. However, there exist [text reader files](text-reader-files.md), for example `DefaultCtlConfig.zrd`.
 
 ## Investigation (MW3)
 

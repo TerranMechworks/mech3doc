@@ -19,9 +19,14 @@ nav:
 - nodes.md
 - anim-files.md
 - events.md
+- text-reader-files.md
 - beginner-guide.md
 
 theme: readthedocs
 markdown_extensions:
 - admonition
 - footnotes
+- toc:
+    permalink: true
+extra_css:
+- extra.css

@@ -1,0 +1,18 @@
+form *, form *:before, form *:after {
+  box-sizing: border-box;
+}
+
+form {
+    max-width: 30em;
+    border: gray solid 1px;
+    padding: 1em;
+}
+
+form label {
+    display: inline-block;
+    width: 20%;
+}
+
+form input:invalid {
+    border: red solid 1px;
+}
