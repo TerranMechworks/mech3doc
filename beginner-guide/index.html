@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Beginner's guide to hex viewing - MechWarrior 3 file format description</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  <link href="../extra.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Beginner's guide to hex viewing";
+    var mkdocs_page_input_path = "beginner-guide.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> MechWarrior 3 file format description</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../conventions/">Pseudo-code conventions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../introduction/">Introduction</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../versions/">MechWarrior 3 versions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../ambient-tracks/">Ambient tracks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../avi-files/">AVI files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../archive-files/">Archive files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../sound-archives/">Sound archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../reader-archives/">Reader archives / binary reader files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../motion-archives/">Motion archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../interpreter-scripts/">Interpreter scripts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../mech3msg/">Message table/translations (Mech3Msg)</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../texture-packages/">Texture packages</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../mechlib-archives/">Mechlib archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../gamez-files/">GameZ files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../nodes/">Nodes</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../anim-files/">Animation definition files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../events/">Sequence events</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../text-reader-files/">Text reader files</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Beginner's guide to hex viewing</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#endianness">Endianness</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#integers">Integers</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#quiz">Quiz</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#floating-point-values">Floating point values</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#quiz_1">Quiz</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#strings">Strings</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#quiz_2">Quiz</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#structures">Structures</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#quiz_3">Quiz</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">MechWarrior 3 file format description</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Beginner's guide to hex viewing</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="beginners-guide-to-hex-viewing">Beginner's guide to hex viewing<a class="headerlink" href="#beginners-guide-to-hex-viewing" title="Permanent link">&para;</a></h1>
+<p>You'll need a hex viewer or editor. On Windows, I strongly recommend <a href="https://mh-nexus.de/en/hxd/">HxD</a>. This guide is specifically for 32-bit inspection, so 64-bit values are unlikely.</p>
+<h2 id="endianness">Endianness<a class="headerlink" href="#endianness" title="Permanent link">&para;</a></h2>
+<p><a href="https://en.wikipedia.org/wiki/Endianness">Endianness</a> is an important concept, but complicated. I'll cover the minimum necessary. x86 CPUs all use little endian. This means if you have a 32-bit value, for example <code>0xDEADBEEF</code>, it is stored in memory as <code>[0xEF, 0xBE, 0xAD, 0xDE]</code>.</p>
+<pre><code class="language-plain">0xDEADBEEF
+  | | | |  (mem)
+  | | | +- 0xEF
+  | | +--- 0xBE
+  | +----- 0xAD
+  +------- 0xDE
+</code></pre>
+<p>This is slightly unintuitive, but luckily, most hex viewers will be able to display the decoded values.</p>
+<h2 id="integers">Integers<a class="headerlink" href="#integers" title="Permanent link">&para;</a></h2>
+<p>Integers can be either signed or unsigned. Unsigned integers can be zero, or positive. Signed integers can be negative, zero, or positive. Zero has no sign (there is only 0, not +0 and -0). Both signed and unsigned integers have a size; generally 8, 16, 32, or 64 bits (1, 2, 4, or 8 bytes).</p>
+<p>Unsigned</p>
+<table>
+<thead>
+<tr>
+<th align="left">Size</th>
+<th align="right">Min (dec)</th>
+<th align="left">Min (hex)</th>
+<th align="right">Max (dec)</th>
+<th align="left">Max (hex)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">8 bit</td>
+<td align="right">0</td>
+<td align="left">0x00</td>
+<td align="right">255</td>
+<td align="left">0xFF</td>
+</tr>
+<tr>
+<td align="left">16 bits</td>
+<td align="right">0</td>
+<td align="left">0x0000</td>
+<td align="right">65535</td>
+<td align="left">0xFFFF</td>
+</tr>
+<tr>
+<td align="left">32 bits</td>
+<td align="right">0</td>
+<td align="left">0x00000000</td>
+<td align="right">4294967295</td>
+<td align="left">0xFFFFFFFF</td>
+</tr>
+</tbody>
+</table>
+<p>Signed</p>
+<table>
+<thead>
+<tr>
+<th align="left">Size</th>
+<th align="right">Min (dec)</th>
+<th align="left">Min (hex)</th>
+<th align="left">-1 (hex)</th>
+<th align="left">0 (hex)</th>
+<th align="right">Max (dec)</th>
+<th align="left">Max (hex)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">8 bit</td>
+<td align="right">-128</td>
+<td align="left">0x80</td>
+<td align="left">0xFF</td>
+<td align="left">0x00</td>
+<td align="right">127</td>
+<td align="left">0x7F</td>
+</tr>
+<tr>
+<td align="left">16 bits</td>
+<td align="right">-32768</td>
+<td align="left">0x8000</td>
+<td align="left">0xFFFF</td>
+<td align="left">0x0000</td>
+<td align="right">32767</td>
+<td align="left">0x7FFF</td>
+</tr>
+<tr>
+<td align="left">32 bits</td>
+<td align="right">-2147483648</td>
+<td align="left">0x80000000</td>
+<td align="left">0xFFFFFFFF</td>
+<td align="left">0x00000000</td>
+<td align="right">2147483647</td>
+<td align="left">0x7FFFFFFF</td>
+</tr>
+</tbody>
+</table>
+<p>As you can see, for signed integers, the sign is encoded in the top-most bit (most significant bit or MSB). The negative values are also not intuitive, since they are encoded in <a href="https://en.wikipedia.org/wiki/Two%27s_complement">two's complement</a>. It's helpful to know this; but again most hex viewers can decode signed integers.</p>
+<p>In general, unless you see an obviously signed value (for example, anything above 0x80000000 where &gt; 2147483647 would be too large), it's impossible to tell if the type is signed or unsigned from the reverse engineering. Also, due to little endian storage, if you see the bytes <code>[0x7F, 0x00, 0x00, 0x00]</code> (<code>7F000000</code>), you cannot tell if this is a) a 32-bit integer with the value 127, b) two 16-bit integers with the values 127 and 0, or even c) four 8-bit integers with the values 127, 0, 0, 0.</p>
+<p>For this reason, if you write any parsing code, you may want to strictly check the bounds of values. This then makes it easier to catch unexpected values earlier.</p>
+<h3 id="quiz">Quiz<a class="headerlink" href="#quiz" title="Permanent link">&para;</a></h3>
+<p>The <a href="../quiz001.bin">quiz001</a> file contains some values, all of the same type. Can you tell what type of integer (and therefore how many they are), and what the values are?</p>
+<p><details>
+<summary>Reveal answer</summary>
+<p>
+There were ten 32-bit signed integers: 111, 9999, 10, 2000, 10, -200, 10, 0, 1, 100000
+</p>
+</details></p>
+
+<h2 id="floating-point-values">Floating point values<a class="headerlink" href="#floating-point-values" title="Permanent link">&para;</a></h2>
+<p>Floating point values basically encode a number in scientific notation, see <a href="https://en.wikipedia.org/wiki/IEEE_754">IEEE 754</a>. The information of a signed bit, the exponent, and the fraction is encoded into either 32 or 64 bits (called single or double precision, respectively). For example, a 32-bit floating point value is packed as follows:</p>
+<pre><code class="language-plain">0 01111100 01000000000000000000000 = 0.15625
+| |      | |                     |
+| exponent      fraction
+sign
+</code></pre>
+<p>A normal human can't be expected to decode this; the hex viewer will help here also. However, with a small amount of practice, you can recognise some values.</p>
+<ul>
+<li>1.0 is 0x3F80000</li>
+<li>-1.0 is 0xBF800000</li>
+<li>10.0 is 0x41200000</li>
+<li>-10.0 is 0xC1200000</li>
+<li>100.0 is 0x42c80000</li>
+<li>-100.0 is 0xC2C80000</li>
+</ul>
+<p>However, 0.0 is 0x00000000, and so indistinguishable from an integer! In this documentation, I try to denote floating point values with a decimal point and at least one place to distinguish them from integers, e.g. 10 is an integer, 10.0 is a float.</p>
+<h3 id="quiz_1">Quiz<a class="headerlink" href="#quiz_1" title="Permanent link">&para;</a></h3>
+<p>The <a href="../quiz002.bin">quiz002</a> file contains a mix of 32-bit integers and 32-bit floats. Can you tell what the values are?</p>
+<p><details>
+<summary>Reveal answer</summary>
+<p>
+The values were 9999, 0.5, -0.5, 1, -1, 200, 200.0, and indeterminate (could have been 0/integer or 0.0/float).
+</p>
+</details></p>
+
+<h2 id="strings">Strings<a class="headerlink" href="#strings" title="Permanent link">&para;</a></h2>
+<p>Strings in C are basically arrays of ASCII/ANSI characters. Each character has a numeric value (see Wikipedia for an <a href="https://en.wikipedia.org/wiki/ASCII">ASCII table</a>). This is why a lot of hex viewers also show an ASCII view next to the hex view, and simply skip non-printable characters. Because each character is a byte, you do not need to worry about endianness for ASCII strings:</p>
+<pre><code class="language-plain">b&quot;Hello world&quot; = 48 65 6c 6c 6f 20 77 6f 72 6c 64
+</code></pre>
+<p>Strings in C are usually terminated with a null or zero character (<code>\0</code>, 0xFF); this is called zero-terminated. So "Hello world" would actually be <code>48656c6c6f20776f726c6400</code>.</p>
+<p>Strings are either stored as fixed length or with a known length encoded before the string. Fixed length strings are usually padded with zeros, so encoding "Hello world" as a 16 length string is:</p>
+<pre><code class="language-plain">b&quot;Hello world\0\0\0\0\0&quot; = 48656c6c6f20776f726c640000000000
+</code></pre>
+<p>However, the padding can also be garbage if the programmer forgets to zero the memory, so this is also "Hello world": <code>48656c6c6f20776f726c6400DEADBEEF</code> (note this is still zero-terminated). For a known-length string, "Hello world" could be either:</p>
+<pre><code class="language-plain"># Zero terminated
+b&quot;Hello world\0&quot; = length 12 = 0c000000 48656c6c6f20776f726c6400
+# (b'\x0c\x00\x00\x00Hello world\x00' in Python)
+# Not terminated
+b&quot;Hello world&quot; = length 11 = 0b000000 48656c6c6f20776f726c64
+# (b'\x0b\x00\x00\x00Hello world' in Python)
+</code></pre>
+<p>Assuming the length is encoded as a 32-bit integer.</p>
+<h3 id="quiz_2">Quiz<a class="headerlink" href="#quiz_2" title="Permanent link">&para;</a></h3>
+<p>The <a href="../quiz003.bin">quiz003</a> file contains several strings. They are separated by <code>DEADBEEFDEADBEEFDEADBEEF</code>. Can you tell what type of strings they are, and what the values were?</p>
+<p><details>
+<summary>Reveal answer</summary>
+<p>
+<ol>
+<li>Fixed length of 32: "Lorem Ipsum"
+<li>Variable length, not terminated: "The quick brown fox"
+<li>Fixed length of 16: "DEADBEEF" (note that the string here is encoded in ASCII, which is not the same as <code>0xDE, 0xAD, 0xBE, 0xEF</code>)
+<li>Fixed length of 16: "Hello world", with padding of "Padx"
+<li>Variable length, zero terminated: "The quick brown fox\0"
+</ol>
+</p>
+</details></p>
+
+<h2 id="structures">Structures<a class="headerlink" href="#structures" title="Permanent link">&para;</a></h2>
+<p>This is a vast oversimplification, but structures basically describe a view/block of memory, that makes it easier to work with in code. They are usually collection of fields, although the field names are identifiers in the source code only, and not present in the actual memory. For example, given this C structure:</p>
+<pre><code class="language-C">struct Foo {
+    uint32_t a;
+    float a;
+}
+</code></pre>
+<p>Then <code>Foo { a = 100, b = 100.0 }</code> would be encoded as:</p>
+<pre><code class="language-plain">64000000 0000c842
+</code></pre>
+<p>When reverse engineering, the structure definitions is what we're usually trying to recover. I'll be using pseudo-Rust code to describe structures, as in the rest of the documentation (as opposed to C code).</p>
+<h3 id="quiz_3">Quiz<a class="headerlink" href="#quiz_3" title="Permanent link">&para;</a></h3>
+<p>Reverse engineer the structure of <a href="../quiz004.bin">quiz004</a>. All data types are 32-bit/32-bit aligned.</p>
+<p><details>
+<summary>Reveal answer</summary>
+<p>
+The structure was:
+
+
+<pre><code class="language-rust">struct Quiz010 {
+    a: f32,
+    b: [u8; 16],
+    c: i32, // or u32
+}
+</code></pre>
+
+
+And the value was <code>Quiz004 { a: 1.5, b: "You can do it", c: 8888}</code>.
+</p>
+</details></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../text-reader-files/" class="btn btn-neutral" title="Text reader files"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../text-reader-files/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Ambient tracks - MechWarrior 3 file format description</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  <link href="../extra.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Ambient tracks";
+    var mkdocs_page_input_path = "ambient-tracks.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> MechWarrior 3 file format description</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../conventions/">Pseudo-code conventions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../introduction/">Introduction</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../versions/">MechWarrior 3 versions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Ambient tracks</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#investigation">Investigation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#in-game-use">In-game use</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#appendix-1-detailed-version-comparison">Appendix 1: Detailed version comparison</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#appendix-2-how-the-waveform-plots-were-made">Appendix 2: How the waveform plots were made</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../avi-files/">AVI files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../archive-files/">Archive files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../sound-archives/">Sound archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../reader-archives/">Reader archives / binary reader files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../motion-archives/">Motion archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../interpreter-scripts/">Interpreter scripts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../mech3msg/">Message table/translations (Mech3Msg)</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../texture-packages/">Texture packages</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../mechlib-archives/">Mechlib archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../gamez-files/">GameZ files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../nodes/">Nodes</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../anim-files/">Animation definition files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../events/">Sequence events</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../text-reader-files/">Text reader files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../beginner-guide/">Beginner's guide to hex viewing</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">MechWarrior 3 file format description</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Ambient tracks</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="ambient-tracks">Ambient tracks<a class="headerlink" href="#ambient-tracks" title="Permanent link">&para;</a></h1>
+<p>Ambient tracks are music tracks, longer than sound effects. There are two 3 minute tracks for the base version of MechWarrior 3, and one 9.5 minute track for the Pirate's Moon expansion. They are never installed, and so must be retrieved from the CD. They are used as background music during missions.</p>
+<h2 id="investigation">Investigation<a class="headerlink" href="#investigation" title="Permanent link">&para;</a></h2>
+<p>When I insert a MechWarrior 3 CD into a Mac, iTunes opens. When I insert a MechWarrior 3 CD into a Windows PC, this message shows:</p>
+<p><img alt="&quot;Select to choose what happens with enhanced audio CDs.&quot;" src="../images/enhanced-audio-cd.png" /></p>
+<p>An <a href="https://en.wikipedia.org/wiki/Enhanced_CD">enhanced audio CD</a> contains data and audio on the same disk. So the ambient tracks are simply CD audio, which are presumably streamed from the CD during gameplay. A re-implementation should also be able to do this.</p>
+<p>There are only two ambient/background tracks, roughly three minutes earch. Using a tool such as <a href="http://www.exactaudiocopy.de/">ExactAudioCopy</a> (EAC)<sup id="fnref:cd-audio-tools"><a class="footnote-ref" href="#fn:cd-audio-tools">1</a></sup>, it is possible to copy the audio tracks as Waveform Audio files (WAV, <code>*.wav</code>) where it is legal to do so.</p>
+<p>For individuals wanting to enjoy these tracks, it's worth noting these WAV files are rather large. For preservation, a lossless compression like <a href="https://xiph.org/flac/">FLAC</a> uses about ~40% of the storage space. Since the tracks slightly differ between the different versions, for general use a lossy format like <a href="https://en.wikipedia.org/wiki/Advanced_Audio_Coding">AAC</a> with a bitrate of 128 kilobytes or above should be plenty. This produces file sizes around 10% of the original.</p>
+<h2 id="in-game-use">In-game use<a class="headerlink" href="#in-game-use" title="Permanent link">&para;</a></h2>
+<p>To my knowledge, the ambient tracks do not play in the menus, only during gameplay. I don't know how the engine uses these tracks:</p>
+<ol>
+<li>Does the engine select a random track, or always starts on the first (audio) track?</li>
+<li>Does the engine loop the tracks once they finish playing, or is there simply slience after a mission time of over six minutes?</li>
+</ol>
+<h2 id="appendix-1-detailed-version-comparison">Appendix 1: Detailed version comparison<a class="headerlink" href="#appendix-1-detailed-version-comparison" title="Permanent link">&para;</a></h2>
+<p>Between the versions, all the tracks had different <a href="https://en.wikipedia.org/wiki/Cyclic_redundancy_check">CRC</a> codes. Another oddity is the fact the tracks aren't in the same order on different versions. I'm unsure why this is. The difference in the audio data could be the result of the manufacturing process. For the German version, it could be due to the SafeDisc DRM (is 2 seconds longer). But they all sound indistinguishable for me, and the waveforms look the same, so it's probably fine. </p>
+<p><img alt="A waveform plot of the shorter tracks, showing virtually indistinguishable waveforms. The data was resampled to mono, but the amplitude is not re-normalised. It may appear slightly quieter than it would be in stereo." src="../images/audio-tracks-shorter.png" /></p>
+<p>These are the detailed track information of all MechWarrior 3 versions I own:</p>
+<p><strong>v1.0 US</strong></p>
+<table>
+<thead>
+<tr>
+<th>Track</th>
+<th align="right">Start</th>
+<th align="right">Length</th>
+<th align="right">Start sector</th>
+<th align="right">End sector</th>
+<th align="right">Size</th>
+<th>CRC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td align="right">0:00.00</td>
+<td align="right">59:12.45</td>
+<td align="right">0</td>
+<td align="right">266444</td>
+<td align="right">597.64 MiB</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td align="right">59:12.45</td>
+<td align="right">3:11.69</td>
+<td align="right">266445</td>
+<td align="right">280838</td>
+<td align="right">32.28 MiB</td>
+<td>515BECAE</td>
+</tr>
+<tr>
+<td>3</td>
+<td align="right">62:24.39</td>
+<td align="right">3:06.06</td>
+<td align="right">280839</td>
+<td align="right">294794</td>
+<td align="right">31.30 MiB</td>
+<td>45D64143</td>
+</tr>
+</tbody>
+</table>
+<p>CTDB TOCID: <code>hUJiDDh7s2IYPP1GpLfGVYpIWxE-</code></p>
+<p><strong>v1.0 DE</strong></p>
+<table>
+<thead>
+<tr>
+<th>Track</th>
+<th align="right">Start</th>
+<th align="right">Length</th>
+<th align="right">Start sector</th>
+<th align="right">End sector</th>
+<th align="right">Size</th>
+<th>CRC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td align="right">0:00.00</td>
+<td align="right">62:48.56</td>
+<td align="right">0</td>
+<td align="right">282655</td>
+<td align="right">634.00 MiB</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td align="right">62:48.56</td>
+<td align="right">3:06.06</td>
+<td align="right">282656</td>
+<td align="right">296611</td>
+<td align="right">31.30 MiB</td>
+<td>EDCC302C</td>
+</tr>
+<tr>
+<td>3</td>
+<td align="right">65:54.62</td>
+<td align="right">3:13.69</td>
+<td align="right">296612</td>
+<td align="right">311155</td>
+<td align="right">32.62 MiB</td>
+<td>A262C28B</td>
+</tr>
+</tbody>
+</table>
+<p>CTDB TOCID: <code>vPmoaaMWAdaLNkVSMLqK2HZxmaE-</code></p>
+<p><strong>v1.1 US</strong></p>
+<table>
+<thead>
+<tr>
+<th>Track</th>
+<th align="right">Start</th>
+<th align="right">Length</th>
+<th align="right">Start sector</th>
+<th align="right">End sector</th>
+<th align="right">Size</th>
+<th>CRC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td align="right">0:00.00</td>
+<td align="right">59:12.20</td>
+<td align="right">0</td>
+<td align="right">266419</td>
+<td align="right">597.59 MiB</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td align="right">59:12.20</td>
+<td align="right">3:06.06</td>
+<td align="right">266420</td>
+<td align="right">280375</td>
+<td align="right">31.30 MiB</td>
+<td>825686B5</td>
+</tr>
+<tr>
+<td>3</td>
+<td align="right">62:18.26</td>
+<td align="right">3:11.69</td>
+<td align="right">280376</td>
+<td align="right">294769</td>
+<td align="right">32.28 MiB</td>
+<td>21627377</td>
+</tr>
+</tbody>
+</table>
+<p>CTDB TOCID: <code>WJdZLalC42N4VOtU.QQx5GDfvqI-</code></p>
+<p><strong>v1.2 US</strong></p>
+<table>
+<thead>
+<tr>
+<th>Track</th>
+<th align="right">Start</th>
+<th align="right">Length</th>
+<th align="right">Start sector</th>
+<th align="right">End sector</th>
+<th align="right">Size</th>
+<th>CRC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td align="right">0:00.00</td>
+<td align="right">59:12.34</td>
+<td align="right">0</td>
+<td align="right">266433</td>
+<td align="right">597.62 MiB</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td align="right">59:12.34</td>
+<td align="right">3:06.06</td>
+<td align="right">266434</td>
+<td align="right">280389</td>
+<td align="right">31.30 MiB</td>
+<td>DB5F6872</td>
+</tr>
+<tr>
+<td>3</td>
+<td align="right">62:18.40</td>
+<td align="right">3:11.69</td>
+<td align="right">280390</td>
+<td align="right">294783</td>
+<td align="right">32.28 MiB</td>
+<td>61502511</td>
+</tr>
+</tbody>
+</table>
+<p>CTDB TOCID: <code>WJdZLalC42N4VOtU.QQx5GDfvqI-</code></p>
+<p><strong>v1.2 PM</strong></p>
+<table>
+<thead>
+<tr>
+<th>Track</th>
+<th align="right">Start</th>
+<th align="right">Length</th>
+<th align="right">Start sector</th>
+<th align="right">End sector</th>
+<th align="right">Size</th>
+<th>CRC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td align="right">0:00.00</td>
+<td align="right">22:18.11</td>
+<td align="right">0</td>
+<td align="right">100360</td>
+<td align="right"></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td align="right">22:18.11</td>
+<td align="right">9:22.61</td>
+<td align="right">100361</td>
+<td align="right">142571</td>
+<td align="right"></td>
+<td>535BD032</td>
+</tr>
+</tbody>
+</table>
+<p>CTDB TOCID: <code>Y1qrr8eDEKTsSDhgyfHah6MGKzA-</code></p>
+<h2 id="appendix-2-how-the-waveform-plots-were-made">Appendix 2: How the waveform plots were made<a class="headerlink" href="#appendix-2-how-the-waveform-plots-were-made" title="Permanent link">&para;</a></h2>
+<p>I used <a href="https://www.scipy.org/">SciPy</a> to <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.io.wavfile.read.html">read WAV file data</a>, and <a href="https://matplotlib.org/">matplotlib</a> to plot them:</p>
+<pre><code class="language-python">import numpy as np
+from scipy.io import wavfile
+from scipy.signal import resample
+
+import matplotlib
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+
+
+def time_ticker_format(x, pos=None):
+    mins, secs = divmod(x, 60)
+    return &quot;{:.0f}:{:02.0f}&quot;.format(abs(mins), secs)
+
+
+def plot_waveforms(tracks, save_name=None, resample_factor=40):
+    &quot;&quot;&quot;This function makes assumptions about the input data: stereo 44100 Hz 16-bit signed PCM&quot;&quot;&quot;
+    data = []
+    rates = []
+    for track in tracks:
+        rate, stereo = wavfile.read(track, mmap=True)
+        samples, channels = stereo.shape
+        assert channels == 2, &quot;expecting stereo&quot;
+        mono = stereo.mean(1)
+        # this is to make the data more resonable to plot
+        resampled = resample(mono, int(np.ceil(mono.size / resample_factor)))
+        data.append(resampled)
+        rates.append(rate)
+
+    rate = rates[0]
+    assert all(rate == r for r in rates)
+
+    count = len(tracks)
+    fig, axis = plt.subplots(count, 1, figsize=(16, 4 * count))
+
+    for ax, mono, name in zip(axis, data, tracks):
+        samples = mono.size
+        length = samples / rate
+        time = np.linspace(0, length, num=samples)
+
+        ax.plot(time, mono)
+        ax.set_xlim(0, length)
+        ax.xaxis.set_major_formatter(ticker.FuncFormatter(time_ticker_format))
+        ax.xaxis.set_major_locator(ticker.MultipleLocator(20))
+        ax.set_ylim(-(1 &lt;&lt; 15), (1 &lt;&lt; 15))  # signed 16-bit
+        ax.yaxis.set_major_locator(ticker.NullLocator())
+        ax.xaxis.set_label_text(name)
+
+    fig.tight_layout()
+    if save_name:
+        plt.savefig(save_name)
+        plt.close(fig)
+</code></pre>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:cd-audio-tools">
+<p>EAC is Windows only. Options on macOS are <a href="https://sbooth.org/Rip/">RIP</a>, <a href="https://sbooth.org/Max/">Max</a>, <a href="https://tmkk.undo.jp/xld/index_e.html">XLD</a>, or iTunes. There are <em>many</em> options on Linux, I suggest <a href="https://github.com/thomasvs/morituri">Morituri</a>.&#160;<a class="footnote-backref" href="#fnref:cd-audio-tools" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../avi-files/" class="btn btn-neutral float-right" title="AVI files">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../overview/" class="btn btn-neutral" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../overview/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../avi-files/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>AVI files - MechWarrior 3 file format description</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  <link href="../extra.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "AVI files";
+    var mkdocs_page_input_path = "avi-files.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> MechWarrior 3 file format description</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../conventions/">Pseudo-code conventions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../introduction/">Introduction</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../versions/">MechWarrior 3 versions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../ambient-tracks/">Ambient tracks</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">AVI files</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#investigation-mw3">Investigation (MW3)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#re-encoding">Re-encoding</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#comparing-results">Comparing results</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#in-game-use">In-game use</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#appendix-1-modern-codec-performance">Appendix 1: Modern codec performance</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#appendix-2-english-video-file-information">Appendix 2: English video file information</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../archive-files/">Archive files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../sound-archives/">Sound archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../reader-archives/">Reader archives / binary reader files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../motion-archives/">Motion archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../interpreter-scripts/">Interpreter scripts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../mech3msg/">Message table/translations (Mech3Msg)</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../texture-packages/">Texture packages</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../mechlib-archives/">Mechlib archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../gamez-files/">GameZ files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../nodes/">Nodes</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../anim-files/">Animation definition files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../events/">Sequence events</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../text-reader-files/">Text reader files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../beginner-guide/">Beginner's guide to hex viewing</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">MechWarrior 3 file format description</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>AVI files</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="avi-files">AVI files<a class="headerlink" href="#avi-files" title="Permanent link">&para;</a></h1>
+<p>The Mechwarrior 3 intro and campaign videos are found in the <code>video</code> directory on the CD. They can also optionally be installed to the hard drive.</p>
+<h2 id="investigation-mw3">Investigation (MW3)<a class="headerlink" href="#investigation-mw3" title="Permanent link">&para;</a></h2>
+<p>They are <a href="https://en.wikipedia.org/wiki/Audio_Video_Interleave">AVI containers</a> (<code>*.avi</code>). The video codec is known from the installation, but we can confirm that and gather more information using   <a href="https://www.ffmpeg.org/"><code>ffmpeg</code></a>, specifically <code>ffprobe</code>. This is for <code>campaign.avi</code>, information on all English video files can be found in the appendix:</p>
+<pre><code>Input #0, avi, from 'Campaign.avi':
+  Duration: 00:03:24.27, start: 0.000000, bitrate: 3320 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 3020 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_u8 ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, u8, 176 kb/s
+</code></pre>
+<p>The video streams are encoded using Intel's <a href="https://en.wikipedia.org/wiki/Indeo">Indeo codec</a> (version 5, FourCC <code>IV50</code>). They are all 640x480 at 15 frames per second, although the bitrates vary from 3020 kb/s to 1260 kb/s. The audio streams are raw <a href="https://en.wikipedia.org/wiki/Pulse-code_modulation">pulse-code modulation (PCM)</a> at 22050 Hz, so uncompressed.</p>
+<p>For the German version, these have the metadata "Sound Forge 4.0 Audio" attached, which was a <a href="https://en.wikipedia.org/wiki/Sound_Forge">German sound editing program</a>, probably used by the localisation team.</p>
+<p>These codecs were no doubt chosen because they could be decoded with very little CPU, not because of their quality. This is especially true if they had to be streamed from the CD. Codecs have come far since then, with ubiquitous hardware support. Indeo has at least one <a href="https://support.microsoft.com/en-us/help/954157/microsoft-security-advisory-vulnerabilities-in-the-indeo-codec-could-a">vulnerability</a>, meaning the codec is unlikely to be installed on modern systems. Realistically, the best option is to re-encode at least the video using existing software (<code>ffmpeg</code>). Installing the old codec is obviously inadvisable, and reverse engineering the codec is complicated and unnecessary.</p>
+<p>The file checksums between the US versions 1.0, 1.1, and 1.2 are exactly the same (on the CD - I don't think the patch affects the video files, simply based on the size, but haven't checked).</p>
+<h2 id="re-encoding">Re-encoding<a class="headerlink" href="#re-encoding" title="Permanent link">&para;</a></h2>
+<p>TL;DR:</p>
+<pre><code class="language-bash">for f in *.avi
+do
+    ffmpeg \
+        -i &quot;$f&quot; \
+        -codec:v &quot;libx264&quot; \
+        -preset &quot;medium&quot; \
+        -crf &quot;30&quot; \
+        -codec:a &quot;aac&quot; \
+        -b:a &quot;64k&quot; \
+        &quot;${f%.*}.mp4&quot;
+done
+</code></pre>
+<p>To compress the audio, there are several options. If supported, <a href="https://en.wikipedia.org/wiki/Advanced_Audio_Coding">advanced audio coding (ACC)</a> is excellent at low bitrates, and for mainly speech, using 64 kb/s is fine without any concerns of quality loss. The command line options are <code>-codec:a aac -b:a 64k</code><sup id="fnref:libfdk"><a class="footnote-ref" href="#fn:libfdk">1</a></sup>. AAC is patented and not all game engines support it. This is generally problematic for good audio codecs. A viable alternative is to not alter the audio and just copy it using <code>-codec:a copy</code>, as raw PCM support is ubiquitous.</p>
+<p>As mentioned, I definitely wanted to re-encode the video because of known Indeo vulnerabilities. H.264/x264 is widely supported. Quality-wise, it's a bit trickier than the audio, because it's more subjective in comparisons. The original video is highly compressed, with visible compression artefacts - please keep this in mind, the re-encoded file can't be better than the original. So personally, I find the video re-encoded with a low bitrate fine. In fact, choosing a low bitrate smooths some of the original, block-y compression artefacts out (the smoothing could be done via processing at higher bitrates). But you can decide for yourself, in a minute I'll show how to compare the re-encoded to the original. And worst case, files can be re-encoded from the original again.</p>
+<p>My recommendation is to use a fairly quick encoding to test things out, and a low quality factor. Something like <code>-codec:v libx264 -preset medium -crf 28</code>. It's worth reading the <a href="https://trac.ffmpeg.org/wiki/Encode/H.264"><code>ffmpeg</code> H.264 encoding guide</a> if you wish to change these parameters. Choose a slower preset should deliver the same quality at a lower bitrate, at expense of encoding time. Choosing a lower <code>crf</code> value will increase the bitrate, which in theory increases quality. Given the source material, that probably won't do much those. Once you're happy with the parameters, I'd suggest using a slower preset for the final encoding, like <code>veryslow</code>, since processing power is cheap and these videos are short and have a tiny resolution (generally, the preset doesn't affect quality very much).</p>
+<p>For a container format with maximum compatibility, I've chosen <a href="https://en.wikipedia.org/wiki/MPEG-4_Part_14">MPEG-4</a> (<code>*.mp4</code>), although if supported by your use-case, the open standard <a href="https://matroska.org/">Matroska</a> (<code>*.mkv</code>) is an excellent choice.</p>
+<h3 id="comparing-results">Comparing results<a class="headerlink" href="#comparing-results" title="Permanent link">&para;</a></h3>
+<p>The <a href="https://mpv.io/">MPV</a> media player <a href="https://superuser.com/a/1325668">can play two (or more) videos side-by-side</a>, which is great for comparing the encoded video. </p>
+<pre><code class="language-bash">mpv --lavfi-complex=&quot;[vid1][vid2]hstack[vo]&quot; intro.avi --external-file=intro.mp4
+</code></pre>
+<h2 id="in-game-use">In-game use<a class="headerlink" href="#in-game-use" title="Permanent link">&para;</a></h2>
+<p>The introduction is played when the game is loading. The campaign videos are played when the campaign is started, and between missions.</p>
+<h2 id="appendix-1-modern-codec-performance">Appendix 1: Modern codec performance<a class="headerlink" href="#appendix-1-modern-codec-performance" title="Permanent link">&para;</a></h2>
+<p>It's interesting to see just how far codecs have come. For those settings, the average reduction in size is 86% for the US version and almost 89% for the German version!</p>
+<p><strong>video/v1.0-us</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">Filename</th>
+<th align="right">Original</th>
+<th align="right">Compressed</th>
+<th align="right">Reduction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">intro.avi</td>
+<td align="right">78.36 MiB</td>
+<td align="right">5.47 MiB</td>
+<td align="right">93.0%</td>
+</tr>
+<tr>
+<td align="left">Campaign.avi</td>
+<td align="right">80.85 MiB</td>
+<td align="right">12.45 MiB</td>
+<td align="right">84.6%</td>
+</tr>
+<tr>
+<td align="left">c1.avi</td>
+<td align="right">14.50 MiB</td>
+<td align="right">1.36 MiB</td>
+<td align="right">90.6%</td>
+</tr>
+<tr>
+<td align="left">c1m1.avi</td>
+<td align="right">8.75 MiB</td>
+<td align="right">0.97 MiB</td>
+<td align="right">88.9%</td>
+</tr>
+<tr>
+<td align="left">c1m2.avi</td>
+<td align="right">5.96 MiB</td>
+<td align="right">0.77 MiB</td>
+<td align="right">87.0%</td>
+</tr>
+<tr>
+<td align="left">c1m3.avi</td>
+<td align="right">5.21 MiB</td>
+<td align="right">0.74 MiB</td>
+<td align="right">85.7%</td>
+</tr>
+<tr>
+<td align="left">c1m4.avi</td>
+<td align="right">9.17 MiB</td>
+<td align="right">1.16 MiB</td>
+<td align="right">87.4%</td>
+</tr>
+<tr>
+<td align="left">c2.avi</td>
+<td align="right">10.79 MiB</td>
+<td align="right">1.67 MiB</td>
+<td align="right">84.6%</td>
+</tr>
+<tr>
+<td align="left">c2m1.avi</td>
+<td align="right">4.77 MiB</td>
+<td align="right">0.65 MiB</td>
+<td align="right">86.4%</td>
+</tr>
+<tr>
+<td align="left">c2m2.avi</td>
+<td align="right">10.41 MiB</td>
+<td align="right">1.22 MiB</td>
+<td align="right">88.3%</td>
+</tr>
+<tr>
+<td align="left">c2m3.avi</td>
+<td align="right">6.31 MiB</td>
+<td align="right">0.75 MiB</td>
+<td align="right">88.2%</td>
+</tr>
+<tr>
+<td align="left">c2m4.avi</td>
+<td align="right">7.68 MiB</td>
+<td align="right">0.79 MiB</td>
+<td align="right">89.7%</td>
+</tr>
+<tr>
+<td align="left">c3.avi</td>
+<td align="right">5.48 MiB</td>
+<td align="right">1.62 MiB</td>
+<td align="right">70.5%</td>
+</tr>
+<tr>
+<td align="left">c3m1.avi</td>
+<td align="right">5.93 MiB</td>
+<td align="right">1.06 MiB</td>
+<td align="right">82.1%</td>
+</tr>
+<tr>
+<td align="left">c3m2.avi</td>
+<td align="right">6.24 MiB</td>
+<td align="right">1.02 MiB</td>
+<td align="right">83.6%</td>
+</tr>
+<tr>
+<td align="left">c3m4.avi</td>
+<td align="right">7.45 MiB</td>
+<td align="right">1.12 MiB</td>
+<td align="right">84.9%</td>
+</tr>
+<tr>
+<td align="left">c3m5.avi</td>
+<td align="right">9.49 MiB</td>
+<td align="right">1.08 MiB</td>
+<td align="right">88.6%</td>
+</tr>
+<tr>
+<td align="left">c3m6.avi</td>
+<td align="right">5.73 MiB</td>
+<td align="right">0.84 MiB</td>
+<td align="right">85.3%</td>
+</tr>
+<tr>
+<td align="left">c4win.avi</td>
+<td align="right">23.98 MiB</td>
+<td align="right">1.49 MiB</td>
+<td align="right">93.8%</td>
+</tr>
+</tbody>
+</table>
+<p>Average reduction: 86.5%</p>
+<p><strong>video/v1.0-de</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">Filename</th>
+<th align="right">Original</th>
+<th align="right">Compressed</th>
+<th align="right">Reduction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">intro.avi</td>
+<td align="right">76.00 MiB</td>
+<td align="right">5.33 MiB</td>
+<td align="right">93.0%</td>
+</tr>
+<tr>
+<td align="left">Campaign.avi</td>
+<td align="right">77.76 MiB</td>
+<td align="right">11.35 MiB</td>
+<td align="right">85.4%</td>
+</tr>
+<tr>
+<td align="left">c1.avi</td>
+<td align="right">13.45 MiB</td>
+<td align="right">1.36 MiB</td>
+<td align="right">89.9%</td>
+</tr>
+<tr>
+<td align="left">c1m1.avi</td>
+<td align="right">10.88 MiB</td>
+<td align="right">0.97 MiB</td>
+<td align="right">91.1%</td>
+</tr>
+<tr>
+<td align="left">c1m2.avi</td>
+<td align="right">7.44 MiB</td>
+<td align="right">0.77 MiB</td>
+<td align="right">89.6%</td>
+</tr>
+<tr>
+<td align="left">c1m3.avi</td>
+<td align="right">6.50 MiB</td>
+<td align="right">0.74 MiB</td>
+<td align="right">88.5%</td>
+</tr>
+<tr>
+<td align="left">c1m4.avi</td>
+<td align="right">11.38 MiB</td>
+<td align="right">1.16 MiB</td>
+<td align="right">89.8%</td>
+</tr>
+<tr>
+<td align="left">c2.avi</td>
+<td align="right">13.32 MiB</td>
+<td align="right">1.67 MiB</td>
+<td align="right">87.5%</td>
+</tr>
+<tr>
+<td align="left">c2m1.avi</td>
+<td align="right">5.95 MiB</td>
+<td align="right">0.65 MiB</td>
+<td align="right">89.1%</td>
+</tr>
+<tr>
+<td align="left">c2m2.avi</td>
+<td align="right">12.86 MiB</td>
+<td align="right">1.22 MiB</td>
+<td align="right">90.5%</td>
+</tr>
+<tr>
+<td align="left">c2m3.avi</td>
+<td align="right">7.86 MiB</td>
+<td align="right">0.75 MiB</td>
+<td align="right">90.5%</td>
+</tr>
+<tr>
+<td align="left">c2m4.avi</td>
+<td align="right">9.46 MiB</td>
+<td align="right">0.79 MiB</td>
+<td align="right">91.6%</td>
+</tr>
+<tr>
+<td align="left">c3.avi</td>
+<td align="right">6.88 MiB</td>
+<td align="right">1.62 MiB</td>
+<td align="right">76.5%</td>
+</tr>
+<tr>
+<td align="left">c3m1.avi</td>
+<td align="right">7.38 MiB</td>
+<td align="right">1.06 MiB</td>
+<td align="right">85.6%</td>
+</tr>
+<tr>
+<td align="left">c3m2.avi</td>
+<td align="right">7.75 MiB</td>
+<td align="right">1.02 MiB</td>
+<td align="right">86.8%</td>
+</tr>
+<tr>
+<td align="left">c3m4.avi</td>
+<td align="right">9.27 MiB</td>
+<td align="right">1.13 MiB</td>
+<td align="right">87.9%</td>
+</tr>
+<tr>
+<td align="left">c3m5.avi</td>
+<td align="right">11.80 MiB</td>
+<td align="right">1.08 MiB</td>
+<td align="right">90.9%</td>
+</tr>
+<tr>
+<td align="left">c3m6.avi</td>
+<td align="right">7.15 MiB</td>
+<td align="right">0.84 MiB</td>
+<td align="right">88.3%</td>
+</tr>
+<tr>
+<td align="left">c4win.avi</td>
+<td align="right">23.98 MiB</td>
+<td align="right">1.50 MiB</td>
+<td align="right">93.8%</td>
+</tr>
+</tbody>
+</table>
+<p>Average reduction: 88.7%</p>
+<h2 id="appendix-2-english-video-file-information">Appendix 2: English video file information<a class="headerlink" href="#appendix-2-english-video-file-information" title="Permanent link">&para;</a></h2>
+<pre><code>Input #0, avi, from 'Campaign.avi':
+  Duration: 00:03:24.27, start: 0.000000, bitrate: 3320 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 3020 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_u8 ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, u8, 176 kb/s
+Input #0, avi, from 'c1.avi':
+  Duration: 00:00:58.00, start: 0.000000, bitrate: 2096 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 1236 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 22050 Hz, 2 channels, s16, 705 kb/s
+Input #0, avi, from 'c1m1.avi':
+  Duration: 00:00:46.00, start: 0.000000, bitrate: 1595 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 1275 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_u8 ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, u8, 176 kb/s
+Input #0, avi, from 'c1m2.avi':
+  Duration: 00:00:31.67, start: 0.000000, bitrate: 1577 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 1263 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_u8 ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, u8, 176 kb/s
+Input #0, avi, from 'c1m3.avi':
+  Duration: 00:00:27.73, start: 0.000000, bitrate: 1577 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 1258 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_u8 ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, u8, 176 kb/s
+Input #0, avi, from 'c1m4.avi':
+  Duration: 00:00:48.33, start: 0.000000, bitrate: 1591 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 1268 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_u8 ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, u8, 176 kb/s
+Input #0, avi, from 'c2.avi':
+  Duration: 00:00:56.67, start: 0.000000, bitrate: 1596 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 1265 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_u8 ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, u8, 176 kb/s
+Input #0, avi, from 'c2m1.avi':
+  Duration: 00:00:25.27, start: 0.000000, bitrate: 1584 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 1270 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_u8 ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, u8, 176 kb/s
+Input #0, avi, from 'c2m2.avi':
+  Duration: 00:00:54.40, start: 0.000000, bitrate: 1605 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 1275 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_u8 ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, u8, 176 kb/s
+Input #0, avi, from 'c2m3.avi':
+  Duration: 00:00:33.33, start: 0.000000, bitrate: 1587 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 1270 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_u8 ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, u8, 176 kb/s
+Input #0, avi, from 'c2m4.avi':
+  Duration: 00:00:39.80, start: 0.000000, bitrate: 1618 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 1286 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_u8 ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, u8, 176 kb/s
+Input #0, avi, from 'c3.avi':
+  Duration: 00:00:29.27, start: 0.000000, bitrate: 1570 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 1264 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_u8 ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, u8, 176 kb/s
+Input #0, avi, from 'c3m1.avi':
+  Duration: 00:00:31.47, start: 0.000000, bitrate: 1579 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 1260 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_u8 ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, u8, 176 kb/s
+Input #0, avi, from 'c3m2.avi':
+  Duration: 00:00:33.20, start: 0.000000, bitrate: 1575 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 1252 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_u8 ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, u8, 176 kb/s
+Input #0, avi, from 'c3m4.avi':
+  Duration: 00:00:39.53, start: 0.000000, bitrate: 1580 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 1260 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_u8 ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, u8, 176 kb/s
+Input #0, avi, from 'c3m5.avi':
+  Duration: 00:00:50.07, start: 0.000000, bitrate: 1590 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 1270 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_u8 ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, u8, 176 kb/s
+Input #0, avi, from 'c3m6.avi':
+  Duration: 00:00:30.40, start: 0.000000, bitrate: 1582 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 1266 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_u8 ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, u8, 176 kb/s
+Input #0, avi, from 'c4win.avi':
+  Duration: 00:01:12.20, start: 0.000000, bitrate: 2786 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 2481 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_u8 ([1][0][0][0] / 0x0001), 22050 Hz, 1 channels, u8, 176 kb/s
+Input #0, avi, from 'intro.avi':
+  Duration: 00:03:02.47, start: 0.000000, bitrate: 3602 kb/s
+  Stream #0:0: Video: indeo5 (IV50 / 0x30355649), yuv410p, 640x480, 2764 kb/s, 15 fps, 15 tbr, 15 tbn, 15 tbc
+  Stream #0:1: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 22050 Hz, 2 channels, s16, 705 kb/s
+</code></pre>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:libfdk">
+<p><code>libfdk</code> <a href="https://trac.ffmpeg.org/wiki/Encode/AAC">might be slightly higher in quality</a>, and if your build of <code>ffmpeg</code> was compiled with <code>libfdk</code> support you could try using the <code>libfdk_aac</code> codec. That also enabled the use of variable bit rate. However, I don't think it's worth the effort. The input isn't exactly high quality in the first place, and the built-in AAC encoder is pretty good.&#160;<a class="footnote-backref" href="#fnref:libfdk" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../archive-files/" class="btn btn-neutral float-right" title="Archive files">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../ambient-tracks/" class="btn btn-neutral" title="Ambient tracks"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../ambient-tracks/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../archive-files/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

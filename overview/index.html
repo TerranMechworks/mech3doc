@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Overview - MechWarrior 3 file format description</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  <link href="../extra.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Overview";
+    var mkdocs_page_input_path = "overview.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> MechWarrior 3 file format description</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../conventions/">Pseudo-code conventions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../introduction/">Introduction</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../versions/">MechWarrior 3 versions</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Overview</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#installer">Installer</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ambient-tracks">Ambient tracks</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#avi-files">AVI files</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sound">Sound</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#software-render-files">Software render files</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3d-accelerator-files">3D accelerator files</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#program-files">Program files</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#database-files">Database files</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#texture-packages">Texture packages</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#reader-archives">Reader archives</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#interpreter-scripts">Interpreter scripts</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mechlib-archive">Mechlib archive</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#motion-archive">Motion archive</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#game-world-data">Game world data</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#animation-definition-archives">Animation definition archives</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#save-games">Save games</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../ambient-tracks/">Ambient tracks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../avi-files/">AVI files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../archive-files/">Archive files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../sound-archives/">Sound archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../reader-archives/">Reader archives / binary reader files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../motion-archives/">Motion archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../interpreter-scripts/">Interpreter scripts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../mech3msg/">Message table/translations (Mech3Msg)</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../texture-packages/">Texture packages</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../mechlib-archives/">Mechlib archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../gamez-files/">GameZ files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../nodes/">Nodes</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../anim-files/">Animation definition files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../events/">Sequence events</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../text-reader-files/">Text reader files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../beginner-guide/">Beginner's guide to hex viewing</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">MechWarrior 3 file format description</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Overview</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h1>
+<h2 id="installer">Installer<a class="headerlink" href="#installer" title="Permanent link">&para;</a></h2>
+<p>The MW3 installer is quite flexible, allowing selection of only some features to save hard drive space. The components and sub-components listed for a custom installation are:</p>
+<ul>
+<li>Program files</li>
+<li>Codec Files</li>
+<li>AVI files</li>
+<li>Software Render Files</li>
+<li>Low Detail</li>
+<li>Medium Detail</li>
+<li>Best Detail</li>
+<li>3D Accelerator Files</li>
+<li>2 MB Card</li>
+<li>4 MB Card</li>
+<li>8 MB Card+</li>
+<li>Sound</li>
+<li>High Fidelity</li>
+<li>Low Fidelity</li>
+</ul>
+<p>Some files not directly installed that are discussed are ambient tracks and save games.</p>
+<p>Please note that while many files have the ending <code>.zbd</code>, this does not mean they are in any way similar. Different <code>.zbd</code> files need to be parsed differently (they aren't even all <a href="../archive-files/">archive files</a>). It's possible <code>.zbd</code> stands for Zipper Binary Data. </p>
+<h2 id="ambient-tracks">Ambient tracks<a class="headerlink" href="#ambient-tracks" title="Permanent link">&para;</a></h2>
+<p>The <a href="../ambient-tracks/">ambient tracks</a> are never installed, and always streamed from the CD.</p>
+<h2 id="avi-files">AVI files<a class="headerlink" href="#avi-files" title="Permanent link">&para;</a></h2>
+<p>If the <a href="../avi-files/">AVI/video files</a> are not installed, they will be read from the CD. These are the game intro, and cut scenes/mission briefings.</p>
+<h2 id="sound">Sound<a class="headerlink" href="#sound" title="Permanent link">&para;</a></h2>
+<p>The high fidelity and low fidelity options installed <code>soundsH.zbd</code> and <code>soundsL.zbd</code> to the <code>zbd</code> directory, respectively. These are both <a href="../sound-archives/">sound archives</a>. The demo only ships with medium fidelity sounds (<code>soundsM.zbd</code>). Additionally, the 1.2 patch installs some loose <code>.wav</code> files into the <code>zbd</code> directory.</p>
+<h2 id="software-render-files">Software render files<a class="headerlink" href="#software-render-files" title="Permanent link">&para;</a></h2>
+<p>The software render files component installs textures for the software rendering to the <code>zbd</code> directory. They are largely campaign-specific.</p>
+<p>For low detail <code>c1\texture1.zbd</code>, <code>c2\texture1.zbd</code>, <code>c3\texture1.zbd</code>, <code>c4\texture1.zbd</code>, <code>c4b\texture1.zbd</code>, and <code>t1\texture1.zbd</code> are installed.</p>
+<p>For medium detail <code>c1\texture2.zbd</code>, <code>c2\texture2.zbd</code>, <code>c3\texture2.zbd</code>, <code>c4\texture2.zbd</code>, <code>c4b\texture2.zbd</code>, and <code>t1\texture2.zbd</code> are installed.</p>
+<p>For best detail <code>c1\texture.zbd</code>, <code>c2\texture.zbd</code>, <code>c3\texture.zbd</code>, <code>c4\texture.zbd</code>, <code>c4b\texture.zbd</code>, and <code>t1\texture.zbd</code> are installed.</p>
+<p>In each case, the 'mech textures <code>rmechtexs.zbd</code> are also installed.</p>
+<p>All of these files are <a href="../texture-packages/">texture packages</a>. The textures for software rendering are largely palette-based.</p>
+<h2 id="3d-accelerator-files">3D accelerator files<a class="headerlink" href="#3d-accelerator-files" title="Permanent link">&para;</a></h2>
+<p>The 3d accelerator files component installs textures for the hardware rendering to the <code>zbd</code> directory. They are largely campaign-specific.</p>
+<p>For 2 MB cards <code>c1\rtexture2.zbd</code>, <code>c2\rtexture2.zbd</code>, <code>c3\rtexture2.zbd</code>, <code>c4\rtexture2.zbd</code>, <code>c4b\rtexture2.zbd</code>, and <code>t1\rtexture2.zbd</code> are installed.</p>
+<p>For 4 MB cards <code>c1\rtexture3.zbd</code>, <code>c2\rtexture3.zbd</code>, <code>c3\rtexture3.zbd</code>, <code>c4\rtexture3.zbd</code>, <code>c4b\rtexture3.zbd</code>, and <code>t1\rtexture3.zbd</code> are installed.</p>
+<p>For 8 MB+ cards <code>c1\rtexture.zbd</code>, <code>c2\rtexture.zbd</code>, <code>c3\rtexture.zbd</code>, <code>c4\rtexture.zbd</code>, <code>c4b\rtexture.zbd</code>, and <code>t1\rtexture.zbd</code> are installed.</p>
+<p>In the 2 MB case, the 'mech textures <code>rmechtex16.zbd</code> are also installed; otherwise, the 'mech textures <code>rmechtex.zbd</code> are also installed. </p>
+<p>All of these files are <a href="../texture-packages/">texture packages</a>. The textures for 3d accelerator rendering are not palette-based, but do have a reduced bit depth. </p>
+<h2 id="program-files">Program files<a class="headerlink" href="#program-files" title="Permanent link">&para;</a></h2>
+<p>The program files component installs the following files to the specified install location:</p>
+<ul>
+<li><code>force_eff.ifr</code>: Probably force-feedback effects. I think this was a technology developed by the Immersion Corporation. The file extension <code>.ifr</code> stands for "Immersion Force Resource", which are pre-built effects authored in a tool called Immersion Studio. It's not clear how the game engine used these, and they deserve more investigation.</li>
+<li><code>Mech3.exe</code>: The main game engine executable. Not further discussed.</li>
+<li><code>Mech3.icd</code>: Only present for the German version, probably related to the SafeDisc DRM. Discussed tangentially in <a href="../introduction/">the introduction</a>; otherwise not further discussed.</li>
+<li><code>Mech3Msg.dll</code>: A resource dynamic link library (DLL), which contains localised messages. Discussed in <a href="../mech3msg/">message table/translations</a>.</li>
+<li><code>MSN Gaming Zone.url</code>: A Windows Internet Shortcut file, presumably to the MSN Gaming Zone, now known as MSN Games. Not further discussed.</li>
+<li><code>ReadMe.doc</code> or <code>readme.doc</code>, <code>ReadMe.txt</code> or <code>readme.txt</code>: The READMEs for the game in both Microsoft Word (<code>.doc</code>) and plain text (<code>.txt</code>) format. Not further discussed.</li>
+<li><code>Uninstl.ddl</code> and <code>Uninstall.isu</code>: Support files for the InstallShield uninstaller. Not further discussed.</li>
+</ul>
+<p>These files are also installed on the system:</p>
+<ul>
+<li><code>arial.ttf</code>, <code>impact.ttf</code>, and <code>lucon.ttf</code>: Font files the game engine needs.</li>
+<li><code>IFORCE2.dll</code>: Probably force-feedback effects, see <code>force_eff.ifr</code>.</li>
+<li><code>MSVCRT.DLL</code>, <code>msvcirt.dll</code>, <code>MSVCRT40.DLL</code>, and <code>MSVCP50.DLL</code>: Support the Microsoft Visual C/C++ Runtime. These could be used to determine which MSVC version was used. Not further discussed.</li>
+<li><code>MFC40.DLL</code> and <code>MFC42.DLL</code>: <a href="https://docs.microsoft.com/en-us/cpp/mfc/mfc-desktop-applications">Microsoft Foundation Class Library</a> (MFC) dependencies. Not further discussed.</li>
+</ul>
+<p>The codec sub-component also installs <code>Ir50_32.dll</code>. This video codec is relevant for the <a href="../avi-files/">AVI files</a>.</p>
+<p>The program files component also installs all the necessary game files to the <code>zbd</code> directory in the specified install location. These are called <a href="#database-files">database files</a>, and have their own section below.</p>
+<h2 id="database-files">Database files<a class="headerlink" href="#database-files" title="Permanent link">&para;</a></h2>
+<p>Database files are installed by the program files component. There are a lot of data files, and can be grouped into various categories. In general, database files are either:</p>
+<ul>
+<li>global, in the root <code>zbd</code> directory</li>
+<li>operation or chapter specific. The sub-directories <code>c1</code>, <code>c2</code>, <code>c3</code>, <code>c4</code>, <code>c4b</code>, and <code>t1</code> seem to correspond to the operations of the campaign. <code>t1</code> for the training operation, and <code>c1</code> to <code>c4</code> for the main campaign's operations/chapters. One oddity is <code>c4b</code>, which is possibly split off because the third and fourth operations (<code>c3</code>/<code>c4</code>) had 6 missions each (instead of four), and there was some kind of game engine limitation</li>
+<li>mission specific. Multiplayer or instant action scenarios are also "missions" associated with a specific operation/chapter. These are identified by the file name's suffix, e.g. <code>m1</code> for mission 1, <code>mp1</code> for multiplayer map 1, and <code>ia1</code> for instant action scenario 1.</li>
+</ul>
+<h3 id="texture-packages">Texture packages<a class="headerlink" href="#texture-packages" title="Permanent link">&para;</a></h3>
+<p>The <code>rimage.zbd</code> provides globally-used images, such as UI elements, menu backgrounds, and more. This file is a <a href="../texture-packages/">texture package</a>, and can be read in the same way software render files and 3D accelerator files are read.</p>
+<h3 id="reader-archives">Reader archives<a class="headerlink" href="#reader-archives" title="Permanent link">&para;</a></h3>
+<p><a href="../reader-archives/">Reader archives</a> contain game configuration. They can be global (<code>reader.zbd</code>), campaign-specific (<code>c1\reader.zbd</code>, <code>c2\reader.zbd</code>, <code>c3\reader.zbd</code>, <code>c4\reader.zbd</code>, <code>c4b\reader.zbd</code>, <code>t1\reader.zbd</code>), mission-specific (<code>&lt;chapter directory&gt;\readerm*.zbd</code>), multiplayer maps (<code>&lt;chapter directory&gt;\readermp*.zbd</code>), or instant action scenarios (<code>&lt;chapter directory\readeria*.zbd</code>). This is the full list:</p>
+<ul>
+<li><code>reader.zbd</code></li>
+<li><code>c1\reader.zbd</code></li>
+<li><code>c2\reader.zbd</code></li>
+<li><code>c3\reader.zbd</code></li>
+<li><code>c4\reader.zbd</code></li>
+<li><code>c4b\reader.zbd</code></li>
+<li><code>t1\reader.zbd</code></li>
+<li><code>c1\readeria1.zbd</code></li>
+<li><code>c1\readeria2.zbd</code></li>
+<li><code>c1\readeria3.zbd</code></li>
+<li><code>c1\readerm1.zbd</code></li>
+<li><code>c1\readerm2.zbd</code></li>
+<li><code>c1\readerm3.zbd</code></li>
+<li><code>c1\readerm4.zbd</code></li>
+<li><code>c1\readermp1.zbd</code></li>
+<li><code>c1\readermp2.zbd</code></li>
+<li><code>c2\readeria1.zbd</code></li>
+<li><code>c2\readeria2.zbd</code></li>
+<li><code>c2\readeria3.zbd</code></li>
+<li><code>c2\readerm1.zbd</code></li>
+<li><code>c2\readerm2.zbd</code></li>
+<li><code>c2\readerm3.zbd</code></li>
+<li><code>c2\readerm4.zbd</code></li>
+<li><code>c2\readermp1.zbd</code></li>
+<li><code>c2\readermp2.zbd</code></li>
+<li><code>c3\readeria1.zbd</code></li>
+<li><code>c3\readeria2.zbd</code></li>
+<li><code>c3\readeria3.zbd</code></li>
+<li><code>c3\readerm1.zbd</code></li>
+<li><code>c3\readerm2.zbd</code></li>
+<li><code>c3\readerm3.zbd</code></li>
+<li><code>c3\readerm4.zbd</code></li>
+<li><code>c3\readerm5.zbd</code></li>
+<li><code>c3\readerm6.zbd</code></li>
+<li><code>c3\readermp1.zbd</code></li>
+<li><code>c3\readermp2.zbd</code></li>
+<li><code>c4\readeria1.zbd</code></li>
+<li><code>c4\readeria2.zbd</code></li>
+<li><code>c4\readeria3.zbd</code></li>
+<li><code>c4\readerm1.zbd</code></li>
+<li><code>c4\readerm2.zbd</code></li>
+<li><code>c4\readerm3.zbd</code></li>
+<li><code>c4\readermp1.zbd</code></li>
+<li><code>c4\readermp2.zbd</code></li>
+<li><code>c4b\readerm4.zbd</code></li>
+<li><code>c4b\readerm5.zbd</code></li>
+<li><code>c4b\readerm6.zbd</code></li>
+<li><code>t1\readeria1.zbd</code></li>
+<li><code>t1\readerm1.zbd</code></li>
+<li><code>t1\readerm2.zbd</code></li>
+<li><code>t1\readerm3.zbd</code></li>
+<li><code>t1\readerm4.zbd</code></li>
+<li><code>t1\readermp1.zbd</code></li>
+</ul>
+<p>Two more multiplayer maps are provided by the 1.2 patch: <code>c3\readermp3.zbd</code> and <code>c3\readermp4.zbd</code>.</p>
+<h3 id="interpreter-scripts">Interpreter scripts<a class="headerlink" href="#interpreter-scripts" title="Permanent link">&para;</a></h3>
+<p>The <a href="../interpreter-scripts/">interpreter scripts</a> (<code>interp.zbd</code>) drive how the game engine loads the game data/worlds.</p>
+<h3 id="mechlib-archive">Mechlib archive<a class="headerlink" href="#mechlib-archive" title="Permanent link">&para;</a></h3>
+<p>A single <a href="../mechlib-archives/">mechlib archive</a> is installed, <code>mechlib.zbd</code>. This contains 'mech and mechlib model data.</p>
+<h3 id="motion-archive">Motion archive<a class="headerlink" href="#motion-archive" title="Permanent link">&para;</a></h3>
+<p>A single <a href="../motion-archives/">motion archive</a> is installed, <code>motion.zbd</code>. This contains the animation data for 'mech motion (e.g. walking).</p>
+<h3 id="game-world-data">Game world data<a class="headerlink" href="#game-world-data" title="Permanent link">&para;</a></h3>
+<p>The game world data is called <code>gamez.zbd</code>, and so also known as <a href="../gamez-files/">GameZ files</a>. Each operation/chapter has its own game world data in the sub-directory:</p>
+<ul>
+<li><code>c1\gamez.zbd</code></li>
+<li><code>c2\gamez.zbd</code></li>
+<li><code>c3\gamez.zbd</code></li>
+<li><code>c4\gamez.zbd</code></li>
+<li><code>c4b\gamez.zbd</code></li>
+<li><code>t1\gamez.zbd</code></li>
+</ul>
+<h3 id="animation-definition-archives">Animation definition archives<a class="headerlink" href="#animation-definition-archives" title="Permanent link">&para;</a></h3>
+<p>While animation definitions are provided in some <a href="#reader-archives">reader archives</a>, they are also present in a compiled form in <a href="../anim-files/">animation definition files</a>, called <code>anim.zbd</code>. These correspond to each game world:</p>
+<ul>
+<li><code>c1\anim.zbd</code></li>
+<li><code>c2\anim.zbd</code></li>
+<li><code>c3\anim.zbd</code></li>
+<li><code>c4\anim.zbd</code></li>
+<li><code>c4b\anim.zbd</code></li>
+<li><code>t1\anim.zbd</code></li>
+</ul>
+<h2 id="save-games">Save games<a class="headerlink" href="#save-games" title="Permanent link">&para;</a></h2>
+<p>TODO</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../ambient-tracks/" class="btn btn-neutral float-right" title="Ambient tracks">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../versions/" class="btn btn-neutral" title="MechWarrior 3 versions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../versions/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../ambient-tracks/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

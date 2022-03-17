@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Introduction - MechWarrior 3 file format description</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  <link href="../extra.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Introduction";
+    var mkdocs_page_input_path = "introduction.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> MechWarrior 3 file format description</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../conventions/">Pseudo-code conventions</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Introduction</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#mechwarrior-3-history">MechWarrior 3 history</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#why-bother">Why bother?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-mechwarrior-3-community">The MechWarrior 3 community</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../versions/">MechWarrior 3 versions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../ambient-tracks/">Ambient tracks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../avi-files/">AVI files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../archive-files/">Archive files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../sound-archives/">Sound archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../reader-archives/">Reader archives / binary reader files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../motion-archives/">Motion archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../interpreter-scripts/">Interpreter scripts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../mech3msg/">Message table/translations (Mech3Msg)</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../texture-packages/">Texture packages</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../mechlib-archives/">Mechlib archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../gamez-files/">GameZ files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../nodes/">Nodes</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../anim-files/">Animation definition files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../events/">Sequence events</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../text-reader-files/">Text reader files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../beginner-guide/">Beginner's guide to hex viewing</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">MechWarrior 3 file format description</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Introduction</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h1>
+<p>To skip the rambling, go straight to the <a href="../overview/">overview</a>.</p>
+<h2 id="mechwarrior-3-history">MechWarrior 3 history<a class="headerlink" href="#mechwarrior-3-history" title="Permanent link">&para;</a></h2>
+<p>If you want a more entertaining and complete history, Chase "Scharmers" Dahl has an awesome review called <a href="https://www.quartertothree.com/features/robots/robots_1.shtml#intro">Fifteen Years of Giant Robots</a> (specifically <a href="https://www.quartertothree.com/features/robots/robots_4.shtml#mw3">MechWarrior 3</a>).  Or if video is your thing, The Examined Life (of Gaming)'s <a href="https://www.youtube.com/watch?list=PLzqQqTZGYi1ZqlVw-_B0mdPOMU3NffkXs&amp;v=WuW0UCyvisM">MechWarrior Retrospective</a> series (specifically <a href="https://www.youtube.com/watch?v=f4a-6RIgVfA&amp;index=5&amp;list=PLzqQqTZGYi1ZqlVw-_B0mdPOMU3NffkXs">MechWarrior 3</a>).</p>
+<p>I highly recommend both, and with reason. It's helpful to understand the development history around MechWarrior 3, which is complicated. And the time-frame allows us to put an upper bound on the hardware, software, and techniques available at the time.</p>
+<p>The short version: In what is now typical fashion, MechWarrior 3 isn't the third instalment of the MechWarrior series, but the third generation. It was published in May 1999, with a new engine. It received an expansion pack, Pirate's Moon, and a Gold Edition release in September 1999. Due to the troubled development, the fourth generation released quite quickly afterwards, with MechWarrior 4: Vengeance in late 2000 in North America.</p>
+<p>The engine seems to be largely developed by Zipper Interactive. Some people have had success using information in this project for other Zipper games, notably Recoil and Crimson Skies. The reverse was sadly not possible, since to my knowledge, no investigation of those games was published.</p>
+<h2 id="why-bother">Why bother?<a class="headerlink" href="#why-bother" title="Permanent link">&para;</a></h2>
+<p>MechWarrior 4 certainly offer a more balanced, tactical approach with e.g. weapon hard-points to differentiate chassis. So why this game? In my mind, none of these games came close to the campaign of MechWarrior 3. Future campaigns have you starting off as a scrappy lance, but quickly growing and often being able to pick missions for different factions - which I never ended up caring about. MechWarrior 3 is different. Nothing comes close to having to complete an entire operation that goes wrong from the start, with limited supplies and out-of-date tactical information. Despite the troubled development which can be felt in lacking graphics for the time, barren landscapes, and lance mates you hear over the radio more often than you see them, the story shines. This is why it sticks in my head.</p>
+<p>Seems I'm not the only one, as there are hundreds of posts trying to get it to work on modern Windows. The most promising approach is <a href="http://dege.freeweb.hu/">dgVoodoo 2</a>, "a wrapper for old graphics API's for Windows Vista/7/8/10". There are still issues with the physics on today's fast processors though.</p>
+<p>There is also a preservation aspect. Video game preservation should be important. After all, video games are the medium that has influenced me and many others the most. Preserving music, film, and television is comparatively simple. The day may come when we can emulate a Window XP PC well, but currently, it's hard to experience MechWarrior 3 at all. Being able to understand the assets is the first step.</p>
+<p>As an aside, the German localisation is outstanding. Everything was localised, including the intro cinematic, the mission briefing, and in-game dialog. This was a huge selling point for me at the time (my English wasn't quite as polished yet), along with the kick-ass box art (seriously, that Mad Cat). The German CD cover is also gorgeous. Apparently though, the German version <a href="https://pcgamingwiki.com/wiki/MechWarrior_3#Localizations">was censored</a>. This rings true, as Germany has always had strict rules for video games certification via the USK and JuSchG. For example, the terrorists in "Command &amp; Conquer: Generals" were replaced by robots. The gibs are quite gruesome when stomping on infantry, and seem largely unnecessary in a 'mech focused game. I will discuss the different <a href="../versions/">versions</a> shortly.</p>
+<h2 id="the-mechwarrior-3-community">The MechWarrior 3 community<a class="headerlink" href="#the-mechwarrior-3-community" title="Permanent link">&para;</a></h2>
+<p>There still exists a modding community, and people still play MW3 online. This sounds ideal. When I reached out a few years ago, there was significant trepidation, since understanding game files could make cheating easier. Initially, I would have loved to build on the work of MW3 legends like Finnegan McCool (whom I didn't know at the time, and may have given me a warm welcome). But this is how it goes. And in retrospect, I think this was a blessing in disguise - I would've never started my project!</p>
+<p>In the long run, not putting the information out there only hurts the community. People have to rely on out-of-date tools, into which they have no insight. No new tools can be written, and no progress can be made if the original authors leave. I hope my open approach changes this, and there are still enough people who care. There's a hard-core group out there thanks mainly to AncientxFreako, and it's just so great to be able to revitalise interest for a game I treasure.</p>
+<p>Also, thanks to <a href="http://www.sarna.net">sarna.net</a> for keeping all things BattleTech around in such a wonderfully accessible way (including patches).</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../versions/" class="btn btn-neutral float-right" title="MechWarrior 3 versions">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../conventions/" class="btn btn-neutral" title="Pseudo-code conventions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../conventions/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../versions/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

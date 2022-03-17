@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Motion archives - MechWarrior 3 file format description</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  <link href="../extra.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Motion archives";
+    var mkdocs_page_input_path = "motion-archives.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> MechWarrior 3 file format description</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../conventions/">Pseudo-code conventions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../introduction/">Introduction</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../versions/">MechWarrior 3 versions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../ambient-tracks/">Ambient tracks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../avi-files/">AVI files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../archive-files/">Archive files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../sound-archives/">Sound archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../reader-archives/">Reader archives / binary reader files</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Motion archives</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#investigation-mw3">Investigation (MW3)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#investigation-pm">Investigation (PM)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#in-game-use">In-game use</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../interpreter-scripts/">Interpreter scripts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../mech3msg/">Message table/translations (Mech3Msg)</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../texture-packages/">Texture packages</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../mechlib-archives/">Mechlib archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../gamez-files/">GameZ files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../nodes/">Nodes</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../anim-files/">Animation definition files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../events/">Sequence events</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../text-reader-files/">Text reader files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../beginner-guide/">Beginner's guide to hex viewing</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">MechWarrior 3 file format description</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Motion archives</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="motion-archives">Motion archives<a class="headerlink" href="#motion-archives" title="Permanent link">&para;</a></h1>
+<p>Motion archives hold 'mech motion animation data, so how a 'mech model moves when it e.g. walks. However, the association of motion data with a 'mech model is determined by a reader file. Some 'mechs share motions/animations, and some motions are seemingly unused.</p>
+<h2 id="investigation-mw3">Investigation (MW3)<a class="headerlink" href="#investigation-mw3" title="Permanent link">&para;</a></h2>
+<p>Motion archives are <a href="../archive-files/">archive files</a>. Each motion file is named <code>&lt;mech&gt;_&lt;motion&gt;</code>, so for example "bushwhacker_jump". Motion files begin with a header:</p>
+<pre><code class="language-rust">struct Header {
+    version: u32, // always 4
+    loop_time: f32, // &gt; 0.0
+    frame_count: u32,
+    part_count: u32,
+    unk16: f32, // always -1.0
+    unk20: f32, // always 1.0
+}
+</code></pre>
+<p>The version field will always be four (4). The loop time is a non-negative floating point value that describes how long the motion plays for. The frame count is the number of frames in the motion, which is inclusive. This means there are actually frame count + 1 frames of data to read. The last frame is always the same as the first frame. Apparently, this is a common technique to make looping animations easier. The part count is the number of parts of the model that will be animated. The last two fields are unknown, but are always set to negative one (-1.0) and positive one (1.0). Maybe they describe the coordinate system?</p>
+<p>Next count parts are read: </p>
+<pre><code class="language-rust">struct Part {
+    name_length: u32,
+    name: [u8; name_length], // not zero-terminated
+    flags: PartFlags, // always Translation + Rotation
+    translations: [Vector3; frame_count + 1],
+    rotations: [Quaternion; frame_count + 1],
+}
+
+bitflags PartFlags: u32 {
+    Scale = 1 &lt;&lt; 1,       // 0x02
+    Rotation = 1 &lt;&lt; 2,    // 0x04
+    Translation = 1 &lt;&lt; 3, // 0x08
+}
+
+struct Vector3 {
+    x: f32,
+    y: f32,
+    z: f32,
+}
+
+struct Quaternion {
+    w: f32,
+    x: f32,
+    y: f32,
+    z: f32,
+}
+</code></pre>
+<p>Each part begins with a variable-length string (ASCII). There is no zero-termination. This is the part of the 'mech model that the motion affects. The flags field always specify translation (8) and rotation (4), and never scale (2) for obvious reasons (scaling any part would look weird on 'mechs). So it will always be twelve (12).</p>
+<p>Then, the translations are read sequentially, and then the rotations are read sequentially. Again, there is one more frame to read than frame count indicates, and the first and last values will be the same. I believe the quaternion order is wxyz, since the quaternions work fine in Blender, but not in Unity, which uses xyzw order.</p>
+<h2 id="investigation-pm">Investigation (PM)<a class="headerlink" href="#investigation-pm" title="Permanent link">&para;</a></h2>
+<p>Motion archive data doesn't change significantly in the expansion, but the archive does. Motion archives do not use checksumming; the checksum is always set to zero (0). Additionally, for some bizarre reason, the length of the data in the archive's TOC is always set to one (1). This can be highly inconvenient depending on the way archive entries are being read. A workaround is described in <a href="../archive-files/">archive files</a>.</p>
+<h2 id="in-game-use">In-game use<a class="headerlink" href="#in-game-use" title="Permanent link">&para;</a></h2>
+<p>Motions are used to animate 'mech models during missions. Which motion is used for which 'mech model is specified in the reader files (<code>dfn_&lt;mech&gt;.zrd</code> in <code>zbd/reader.zbd</code>). Some 'mechs share motions, and some motions are unused.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../interpreter-scripts/" class="btn btn-neutral float-right" title="Interpreter scripts">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../reader-archives/" class="btn btn-neutral" title="Reader archives / binary reader files"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../reader-archives/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../interpreter-scripts/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

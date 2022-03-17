@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>MechWarrior 3 versions - MechWarrior 3 file format description</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  <link href="../extra.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "MechWarrior 3 versions";
+    var mkdocs_page_input_path = "versions.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> MechWarrior 3 file format description</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../conventions/">Pseudo-code conventions</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../introduction/">Introduction</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">MechWarrior 3 versions</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#base-game">Base game</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#expansion">Expansion</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#system-requirements">System requirements</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#drm">DRM</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../ambient-tracks/">Ambient tracks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../avi-files/">AVI files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../archive-files/">Archive files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../sound-archives/">Sound archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../reader-archives/">Reader archives / binary reader files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../motion-archives/">Motion archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../interpreter-scripts/">Interpreter scripts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../mech3msg/">Message table/translations (Mech3Msg)</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../texture-packages/">Texture packages</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../mechlib-archives/">Mechlib archives</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../gamez-files/">GameZ files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../nodes/">Nodes</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../anim-files/">Animation definition files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../events/">Sequence events</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../text-reader-files/">Text reader files</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../beginner-guide/">Beginner's guide to hex viewing</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">MechWarrior 3 file format description</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>MechWarrior 3 versions</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="mechwarrior-3-versions">MechWarrior 3 versions<a class="headerlink" href="#mechwarrior-3-versions" title="Permanent link">&para;</a></h1>
+<h2 id="base-game">Base game<a class="headerlink" href="#base-game" title="Permanent link">&para;</a></h2>
+<p>In the US, there seem to have been three releases: version 1.0, 1.1, and Gold Edition. At least I've managed to acquire those. They can all be patched to 1.2. Presumably there was also a 1.1 patch (which I have not been able to find). In a weird quirk, the Gold Edition Readme says it is version 1.2, but it is still missing two multiplayer maps, <code>zbd/c3/readermp3.zbd</code> and <code>zbd/c3/readermp4.zbd</code>. Applying the 1.2 patch will install these.</p>
+<p>The game was localised for German and French. I only have the 1.0 German version, and couldn't get hold of a French version. Please do reach out if you have a version I'm missing. I would love to confirm the information holds for all versions.</p>
+<p>For simplicity, I will refer to the Gold Edition as 1.2. I have installed all versions in a virtual machine, gathered the files, patched the versions to 1.2, and gathered the files again. This has allowed me to find differences, but also check that the structures, value-ranges, and methods should hold.</p>
+<h2 id="expansion">Expansion<a class="headerlink" href="#expansion" title="Permanent link">&para;</a></h2>
+<p>I know a lot less about the Pirate's Moon expansion. For one, I never played it. My focus has also been mainly on the base game, and there's still enough unknown information it that. I also only own a single US version of PM. Still, the code from the base game was easy enough to apply to Pirate's Moon, so some things could be discovered. When Pirate's Moon-specific information is known, it is noted in this project.</p>
+<h2 id="system-requirements">System requirements<a class="headerlink" href="#system-requirements" title="Permanent link">&para;</a></h2>
+<p>MechWarrior 3 only runs on Windows, and required DirectX 6.1. It is probably a 32-bit executable, given the time frame. And it was likely programmed in C++, specifically Microsoft Visual C++ based on the dependencies. MechWarrior 3 came on a standard CD-ROM.</p>
+<table>
+<thead>
+<tr>
+<th>Spec</th>
+<th>Minimum</th>
+<th>Recommended</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Operating system (OS)</td>
+<td>Windows 95</td>
+<td>Windows 98</td>
+</tr>
+<tr>
+<td>Processor (CPU)</td>
+<td>Intel Pentium 166 MHz</td>
+<td>Intel Pentium 200 MHz</td>
+</tr>
+<tr>
+<td>System memory (RAM)</td>
+<td>32 MB</td>
+<td>64 MB</td>
+</tr>
+<tr>
+<td>Hard disk drive (HDD)</td>
+<td>240 MB</td>
+<td>390 MB</td>
+</tr>
+<tr>
+<td>Video card (GPU)</td>
+<td>2 MB of VRAM</td>
+<td>8 MB of VRAM</td>
+</tr>
+</tbody>
+</table>
+<h2 id="drm">DRM<a class="headerlink" href="#drm" title="Permanent link">&para;</a></h2>
+<p>The PC Gaming Wiki claims <a href="https://pcgamingwiki.com/wiki/MechWarrior_3">MechWarrior 3 is protected by Macrovision's SafeDisc DRM</a>. At the time MW3 was released, only SafeDisc version 1 was available. Instructions from <a href="https://www.cdmediaworld.com/hardware/cdrom/cd_protections_safedisc.shtml">CD Media World</a> on how to detect SafeDisc protection:</p>
+<blockquote>
+<p>The following files should exist on every the original CD: <strong>00000001.TMP</strong>, <strong>CLCD16.DLL</strong>, <strong>CLCD32.DLL</strong>, <strong>CLOKSPL.EXE</strong>, <strong>DPLAYERX.DLL</strong></p>
+<p>There is always a <strong>GAME.EXE</strong> and <strong>GAME.ICD</strong> file where the <strong>.ICD</strong> is the original game executable (in encrypted form) and the <strong>.EXE</strong> is a loader containing a parts of the <strong>SafeDisc</strong> protection.</p>
+</blockquote>
+<p>(Formatting edited for readability.) The <a href="https://www.winehq.org/pipermail/wine-users/2002-April/007910.html">Wine mailing list agrees</a> largely, sometimes <code>SECDRV.SYS</code> and <code>DRVMGT.DLL</code> are also found. </p>
+<p>None of the US version I own have any of these files, the German version does though. It is possible the US versions have an earlier variant of SafeDisc copy protection, based on the earlier SafeAudio copy protection It uses weak sectors to detect when a disk has been copied. (For more information, see <a href="https://www.myce.com/article/SafeDisc-2-Explained-and-Defeated___-181/">this CD Freaks/Myce article</a> on SafeDisc 2.)</p>
+<p>There are indications something odd is present on US disks. When I list the <code>video</code> directory, the date of the parent directory (<code>..</code>) is always mangled:</p>
+<p>Version 1.00 (DE):</p>
+<pre><code class="language-plain">04/06/1999  02:25    &lt;DIR&gt;          .
+04/06/1999  02:25    &lt;DIR&gt;          ..
+</code></pre>
+<p>Version 1.00 (US):</p>
+<pre><code class="language-plain">12/05/1999  02:18    &lt;DIR&gt;          .
+The parameter is incorrect.
+&lt;0x16&gt;?      &lt;DIR&gt;          ..
+</code></pre>
+<p>Version 1.1 (US):</p>
+<pre><code class="language-plain">09/07/1999  12:01    &lt;DIR&gt;          .
+The parameter is incorrect.
+
+?      &lt;DIR&gt;                              ..
+</code></pre>
+<p>Version 1.2 (US):</p>
+<pre><code class="language-plain">05/10/1999  08:35    &lt;DIR&gt;          .
+&lt;0x11&gt;?      &lt;DIR&gt;          ..
+</code></pre>
+<p>SafeDisc itself is a liability, as the driver <a href="https://nvd.nist.gov/vuln/detail/CVE-2007-5587">contains a buffer overflow vulnerability (CVE-2007-5587)</a>.</p>
+<p>I don't want to comment too much on DRM, although as a customer, it has always been an annoyance and a hindrance for me. It is a concern for any effort legally examining the game. Some countries allow circumventing DRM for abandoned products or legitimate fair use. Some don't. This is why I've approached the project by installing the game, and then working on binary files. No DRM is bypassed.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../overview/" class="btn btn-neutral float-right" title="Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../introduction/" class="btn btn-neutral" title="Introduction"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../introduction/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../overview/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
