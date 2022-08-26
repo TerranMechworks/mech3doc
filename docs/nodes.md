@@ -76,7 +76,8 @@ struct Node {
     unk196: u32,
     unk200: u32, // always 0
     unk204: u32, // always 0
-}
+    unk208: u32,
+} // 212 bytes
 
 tuple Box3d(f32, f32, f32, f32, f32, f32);
 
