@@ -7,7 +7,7 @@ GameZ files hold the game's world assets (except for 'mech models).
 GameZ files begin with a header, which is a mish-mash of information:
 
 ```rust
-struct Header {
+struct HeaderMW {
     signature: u32, // always 0x02971222
     version: u32, // always 27
     texture_count: u32,
@@ -195,7 +195,7 @@ Again, all of these values should be less than the total texture count. As far a
 
 ### Meshes
 
-In the gamez.zbd main header, the member meshes_offset gives the file offset to the main mesh header, which looks like this:
+From the main header, `meshes_offset` gives the offset to the meshes header, which looks like this:
 
 ```rust
 struct MeshesHeader {
@@ -205,20 +205,16 @@ struct MeshesHeader {
 }
 ```
 
-This is very similar to the materials header.  The fields are interdependent. The mesh array size indicates how big the mesh array for this world is expected to the in the worst case. Expect this to be zero (0) or greater, and less than 65535/0xFFFF. Next is the actual count of meshes in the file. Naturally, this must be zero (0) or greater, and less than the array size. Finally is the maximum index or next index, which is used to track which index to use for any further meshes. This will always be the same as the mesh count.
+This is very similar to the materials header. The fields are interdependent. The mesh array size indicates how big the mesh array for this world is expected to the in the worst case. Expect this to be zero (0) or greater, and less than 65535/0xFFFF. Next is the actual count of meshes in the file. Naturally, this must be zero (0) or greater, and less than the array size. Finally is the maximum index or next index, which is used to track which index to use for any further meshes. This will always be the same as the mesh count.
 
 Meshes are read in three phases. The valid mesh headers or mesh information first, then zeroed-out mesh headers/information, and then mesh data.
 
 #### Mesh information
 
-In order to decode individual meshes, we need to locate the header for the mesh in question. If data is not read sequentially, use the following formula to find the offset for a mesh (C++):
-
-meshHeaderOffset = MW3GameZHeader->meshes_offset + sizeof(MeshesHeader) + i * sizeof(MeshInfo);
-
 The mesh information is a large structure:
 
 ```rust
-struct MeshInfo {
+struct MeshInfoMW {
     unk00: u32, // always 0 or 1 (bool)
     unk04: u32, // always 0 or 1 (bool)
     unk08: u32,
@@ -242,18 +238,17 @@ struct MeshInfo {
     unk80: f32,
     unk84: f32,
     unk88: u32, // always 0
-    dataOffset: u32
-} // 96 bytes
+}
 
 type MeshOffset = u32; // or i32
 type MeshIndex = i32;
-type MeshInfos = [MeshInfo + MeshOffset; count];
-type ZeroInfos = [MeshInfo + MeshIndex; (array_size - count)];
+type MeshInfosMW = [(MeshInfoMW, MeshOffset); count];
+type ZeroInfosMW = [(MeshInfoMW, MeshIndex); (array_size - count)];
 ```
 
 The most important piece of information is the polygon count. If this is zero (0), then the vertex count, normal count, and morph count will all be zero (0). Note that the counts can also be zero if the polygon count is non-zero. You might expect the light count to also be zero, and this would make sense, but is not true in at least one case.
 
-Pointers will be zero/null if the corresponding count is zero (0), and will be non-zero/non-null if the corresponding count is positive. The pointers may have been valid at the time the file was created, but they have no obvious use in a file on disk. It is possible to read the data structures into memory and adjust the pointers after loading, though.
+Pointers will be zero/null if the corresponding count is zero (0), and will be non-zero/non-null if the corresponding count is positive.
 
 The fields `unk00` and `unk04` will always be zero (0) or one (1), a Boolean. The parent count will always be greater than zero. The fields `unk36`, `unk48`, and `unk88` will always be zero (0). The other fields are unknown.
 
@@ -274,14 +269,14 @@ if expected_index >= array_size {
 
 #### Mesh data
 
-Next, the mesh data is read for any filled in mesh information (not zeroed-out). The start offset for the mesh data can be determined from MeshInfo.dataOffset or by simply reading the file sequentially without seeking.
+Next, the mesh data is read for any filled in mesh information (not zeroed-out). The offset of the start of this data should match the previously read mesh data offset, but can be read sequentially without seeking.
 
 Reading the mesh data is dynamic, based on the counts:
 
 * Read vertex count vertices (where each is a vector of three f32)
 * Read normal count normals (where each is a vector of three f32)
 * Read morph count morphs(?) (where each is a vector of three f32)
-* Read the lights (each light seems to take 80 bytes)
+* Read the lights
 * Read the polygons
 
 ```rust
@@ -329,8 +324,7 @@ struct LightInfo {
     unk64: f32,
     unk68: f32,
     unk72: f32,
-    unk76: u32
-} // 80 bytes in total
+}
 
 // probably good to combine lights + extras
 // in real code
@@ -348,7 +342,7 @@ More research is needed on what the lights do.
 ##### Polygon information and data
 
 ```rust
-struct PolygonInfo {
+struct PolygonInfoMW {
     vertex_info: u32, // always <= 0x3FF
     unk04: u32, // always >= 0, <= 20
     vertices_ptr: u32, // always != 0
@@ -358,9 +352,9 @@ struct PolygonInfo {
     unk_ptr: u32, // always != 0
     material_index: u32,
     material_info: u32,
-} // 36 bytes
+}
 
-type PolygonInfos = [PolygonInfo; polygon_count];
+type PolygonInfosMW = [PolygonInfoMW; polygon_count];
 ```
 
 The vertex info field is a compound field, and could also be read as u8 values. The lower byte can be masked via `vertex_info & 0xFF`, and provides the number of vertices in the polygon. This must be greater than zero (0), since every polygon must have at least one vertex, and therefore the vertices pointer, colours pointer, and an unknown pointer are also non-zero/non-null.
@@ -386,9 +380,7 @@ Finally, the nodes block. If you thought the previous information was complex to
 
 Because the node data is very complicated, I describe [all nodes](nodes.md) separately. Please refer to that document for detailed information. I will however go over how to read the data here.
 
-In principle, this works a lot like the other blocks. The node count and node array size was given by the GameZ header. The nodes are also read in a phased manner, and also have zeroed-out nodes. If data is not read sequentially, node i can be found at the offset
-
-nodeOffset = MW3GameZHeader->nodesOffset + i * sizeof(MW3GameZNodeHeader)
+In principle, this works a lot like the other blocks. The node count and node array size was given by the GameZ header. The nodes are also read in a phased manner, and also have zeroed-out nodes.
 
 Unfortunately, to me it seems the node count is wildly inaccurate for some files. Since this seems like a memory dump, it's possible that only node count nodes should actually be read. But the nodes between count and the array size may not be zeroed out. So I resorted to reading all the node base structures until I found a zeroed out one, and then stopped. That allowed me to get the actual count.
 
@@ -441,10 +433,25 @@ As a final step, you can transform the linearly arranged nodes into a graph/tree
 
 ## Investigation (PM)
 
-The data structures differ slightly for MW3:PM. For the main header, there is an unknown, 32-bit integer between the members version and textureCount. 
+The data structures differ slightly for Pirate's Moon. For the main header, there is a new unknown, 32-bit integer:
 
 ```rust
-struct PMMeshInfo {
+struct HeaderPM {
+    signature: u32, // always 0x02971222?
+    version: u32, // always 27?
+    unk08: u32, // new
+    texture_count: u32,
+    textures_offset: u32,
+    materials_offset: u32,
+    meshes_offset: u32,
+    node_array_size: u32,
+    node_count: u32,
+    nodes_offset: u32,
+}
+```
+
+```rust
+struct MeshInfoPM {
     unk00: u32, // always 0 or 1 (bool)
     unk04: u32, // always 0 or 1 (bool)
     unk08: u32,
@@ -467,17 +474,16 @@ struct PMMeshInfo {
     unk76: f32,
     unk80: f32,
     unk84: f32,
-    unk88: u32,
-    unk92: u32,
-    unk96: u32,
-    dataOffset: u32
-} // 104 bytes
+    unk88: u32, // might be different?
+    unk92: u32, // new
+    unk96: u32, // new
+}
 ```
 
 ```rust
-struct PMPolygonInfo {
+struct PolygonInfoPM {
     vertex_info: u32, // always <= 0x3FF
-    polygonMode: u8, // always >= 0, <= 20
+    polygon_mode: u8,
     flags2: u8,
     flags3: u8,
     zero: u8,
@@ -489,10 +495,10 @@ struct PMPolygonInfo {
     material_index: u32,
     material_info: u32,
     flags4: u32,
-} // 40 bytes
+}
 ```
 
-The important addition here is polygonMode. If polygonMode equals 0x30, we are not dealing with a single polygon, but a triangle strip instead. A triangle strip is read like a polygon, but instead of creating a polygon of vertex_info vertices, (vertex_info-2) triangles are created instead. After reading one triangle, advance the pointer to the vertex indices by 4 bytes. After reading all data for one triangle strip, the vertex index has to be increased by an additional 8 to account for the last two vertices in the triangle strip.
+The important addition here is `polygon_mode`. If `polygon_mode` equals 0x30, we are not dealing with a single polygon, but a triangle strip instead. A triangle strip is read like a polygon, but instead of creating a polygon of `vertex_info` vertices, `vertex_info - 2` triangles are created instead. After reading one triangle, advance the pointer to the vertex indices by 4 bytes. After reading all data for one triangle strip, the vertex index has to be increased by an additional 8 to account for the last two vertices in the triangle strip.
 
 ## In-game use
 
