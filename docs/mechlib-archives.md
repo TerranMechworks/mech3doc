@@ -49,7 +49,7 @@ A lot isn't known about the material information. It seems to be dump of an in-g
 
 Textured materials always have alpha set to 255/0xFF, since textures can include their own alpha data. The `rgb` field set to 32767/0x7FFF, and the red, green, and blue fields set to 255.0 (which is white). The unknown flag may or may not be set, and the `unk32` field is also indeterminate. This field could be specularity or some other material property.
 
-Only textured materials can have the cycled flag set, which indicates that the material has multiple textures that are cycled through, creating an animated effect. However, mechlib materials cannot be cycled, so this flag is never set, and the cycle pointer field is always zero (0)/null. 
+Only textured materials can have the cycled flag set, which indicates that the material has multiple textures that are cycled through, creating an animated effect. However, mechlib materials cannot be cycled, so this flag is never set, and the cycle pointer field is always zero (0)/null.
 
 In short, for textured materials in the mechlib archive, the variable information is the `unk32` field, the unknown flag, and the `texture_ident` field. In the GameZ file, this holds the texture index on load, which is then replaced with a pointer to the texture. In the mechlib archive, this is the raw pointer value, since the texture name is written after the structure (discussed shortly). Code that only wants to draw the materials can basically discard almost all this information, except for if the material is textured.
 
@@ -76,12 +76,27 @@ First, some background. MechWarrior 3 uses so-called "nodes" to represent inform
 
 I describe [all nodes](nodes.md) separately, since the structures are rather large. As a quick refresher, all nodes share a base structure, and then have node type specific data.
 
-
-
+I also describe [mesh data structures in GameZ](gamez-files.md#meshes_mw), since they are largely the same.
 
 ## Investigation (PM)
 
-It is currently not known how to read expansion model data. The data structures seem to have changed. The format value is the same as the base game. The version value is 41 for the expansion.
+The expansion files are similar to the base game, however many data structures around the nodes have changed.
+
+### Format and version
+
+Both of these files are four (4) bytes long, and can be read as either a u32 or i32. The format value is always one (1). The version value is 41 for the expansion.
+
+### Materials
+
+Materials are read exactly the same as the base game.
+
+### Model files
+
+Model files are ready the same way as the base game, but many data structures are different. Note that while in the base game, only 3D object nodes are allowed, in the expansion both 3D object nodes and LOD (level of detail) nodes are present.
+
+I describe [all nodes](nodes.md) separately, since the structures are rather large and shared with GameZ files.
+
+I also describe [mesh data structures in GameZ](gamez-files.md#meshes_pm), since they are largely the same.
 
 ## In-game use
 

@@ -7,7 +7,7 @@ GameZ files hold the game's world assets (except for 'mech models).
 GameZ files begin with a header, which is a mish-mash of information:
 
 ```rust
-struct HeaderMW {
+struct HeaderMw {
     signature: u32, // always 0x02971222
     version: u32, // always 27
     texture_count: u32,
@@ -24,7 +24,7 @@ The signature (u32) is the magic number `0x02971222`. The version (u32) is alway
 
 The other values are used for accessing the four big blocks of information: textures, materials, meshes, and nodes. This is also not so different from the mechlib archives, although there are significant differences in the way the data is read/written. It isn't known why this is. The offsets aren't strictly necessary for parsing, since the data is written without padding, and so can be used for verifying the different parsing stages were successful/parsed all the information.
 
-### Textures
+### Textures ### {: #textures_mw }
 
 Reading the textures uses the texture count from the header. Expect this to be less than 4096 textures for sanity checking (if desired). There is no header, instead simply read texture count texture information structures:
 
@@ -58,7 +58,7 @@ For code that only wants to read the texture name, this doesn't matter. Simply r
 
 Not much else is known about the other fields. `unk00` (u32?) is always zero (0), and could've been a pointer. `unk04` (u32?) is always zero (0). I'm told it could cause the engine to execute additional dynamic code on loading. The `usage` field (u32?) seems to allow tracking of if the texture is no longer in use by the engine and can be removed from memory. It will always be two (2) in the file, which corresponds to "Used". The `index` field (u32 or i32) tracks the texture's index in the global texture array. It will always be zero (0) in the file, since no index has been assigned until it is loaded. `unk36` (i32) is always negative one (-1).
 
-### Materials
+### Materials ### {: #materials_mw }
 
 #### Materials header
 
@@ -191,9 +191,9 @@ struct CycleTextures {
 }
 ```
 
-Again, all of these values should be less than the total texture count. As far as I can see, the texture index (`texture_ident`) from the materials information isn't used for cycled textures, instead it's only these. 
+Again, all of these values should be less than the total texture count. As far as I can see, the texture index (`texture_ident`) from the materials information isn't used for cycled textures, instead it's only these.
 
-### Meshes
+### Meshes ### {: #meshes_mw }
 
 From the main header, `meshes_offset` gives the offset to the meshes header, which looks like this:
 
@@ -211,12 +211,12 @@ Meshes are read in three phases. The valid mesh headers or mesh information firs
 
 #### Mesh information
 
-The mesh information is a large structure:
+The mesh information is a large structure of 92 bytes:
 
 ```rust
-struct MeshInfoMW {
+struct MeshInfoMw {
     unk00: u32, // always 0 or 1 (bool)
-    unk04: u32, // always 0 or 1 (bool)
+    unk04: u32, // always 0 or 1
     unk08: u32,
     parent_count: u32,  // 12, always > 0
     polygon_count: u32, // 16
@@ -250,7 +250,9 @@ The most important piece of information is the polygon count. If this is zero (0
 
 Pointers will be zero/null if the corresponding count is zero (0), and will be non-zero/non-null if the corresponding count is positive.
 
-The fields `unk00` and `unk04` will always be zero (0) or one (1), a Boolean. The parent count will always be greater than zero. The fields `unk36`, `unk48`, and `unk88` will always be zero (0). The other fields are unknown.
+The fields `unk00` and `unk04` will always be zero (0) or one (1). In Pirate's Moon, `unk04` can also be two (2), so it's assumed this is not a boolean.
+
+The parent count will always be greater than zero. The fields `unk36`, `unk48`, and `unk88` will always be zero (0). The other fields are unknown.
 
 The mechlib archive has a similar data structure, which does not include the final member. dataOffset indicates the absolute offset of the mesh data in the GameZ file. Since the mesh data is written in order, the mesh data offset must be greater than the last (or for the first, after all the mesh information and zeroed-out mesh information), and less than the next block (the nodes).
 
@@ -258,7 +260,7 @@ As an aside, internally this is probably used as the next mesh index, just like 
 
 #### Zeroed-out mesh information
 
-If there is a difference between the meshes count and the array size, then there will be array size - count zeroed-out mesh information structures. This means all bytes/fields will be zero. You can basically loop from count to array size, and this is in fact advisable since in this case, the mesh data offset is instead the mesh index. The mesh index wants to be loaded as an i32, not a u32 as might be more useful for the mesh data offset: 
+If there is a difference between the meshes count and the array size, then there will be array size - count zeroed-out mesh information structures. This means all bytes/fields will be zero. You can basically loop from count to array size, and this is in fact advisable since in this case, the mesh data offset is instead the mesh index. The mesh index wants to be loaded as an i32, not a u32 as might be more useful for the mesh data offset:
 
 ```rust
 let mut expected_index: i32 = index + 1;
@@ -301,10 +303,10 @@ struct Morphs {
 
 ##### Light information and data
 
-The light information is largely unexplored and read in two phases. First, light count light information structures are read:
+The light information is largely unexplored and read in two phases. First, light count light information structures are read, each of 76 bytes in size:
 
 ```rust
-struct LightInfo {
+struct LightInfoMw {
     unk00: u32,
     unk04: u32,
     unk08: u32,
@@ -341,8 +343,10 @@ More research is needed on what the lights do.
 
 ##### Polygon information and data
 
+The polygon information structure is 36 bytes:
+
 ```rust
-struct PolygonInfoMW {
+struct PolygonInfoMw {
     vertex_info: u32, // always <= 0x3FF
     unk04: u32, // always >= 0, <= 20
     vertices_ptr: u32, // always != 0
@@ -354,14 +358,14 @@ struct PolygonInfoMW {
     material_info: u32,
 }
 
-type PolygonInfosMW = [PolygonInfoMW; polygon_count];
+type PolygonInfosMw = [PolygonInfoMw; polygon_count];
 ```
 
-The vertex info field is a compound field, and could also be read as u8 values. The lower byte can be masked via `vertex_info & 0xFF`, and provides the number of vertices in the polygon. This must be greater than zero (0), since every polygon must have at least one vertex, and therefore the vertices pointer, colours pointer, and an unknown pointer are also non-zero/non-null.
+The vertex info field is a compound field, and could also be read as u8 values. The lower byte can be masked via `vertex_info & 0xFF`, and provides the number of vertices in the polygon. This must be greater than or equal to three (3), since every polygon must have at least three vertices, and therefore the vertices pointer, colours pointer, and an unknown pointer are also non-zero/non-null.
 
 There are additionally two flags, an unknown flag masked with `(vertex_info & 0x100) != 0` and the normals flag masked with `(vertex_info & 0x200) != 0`. The use of the unknown flag is predictably unknown. The normals flag indicates whether the polygon has normals. Additionally, whether the polygon has UVs is determined by whether the UV pointer is non-zero/non-null. It's unclear why the normals pointer doesn't do this and a flag was used.
 
-The material index indicates which material the polygon uses. The material info is currently unknown. 
+The material index indicates which material the polygon uses. The material info is currently unknown.
 
 After all the polygon information has been read, the polygon data is read.
 
@@ -369,12 +373,12 @@ The data is based on the number of vertices in the polygon (vertex count). For e
 
 * The vertex indices are always read, which are u32 that index the mesh's vertices. Read vertex count of these.
 * The normal indices are only read if the flag is set, and are u32 that index the mesh's normals. Read vertex count of these.
-* The UV data is only read if the UV pointer is non-zero/non-null. Each UV is two f32 (u, v). To use these, we had to subtract the v value from 1.0, so `v = 1.0 - v`. Read vertex count UVs.
+* The UV coordinates are only read if the UV pointer is non-zero/non-null. Each UV coordinate is two f32 (u, v). Read vertex count UVs.
 * The vertex colours are always read. Each colour is three f32 (r, g, b), the same structure as `Vec3`. Read vertex count colours.
 
 With this information and the mesh information, the polygons can be reconstructed.
 
-### Nodes
+### Nodes ### {: #nodes_mw }
 
 Finally, the nodes block. If you thought the previous information was complex to read, the nodes turn this to eleven.
 
@@ -429,14 +433,14 @@ But the logic could be generic simply based on the count. After the type data, t
 
 #### Node relationships
 
-As a final step, you can transform the linearly arranged nodes into a graph/tree structure.
+As a final step, the linearly arranged nodes could be transformed into a graph/tree structure if this is more convenient.
 
 ## Investigation (PM)
 
 The data structures differ slightly for Pirate's Moon. For the main header, there is a new unknown, 32-bit integer:
 
 ```rust
-struct HeaderPM {
+struct HeaderPm {
     signature: u32, // always 0x02971222?
     version: u32, // always 27?
     unk08: u32, // new
@@ -450,10 +454,24 @@ struct HeaderPM {
 }
 ```
 
+### Textures ### {: #textures_pm }
+
+Assumed to be the same as the base game?
+
+### Materials ### {: #materials_pm }
+
+Assumed to be the same as the base game, since in the mechlib they are.
+
+### Meshes ### {: #meshes_pm }
+
+#### Mesh information
+
+The mesh information has changed, and is now 100 bytes (+8):
+
 ```rust
-struct MeshInfoPM {
+struct MeshInfoPm {
     unk00: u32, // always 0 or 1 (bool)
-    unk04: u32, // always 0 or 1 (bool)
+    unk04: u32, // always 0, 1, 2
     unk08: u32,
     parent_count: u32,  // 12, always > 0
     polygon_count: u32, // 16
@@ -474,31 +492,158 @@ struct MeshInfoPM {
     unk76: f32,
     unk80: f32,
     unk84: f32,
-    unk88: u32, // might be different?
-    unk92: u32, // new
-    unk96: u32, // new
+    unk88: u32, // always 0
+    unk_count: u32,
+    unk_ptr: u32,
 }
 ```
+
+The `unk04` field (u32) used to be 0 or 1, but can now be 0, 1, or 2.
+
+Of interest are the new fields `unk_count` (u32) and `unk_ptr` (u32). So far, we don't know what this is, but it behaves similarly to other mesh information (e.g. the vertices). If this count is zero (0), then the pointer will be null (0). Otherwise, if the count is greater than zero, the pointer will be non-null. As we will shortly see, this unknown data is 12 bytes per count (maybe a `Vec3`?), and read after the polygon data.
+
+#### Mesh data
+
+Next, the mesh data is read for any filled in mesh information (not zeroed-out). The offset of the start of this data should match the previously read mesh data offset, but can be read sequentially without seeking.
+
+Reading the mesh data is dynamic, based on the counts:
+
+* Read vertex count vertices (where each is a vector of three f32)
+* Read normal count normals (where each is a vector of three f32)
+* Read morph count morphs(?) (where each is a vector of three f32)
+* Read the lights
+* Read the polygons
+* Read the unknown data, which is unknown count * 12 bytes (possibly a vector of three f32?)
+
 
 ```rust
-struct PolygonInfoPM {
-    vertex_info: u32, // always <= 0x3FF
-    polygon_mode: u8,
-    flags2: u8,
-    flags3: u8,
-    zero: u8,
-    vertices_ptr: u32, // always != 0
-    uvs_ptr: u32,
-    normals_ptr: u32,
-    colors_ptr: u32, // always != 0
-    unk_ptr: u32, // always != 0
-    material_index: u32,
-    material_info: u32,
-    flags4: u32,
+struct Vec3 {
+    x: f32,
+    y: f32,
+    z: f32,
+}
+
+struct Vertices {
+    vertices: [Vec3; vertex_count],
+}
+
+struct Normals {
+    normals: [Vec3; normal_count],
+}
+
+struct Morphs {
+    morphs: [Vec3; morph_count],
+}
+
+struct Unknowns {
+    unknowns: [Vec3, unk_count],
 }
 ```
 
-The important addition here is `polygon_mode`. If `polygon_mode` equals 0x30, we are not dealing with a single polygon, but a triangle strip instead. A triangle strip is read like a polygon, but instead of creating a polygon of `vertex_info` vertices, `vertex_info - 2` triangles are created instead. After reading one triangle, advance the pointer to the vertex indices by 4 bytes. After reading all data for one triangle strip, the vertex index has to be increased by an additional 8 to account for the last two vertices in the triangle strip.
+##### Light information and data
+
+The light information is largely unexplored and read in two phases. First, light count light information structures are read, each of 80 bytes in size:
+
+```rust
+struct LightInfoPm {
+    unk00: u32,
+    unk04: u32,
+    unk08: u32,
+    extra_count: u32,
+    unk16: u32,
+    unk20: u32,
+    unk24: u32,
+    unk28: f32,
+    unk32: f32,
+    unk36: f32,
+    unk40: f32,
+    ptr: u32,
+    unk48: f32,
+    unk52: f32,
+    unk56: f32,
+    unk60: f32,
+    unk64: f32,
+    unk68: f32,
+    unk72: f32,
+    unk76: f32,
+}
+
+// probably good to combine lights + extras
+// in real code
+struct Lights {
+    lights: [LightInfo; light_count],
+    // pseudo-code: extra_count is variable!
+    extras: [[Vec3; extra_count]; light_count],
+}
+```
+
+The important field here is at offset 12, which is a u32 or i32 and indicates how much extra data to read. This data is read after all the light information. In this case, loop over the light information, and read extra count vertices (where each is a vector of the f32).
+
+More research is needed on what the lights do.
+
+##### Polygon information and data
+
+The polygon information structure is 40 bytes:
+
+```rust
+struct PolygonInfoPm {
+    vertex_info: u32, // always <= 0x3FF
+    unk04: u32, // always >= 0, <= 20
+    vertices_ptr: u32, // always != 0
+    normals_ptr: u32,
+    unk16: u32, // always 1
+    uvs_ptr: u32, // always != 0
+    colors_ptr: u32, // always != 0
+    unk28: u32, // always != 0
+    unk32: u32, // always != 0
+    unk36: u32, // always 0xFFFFFF00
+}
+
+bitflags PolygonFlags: u32 {
+    Unk2 = 1 << 2,
+    Normals = 1 << 4,
+    TriStrip = 1 << 5,
+}
+
+type PolygonInfosPm = [PolygonInfoPm; polygon_count];
+```
+
+Note that this structure has significantly changed from the base game.
+
+The vertex info field is a compound field, and could also be read as u8 values. The lower byte can be masked via `vertex_info & 0xFF`, and provides the number of vertices in the polygon. This must be greater than or equal to three (3), since every polygon must have at least three vertices, and therefore the vertices pointer, colours pointer, and an unknown pointer are also non-zero/non-null.
+
+The second byte can be masked via `(vertex_info & 0xFF00) >> 8`; this is the polygon flags. In the Mechlib, these are much better behaved than the base game.
+
+The flag `Unk2` is predictably unknown, so far no correlation to polygon data has been found. Normals indicates whether the polygon has normals data.
+
+Finally, the newest addition is whether the polygon is a triangle strip. This was found by Skyfaller in his investigation of the Pirate's Moon data. Triangle fans so far also always require normals data. For reading the polygon information, nothing changes for a triangle strip. What does change is how the polygon faces must be constructed by programs displaying the polygon data.
+
+The field `unk04` (u32) is always greater than or equal to zero (0), and less than or equal to twenty (20).
+
+The vertices index pointer (`vertices_ptr`), UV coordinate pointer (`uvs_ptr`), and vertex color (`colors_ptr`) are always non-null/non-zero. The normals index pointer is always non-null/non-zero if the normals flag is set; otherwise, it is always zero (0).
+
+The field `unk16` (u32) is always one (1). The fields `unk26` (u32) and `unk32` (u32) look like pointers, and are always non-null/non-zero.
+
+The field `unk36` (u32) is always 0xFFFFFF00.
+
+Note that unlike in MechWarrior 3, the texture/material index is not present in the polygon info - it is read later.
+
+
+After all the polygon information has been read, the polygon data is read.
+
+The data is based on the number of vertices in the polygon (vertex count). For each polygon:
+
+* The vertex indices are always read, which are u32 that index the mesh's vertices. Read vertex count of these.
+* The normal indices are only read if the flag is set, and are u32 that index the mesh's normals. Read vertex count of these.
+* The texture index is always read. This is a single u32.
+* The UV coordinates are always read. Each UV coordinate is two f32 (u, v). Read vertex count UVs.
+* The vertex colours are always read. Each colour is three f32 (r, g, b), the same structure as `Vec3`. Read vertex count colours.
+
+With this information and the mesh information, the polygons can be reconstructed.
+
+### Nodes ### {: #nodes_pm }
+
+Unexplored.
 
 ## In-game use
 

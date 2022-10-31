@@ -104,7 +104,7 @@ struct Data {
 
 Finally, the entries are read by iterating over the blocks, the most complicated step (but still easy).
 
-For each block, it's offset from the start of the message table data is given. Blocks should be sequential, so it should be possible to simply iterate through the data, but I would recommend seeking to the position anyway. Since the entries are grouped into blocks, the entries from low ID (inclusive) to high ID (inclusive!) are read per block. The inclusive high ID can be a bit of a trap. It's very easy to not read the highest ID in a block by being off-by-one. For a block with only one message, the low ID and high ID are the same. For a block with two messages, the low ID could be e.g. 1 and the high ID would be e.g. 2. So in Python, the entry ID would be: `for entry_id in range(low_id, high_id + 1)`. 
+For each block, it's offset from the start of the message table data is given. Blocks should be sequential, so it should be possible to simply iterate through the data, but I would recommend seeking to the position anyway. Since the entries are grouped into blocks, the entries from low ID (inclusive) to high ID (inclusive!) are read per block. The inclusive high ID can be a bit of a trap. It's very easy to not read the highest ID in a block by being off-by-one. For a block with only one message, the low ID and high ID are the same. For a block with two messages, the low ID could be e.g. 1 and the high ID would be e.g. 2. So in Python, the entry ID would be: `for entry_id in range(low_id, high_id + 1)`.
 
 ```rust
 struct Entry {
@@ -124,7 +124,7 @@ It's also worth pointing out that some of the messages contain formatting placeh
 
 ## Reading the message keys
 
-Presumably, you'll be using a PE parsing library. Start from the `.data` section. The first bytes are not important to understand. They are part of [the common runtime (CRT) initialisation](https://docs.microsoft.com/en-us/cpp/c-runtime-library/crt-initialization), generally called `.CRT$XCA`/`__xc_a`, `.CRT$XCU_`, and `.CRT$XCZ`/`__xc_z`. For MechWarrior 3, simply skip or read four (4) u32 values. They should all be zero.
+Presumably, you'll be using a PE parsing library. Start from the `.data` section. The first bytes are not important to understand. They are part of [the common runtime (CRT) initialisation](https://docs.microsoft.com/en-us/cpp/c-runtime-library/crt-initialization), generally called `.CRT$XCA`/`__xc_a`, `.CRT$XCU_`, and `.CRT$XCZ`/`__xc_z`. For MechWarrior 3 or Pirate's Moon, simply skip or read these four (4) u32 values (16 bytes). They should all be zero. For Recoil, skip 48 bytes.
 
 The data that follows are clearly constants defined in the original code. There is a sort of entry table for the message keys, that consists of the absolute memory offset of the message key string (u32), and the corresponding message table entry ID (u32). There is no easy way of knowing when the table has fully been read. I suggest checking if the offset is in the bounds of the `.data` section, since the string data produces values outside this range when accidentally interpreted as an integer.
 

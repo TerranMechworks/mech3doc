@@ -17,6 +17,8 @@ nav:
 - mechlib-archives.md
 - gamez-files.md
 - nodes.md
+- nodes-mw.md
+- nodes-pm.md
 - anim-files.md
 - events.md
 - text-reader-files.md
@@ -28,5 +30,6 @@ markdown_extensions:
 - footnotes
 - toc:
     permalink: true
+- attr_list
 extra_css:
 - extra.css
