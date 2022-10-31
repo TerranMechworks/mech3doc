@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Message table/translations (Mech3Msg) - MechWarrior 3 file format description</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Message table/translations (Mech3Msg)";
+        var mkdocs_page_input_path = "mech3msg.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> MechWarrior 3 file format description
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../conventions/">Pseudo-code conventions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../introduction/">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../versions/">MechWarrior 3 versions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ambient-tracks/">Ambient tracks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../avi-files/">AVI files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../archive-files/">Archive files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../sound-archives/">Sound archives</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../reader-archives/">Reader archives / binary reader files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../motion-archives/">Motion archives</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../interpreter-scripts/">Interpreter scripts</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Message table/translations (Mech3Msg)</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#investigation">Investigation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#in-game-use">In-game use</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#reading-the-message-table">Reading the message table</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#reading-the-message-keys">Reading the message keys</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../texture-packages/">Texture packages</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mechlib-archives/">Mechlib archives</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../gamez-files/">GameZ files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../nodes/">Nodes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../nodes-mw/">Nodes (MW3)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../nodes-pm/">Nodes (PM)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../anim-files/">Animation definition files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../events/">Sequence events</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../text-reader-files/">Text reader files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../beginner-guide/">Beginner's guide to hex viewing</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">MechWarrior 3 file format description</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Message table/translations (Mech3Msg)</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="message-tabletranslations-mech3msg">Message table/translations (Mech3Msg)<a class="headerlink" href="#message-tabletranslations-mech3msg" title="Permanent link">&para;</a></h1>
+<p>The <code>Mech3Msg.dll</code> contains localised strings that are used by the game engine for displaying either English, German, or French text. Some of these strings are referred to by message keys (<code>MSG_</code>) in e.g. reader files.</p>
+<h2 id="investigation">Investigation<a class="headerlink" href="#investigation" title="Permanent link">&para;</a></h2>
+<p><code>Mech3Msg.dll</code> has a single export:</p>
+<pre><code class="language-console">$ rabin2 -E Mech3Msg.dll
+[Exports]
+
+nth paddr      vaddr      bind   type size lib          name
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+1   0x00000b20 0x10001720 GLOBAL FUNC 0    Mech3Msg.dll ZLocGetID
+</code></pre>
+<p>This is somewhat unusual for a DLL that is ~120 KB in size. It also doesn't use many functions:</p>
+<pre><code class="language-console">$ rabin2 -s Mech3Msg.dll
+[Symbols]
+
+nth paddr      vaddr      bind   type size lib          name
+――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+1   0x00000b20 0x10001720 GLOBAL FUNC 0    Mech3Msg.dll ZLocGetID
+1   0x00001000 0x10002000 NONE   FUNC 0    MSVCRT.dll   imp._initterm
+2   0x00001004 0x10002004 NONE   FUNC 0    MSVCRT.dll   imp.malloc
+3   0x00001008 0x10002008 NONE   FUNC 0    MSVCRT.dll   imp._adjust_fdiv
+4   0x0000100c 0x1000200c NONE   FUNC 0    MSVCRT.dll   imp.free
+</code></pre>
+<p>And only links to <code>msvcrt.dll</code> (<code>rabin2 -l Mech3Msg.dll</code>), which is Microsoft's Visual C Runtime (MSVCRT). This hints that the DLL does not contain much functionality code-wise.</p>
+<p>Printing the sections (<code>rabin2 -S Mech3Msg.dll</code>) shows the <code>.rsrc</code> section is the biggest, followed by <code>.data</code>. Printing the strings (<code>rabin2 -z Mech3Msg.dll</code>) shows that there are a lot of strings in both of these sections. Printing the resources shows that it contains a message table:</p>
+<pre><code class="language-console">$ rabin2 -U Mech3Msg.dll
+Resource 0
+  name: 1
+  timestamp: Thu Jan  1 00:00:00 1970
+  vaddr: 0x1000e060
+  size: 64.9K
+  type: MESSAGETABLE
+  language: LANG_ENGLISH
+</code></pre>
+<p>The German version predictably has the language <code>LANG_GERMAN</code>. This isn't an uncommon way of handling localisation, and is known as a <a href="https://docs.microsoft.com/en-us/cpp/build/creating-a-resource-only-dll">resource-only DLL</a>. Microsoft describes a similar approach to <a href="https://docs.microsoft.com/en-us/windows/win32/wes/localizing-message-strings">"localizing message strings"</a>. What is uncommon is the export, since resource-only DLLs usually contain no code.</p>
+<p>The message table accounts for the strings in <code>.rsrc</code>, but not in <code>.data</code>.</p>
+<p>However, the strings in the <code>.data</code> section all begin with the same prefix: <code>MSG_</code>. This also provides some indication of what the <code>ZLocGetID</code> function does. After simply trying some different arguments, it becomes apparent that when <code>ZLocGetID</code> is passed one of those message keys, it returns an unsigned 32-bit integer which corresponds to the entry ID in the table. So <code>ZLocGetID</code> and the <code>.data</code> section map human-readable strings to message table entry IDs. In Python - but only using a 32-bit version of Python and on Windows - this can be done as follows:</p>
+<pre><code class="language-python">import ctypes
+import ctypes.wintypes
+
+lib = ctypes.CDLL(&quot;Mech3Msg.dll&quot;)
+ZLocGetID = lib.ZLocGetID
+ZLocGetID.argtypes = [ctypes.c_char_p]
+ZLocGetID.restype = ctypes.c_int32
+
+message_id = ZLocGetID(message_name)
+</code></pre>
+<p>Of course, enumerating the message keys via <code>ZLocGetID</code> is also not easy; a brute-force approach could take a long time. So message keys still need to be extracted from the <code>.data</code> section (see below).</p>
+<p>The internal workings of <code>Mech3Msg.dll</code> are otherwise not interesting to this project. I think the DLL probably uses binary search to be able to quickly look up the entry IDs by message keys (at least, that's how I would've done it in 1999 and with C). Binary search requires the message keys to be sorted, which could be done at compile time, or run time. For a replacement <code>Mech3Msg.dll</code>, with a modern language, a hash-table/dictionary lookup would be more than sufficient. Or using C on a modern processor, a linear search would be fast enough.</p>
+<p>Bonus facts:</p>
+<ol>
+<li>Not all messages are looked up by the message key! See below in "in-game use".</li>
+<li>Not all messages have corresponding values in the message table - it was probably easier to leave them in, knowing they're unused in the engine than recreate this data.</li>
+<li>Some messages are zeroed out by the patch, for example <code>MSG_GAME_NAME_DEBUG_VER</code>. Rather interesting.</li>
+</ol>
+<h2 id="in-game-use">In-game use<a class="headerlink" href="#in-game-use" title="Permanent link">&para;</a></h2>
+<p>Some messages are looked up directly by entry ID. I found this out when I didn't preserve the entry IDs in a replacement DLL, and the "insert CD" message was incorrect. Even though new messages are added and old messages are removed in the new versions/patches, they preserve entry ID numbering between versions. A replacement DLL should also do this. A re-implementation doesn't have to.</p>
+<p>Presumably, most messages are looked up by message key by the engine. Some reader files also reference message keys, which are presumably dynamically looked up when interpreting reader files.</p>
+<h2 id="reading-the-message-table">Reading the message table<a class="headerlink" href="#reading-the-message-table" title="Permanent link">&para;</a></h2>
+<p>Luckily, Windows resources are somewhat well documented, either by Microsoft or third-parties. There are two options. On Windows, it is possible to use Windows APIs to read these resources, via <a href="https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryexw"><code>LoadLibraryEx</code></a>, and then <code>FindResource</code>/<code>LoadResource</code>, or <a href="https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-formatmessage"><code>FormatMessage</code></a> specifically for message tables. The problem with the former functions are they less helpful for message tables, as the raw message table still needs to be parsed. The problem with the latter function is that it requires a message ID to load a specific message. Alternatively, it's trivial to read the entire message table on any platform/operating system.</p>
+<p>There exist many libraries for parsing Portable Executables (PE), which is the <a href="https://en.wikipedia.org/wiki/Portable_Executable">"file format for executables, object code, DLLs and others used in 32-bit and 64-bit versions of Windows operating systems"</a>. They can often parse resource definitions also. So getting the raw message table data should be easy, especially since there is only one resource in the DLL. If a library doesn't support this, then the best approach is to <a href="https://docs.microsoft.com/en-us/windows/win32/debug/pe-format#the-rsrc-section">parse the <code>.rsrc</code> section</a> and look for <code>RT_MESSAGETABLE = 11 (0x000B)</code>, and the appropriate locale ID <code>en_US = 1033 (0x0409)</code>.</p>
+<p>The format of the message table is described by <a href="https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-message_resource_data"><code>MESSAGE_RESOURCE_DATA</code></a>, <a href="https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-message_resource_block"><code>MESSAGE_RESOURCE_BLOCK</code></a>, and <a href="https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-message_resource_entry"><code>MESSAGE_RESOURCE_ENTRY</code></a>, although they are pseudo-structures. Note that since MechWarrior 3 is a 32-bit application (as discussed in the introduction), the alignment for data is 32-bit or 4 bytes.</p>
+<p>First, the number of blocks is read (u32). Next, the blocks are read, which are the low ID (u32), high ID (u32), and the offset to entries (u32):</p>
+<pre><code class="language-rust">struct Block {
+    low_id: u32,
+    high_id: u32,
+    offset_to_entries: u32,
+}
+
+struct Data {
+    count: u32,
+    blocks: [Blocks; count],
+}
+</code></pre>
+<p>Finally, the entries are read by iterating over the blocks, the most complicated step (but still easy).</p>
+<p>For each block, it's offset from the start of the message table data is given. Blocks should be sequential, so it should be possible to simply iterate through the data, but I would recommend seeking to the position anyway. Since the entries are grouped into blocks, the entries from low ID (inclusive) to high ID (inclusive!) are read per block. The inclusive high ID can be a bit of a trap. It's very easy to not read the highest ID in a block by being off-by-one. For a block with only one message, the low ID and high ID are the same. For a block with two messages, the low ID could be e.g. 1 and the high ID would be e.g. 2. So in Python, the entry ID would be: <code>for entry_id in range(low_id, high_id + 1)</code>.</p>
+<pre><code class="language-rust">struct Entry {
+    length: u16,
+    flags: u16,
+    message: [u8; length - 4], // zero-terminated/padded
+}
+</code></pre>
+<p>For each entry, the length is read first (u16), which is the length of the entire entry. Then the Unicode flags are read (u16). Expect this to be 0, since the messages are not Unicode (which in Microsoft-land means UTF-16 LE). Instead, the messages are encoded using the codepage appropriate for the language of the message table (aka. locale ID). Luckily for extraction, the English, German, and French locale IDs map to the same codepage (1251). This means that the messages simply need to be read with the codepage encoding, and they will decode properly (I have tested this on the German strings). So it is simply a matter of reading length - 4 bytes (remember, the length includes itself and the flags field) to get the message data, which is not quite the same as the message.</p>
+<p>Messages are padded to be 32-bit aligned with null bytes (<code>\0</code>). Even though the length is known, messages have at least one null byte at the end (zero-terminated), presumably for C interoperability. Since codepage 1251 shares the first 128 characters with ASCII, these can be safely stripped before decoding the string (i.e. in byte form), or afterwards.</p>
+<p>Additionally, even single line messages are terminated with the DOS/Windows line ending <code>\r\n</code> (this isn't always the case, but common and true in this case). As long as they are at the end of the message, you may wish to also strip these for convenience. Messages can also contain DOS/Windows newlines within the message, which should be preserved.</p>
+<p>It's also worth pointing out that some of the messages contain formatting placeholders, that are specific to those messages. There is no way of knowing what values were intended, other than looking for the format placeholders (e.g. <code>%1</code>, <code>%2</code>) and inferring this from the context of the message (or reverse-engineering the engine, which this project does not encourage).</p>
+<h2 id="reading-the-message-keys">Reading the message keys<a class="headerlink" href="#reading-the-message-keys" title="Permanent link">&para;</a></h2>
+<p>Presumably, you'll be using a PE parsing library. Start from the <code>.data</code> section. The first bytes are not important to understand. They are part of <a href="https://docs.microsoft.com/en-us/cpp/c-runtime-library/crt-initialization">the common runtime (CRT) initialisation</a>, generally called <code>.CRT$XCA</code>/<code>__xc_a</code>, <code>.CRT$XCU_</code>, and <code>.CRT$XCZ</code>/<code>__xc_z</code>. For MechWarrior 3 or Pirate's Moon, simply skip or read these four (4) u32 values (16 bytes). They should all be zero. For Recoil, skip 48 bytes.</p>
+<p>The data that follows are clearly constants defined in the original code. There is a sort of entry table for the message keys, that consists of the absolute memory offset of the message key string (u32), and the corresponding message table entry ID (u32). There is no easy way of knowing when the table has fully been read. I suggest checking if the offset is in the bounds of the <code>.data</code> section, since the string data produces values outside this range when accidentally interpreted as an integer.</p>
+<p>Given the memory offset of the start of the <code>.data</code> section, the relative offset of the message key is easy to determine by subtracting the start offset from the absolute offset read previously. Seek to that position, and read the message key until encountering a null byte (<code>\0</code>). All message keys will be ASCII.</p>
+<p>For manual verification, it's possible to use e.g. <code>rabin2</code> to extract the strings, filter only the ones beginning with <code>MSG_</code>, and compere that to the result of parsing the <code>.data</code> section.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../interpreter-scripts/" class="btn btn-neutral float-left" title="Interpreter scripts"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../texture-packages/" class="btn btn-neutral float-right" title="Texture packages">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../interpreter-scripts/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../texture-packages/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

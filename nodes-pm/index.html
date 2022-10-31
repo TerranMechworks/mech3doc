@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Nodes (PM) - MechWarrior 3 file format description</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Nodes (PM)";
+        var mkdocs_page_input_path = "nodes-pm.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> MechWarrior 3 file format description
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../conventions/">Pseudo-code conventions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../introduction/">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../versions/">MechWarrior 3 versions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ambient-tracks/">Ambient tracks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../avi-files/">AVI files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../archive-files/">Archive files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../sound-archives/">Sound archives</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../reader-archives/">Reader archives / binary reader files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../motion-archives/">Motion archives</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../interpreter-scripts/">Interpreter scripts</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mech3msg/">Message table/translations (Mech3Msg)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../texture-packages/">Texture packages</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mechlib-archives/">Mechlib archives</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../gamez-files/">GameZ files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../nodes/">Nodes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../nodes-mw/">Nodes (MW3)</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Nodes (PM)</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#node-baseshared-structure">Node base/shared structure</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#camera-nodes-base-structure">Camera nodes base structure</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#display-nodes-base-structure">Display nodes base structure</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#empty-nodes-base-structure">Empty nodes base structure</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#light-nodes-base-structure">Light nodes base structure</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#lod-nodes-base-structure">LOD nodes base structure</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#object3d-nodes-base-structure">Object3d nodes base structure</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#window-nodes-base-structure">Window nodes base structure</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#world-nodes-base-structure">World nodes base structure</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#node-type-data-structures">Node type data structures</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#camera-data">Camera data</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#display-data">Display data</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#empty-data">Empty data</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#light-data">Light data</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#lod-data">LOD data</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#object3d-data">Object3d data</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#window-data">Window data</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#world-data">World data</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../anim-files/">Animation definition files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../events/">Sequence events</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../text-reader-files/">Text reader files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../beginner-guide/">Beginner's guide to hex viewing</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">MechWarrior 3 file format description</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Nodes (PM)</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="nodes-pm">Nodes (PM)<a class="headerlink" href="#nodes-pm" title="Permanent link">&para;</a></h1>
+<p>Nodes are how the world data is organised and structured. Please see <a href="../nodes/">the general node overview</a> first. This page describes node data structures for Pirate's Moon only. Refer also to <a href="../nodes-mw/">MechWarrior 3 nodes</a>.</p>
+<h2 id="node-baseshared-structure">Node base/shared structure<a class="headerlink" href="#node-baseshared-structure" title="Permanent link">&para;</a></h2>
+<p>Only analysed in the mechlib.</p>
+<p>This is the structure used by all nodes, and is 208 bytes in size. Please note that while this is the same size as <code>NodeMw</code>, the layout is different! Refer to the base game for any other types.</p>
+<pre><code class="language-rust">struct NodePm {
+    name: [u8; 36],
+    flags: NodeFlags,
+    unk040: u32, // always 0
+    unk044: u32,
+    zone_id: u32, // always 255 (mechlib only?)
+    node_type: NodeType,
+    data_ptr: u32,
+    mesh_index: i32,
+    environment_data: u32, // always 0
+    action_priority: u32, // always 1
+    action_callback: u32, // always 0
+    area_partition_x: i32, // -1, or &gt;= 0, &lt;= 64
+    area_partition_y: i32, // -1, or &gt;= 0, &lt;= 64
+    parent_count: u16, // always 0 or 1
+    children_count: u16,
+    parent_array_ptr: u32,
+    children_array_ptr: u32,
+    unk096: u32, // always 0
+    unk100: u32, // always 0
+    unk104: u32, // always 0
+    unk108: u32, // always 0
+    unk112: u32, // 0, 1, 2 (mechlib?)
+    unk116: Box3d,
+    unk140: Box3d,
+    unk164: Box3d,
+    unk188: u32, // always 0
+    unk192: u32, // always 0
+    unk196: u32, // always 0x000000A0 (mechlib?)
+    unk200: u32, // always 0
+    unk204: u32, // always 0
+}
+</code></pre>
+<p>Preliminary analysis of nodes in the mechlib indicates this data structure is largely the same as the base game. The biggest change is around offset 84:</p>
+<pre><code class="language-diff">-    parent_count: u32, // always 0 or 1
+-    parent_array_ptr: u32,
+-    children_count: u32,
+-    children_array_ptr: u32,
++    parent_count: u16, // always 0 or 1
++    children_count: u16,
++    parent_array_ptr: u32,
++    children_array_ptr: u32,
++    unk096: u32, // always 0
+</code></pre>
+<p>I.e. the <code>parent_count</code> and <code>children_count</code> have been changed from u32 values to u16 values. This has shifted the parent and child array pointers, and has introduced an extra field, <code>unk096</code> (u32), which is always zero (0).</p>
+<p>Additionally, the field <code>unk112</code> (u32) is now variable, but always 0, 1, or 2.</p>
+<h3 id="camera-nodes-base-structure">Camera nodes base structure<a class="headerlink" href="#camera-nodes-base-structure" title="Permanent link">&para;</a></h3>
+<p>Not analysed yet.</p>
+<h3 id="display-nodes-base-structure">Display nodes base structure<a class="headerlink" href="#display-nodes-base-structure" title="Permanent link">&para;</a></h3>
+<p>Not analysed yet.</p>
+<h3 id="empty-nodes-base-structure">Empty nodes base structure<a class="headerlink" href="#empty-nodes-base-structure" title="Permanent link">&para;</a></h3>
+<p>Not analysed yet.</p>
+<h3 id="light-nodes-base-structure">Light nodes base structure<a class="headerlink" href="#light-nodes-base-structure" title="Permanent link">&para;</a></h3>
+<p>Not analysed yet.</p>
+<h3 id="lod-nodes-base-structure">LOD nodes base structure<a class="headerlink" href="#lod-nodes-base-structure" title="Permanent link">&para;</a></h3>
+<p>Preliminary analysis of nodes in the mechlib indicates LOD nodes always have the node flags:</p>
+<ul>
+<li><code>BASE</code></li>
+<li><code>UNK08</code></li>
+<li><code>UNK10</code></li>
+<li><code>ALTITUDE_SURFACE</code></li>
+<li><code>INTERSECT_SURFACE</code></li>
+<li><code>UNK25</code></li>
+</ul>
+<p>The field <code>unk044</code> will always be one (1).</p>
+<p>The zone ID will be the default zone ID (255), but this is probably down to the mechlib. Assuming the same behaviour as the base game, the zone ID will be either the default zone ID (255), or a value greater than or equal to one (1) and less than or equal to 80 (this upper bound is arbitrarily chosen based on usual zone IDs).</p>
+<p>LOD nodes always have data associated with them, so the data pointer will always be non-zero/non-null.</p>
+<p>Although LOD nodes cannot have a mesh, the mesh index does depend on whether the node is in a GameZ file or a mechlib archive. For a GameZ file, the mesh index is an index, so it is always negative one (-1). For a mechlib archive, the mesh index is actually a pointer value, since the data is already stored hierarchically. So it is always zero (0). See Object3d nodes for mode information.</p>
+<p>There will be one parent, and therefore the parent array pointer is non-zero/non-null. There will be at last one child, and therefore the child array pointer is non-zero/non-null.</p>
+<p>The fields <code>unk116</code> and <code>unk140</code> will always be zeros (0.0). The field <code>unk164</code> will be unequal to <code>(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)</code>.</p>
+<p>The field <code>unk112</code> will always be 2. The field <code>unk196</code> will always be 160.</p>
+<h3 id="object3d-nodes-base-structure">Object3d nodes base structure<a class="headerlink" href="#object3d-nodes-base-structure" title="Permanent link">&para;</a></h3>
+<p>The field <code>unk044</code> will be either 1 or 45697.</p>
+<p>The zone ID will be the default zone ID (255), but this is probably down to the mechlib. Assuming the same behaviour as the base game, the zone ID will be either the default zone ID (255), or a value greater than or equal to one (1) and less than or equal to 80 (this upper bound is arbitrarily chosen based on usual zone IDs).</p>
+<p>Object3d nodes always have data associated with them, so the data pointer will always be non-zero/non-null.</p>
+<p>The mesh index depends on the HasMesh flag, and whether the node is in a GameZ file or a mechlib archive. For a GameZ file, the mesh index is an index. So if the flag is set, then the index is greater than or equal to zero (0). If the flag is unset, then the index is always negative one (-1). For a mechlib archive, the mesh index is actually a pointer value, since the data is already stored hierarchically. So if the flag is set, this is non-zero/non-null. If the flag is unset, this is zero/null. Note that for the non-null case, if you are loading the value as a signed integer (i32), the memory on 32-bit machines was limited. In practice, it won't be greater than 2147483647 bytes, so you can also check if the value is greater than zero.</p>
+<p>In short:</p>
+<ul>
+<li><code>IsMechlib &amp;&amp; !HasMesh</code> =&gt; <code>mesh_index == 0</code> (null ptr)</li>
+<li><code>IsMechlib &amp;&amp; HasMesh</code> =&gt; <code>mesh_index != 0</code> (non-null ptr)</li>
+<li><code>IsGameZ &amp;&amp; !HasMesh</code> =&gt; <code>mesh_index == -1</code> (invalid index)</li>
+<li><code>IsGameZ &amp;&amp; HasMesh</code> =&gt; <code>mesh_index &gt; -1</code> (valid index)</li>
+</ul>
+<p>The field <code>unk196</code> will always be 160.</p>
+<p>Other fields have not been analysed in detail, since they are liable to change outside the Mechlib.</p>
+<h3 id="window-nodes-base-structure">Window nodes base structure<a class="headerlink" href="#window-nodes-base-structure" title="Permanent link">&para;</a></h3>
+<p>Not analysed yet.</p>
+<h3 id="world-nodes-base-structure">World nodes base structure<a class="headerlink" href="#world-nodes-base-structure" title="Permanent link">&para;</a></h3>
+<p>Not analysed yet.</p>
+<h2 id="node-type-data-structures">Node type data structures<a class="headerlink" href="#node-type-data-structures" title="Permanent link">&para;</a></h2>
+<p>All nodes except empty nodes have extra, type-specific data associated with them.</p>
+<h3 id="camera-data">Camera data<a class="headerlink" href="#camera-data" title="Permanent link">&para;</a></h3>
+<p>Not analysed yet.</p>
+<h3 id="display-data">Display data<a class="headerlink" href="#display-data" title="Permanent link">&para;</a></h3>
+<p>Not analysed yet.</p>
+<h3 id="empty-data">Empty data<a class="headerlink" href="#empty-data" title="Permanent link">&para;</a></h3>
+<p>Not analysed yet.</p>
+<h3 id="light-data">Light data<a class="headerlink" href="#light-data" title="Permanent link">&para;</a></h3>
+<p>Not analysed yet.</p>
+<h3 id="lod-data">LOD data<a class="headerlink" href="#lod-data" title="Permanent link">&para;</a></h3>
+<p>Only analysed in the mechlib.</p>
+<pre><code class="language-rust">struct LodPm {
+    level: u32, // always 0 or 1
+    range_near_sq: f32,
+    range_far: f32,
+    range_far_sq: f32,
+    zero16: [u8; 44], // always 0
+    unk60: f32, // always == 0.0
+    unk64: f32, // always &gt;= 0.0
+    unk68: f32, // always == unk64 * unk64
+    unk72: f32, // always &gt;= 0.0
+    unk76: f32, // always == unk72 * unk72
+    unk80: u32, // always 1
+    unk84: u32, // always 0
+    unk88: u32, // always 0
+}
+</code></pre>
+<p>The size of the LOD structure is 92 bytes.</p>
+<p>The level field (u32) is always zero (0) or one (1). Usually, this would make it a Boolean, but I think it corresponds to the level of detail setting, so e.g. low and high (hence the name). The near range value (f32) is always greater than or equal to zero (0.0) and less than or equal to 1000.0 squared, so it's assumed this is the near range squared. The far range value is stored as the base value (f32), which is always greater than zero (0.0), and why I suspect this is the far range, and as a squared value (f32). These are guesses at best.</p>
+<p>The <code>unk60</code> field (f32) is always zero (0.0). The <code>unk64</code> field (f32) is greater than or equal to zero (0.0), while the <code>unk68</code> field (f32) is this value squared. . The <code>unk72</code> field (f32) is greater than or equal to zero (0.0), while the <code>unk76</code> field (f32) is this value squared. The <code>unk80</code> field (u32) is always one (1). The <code>unk84</code> field (u32) and <code>unk88</code> field (u32) are both always zero (0).</p>
+<h3 id="object3d-data">Object3d data<a class="headerlink" href="#object3d-data" title="Permanent link">&para;</a></h3>
+<p>Only analysed in the mechlib.</p>
+<p>This seems to be the same as the base game.</p>
+<h3 id="window-data">Window data<a class="headerlink" href="#window-data" title="Permanent link">&para;</a></h3>
+<p>Not analysed yet.</p>
+<h3 id="world-data">World data<a class="headerlink" href="#world-data" title="Permanent link">&para;</a></h3>
+<p>Not analysed yet.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../nodes-mw/" class="btn btn-neutral float-left" title="Nodes (MW3)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../anim-files/" class="btn btn-neutral float-right" title="Animation definition files">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../nodes-mw/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../anim-files/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

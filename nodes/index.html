@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Nodes - MechWarrior 3 file format description</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Nodes";
+        var mkdocs_page_input_path = "nodes.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> MechWarrior 3 file format description
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../conventions/">Pseudo-code conventions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../introduction/">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../versions/">MechWarrior 3 versions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ambient-tracks/">Ambient tracks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../avi-files/">AVI files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../archive-files/">Archive files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../sound-archives/">Sound archives</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../reader-archives/">Reader archives / binary reader files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../motion-archives/">Motion archives</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../interpreter-scripts/">Interpreter scripts</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mech3msg/">Message table/translations (Mech3Msg)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../texture-packages/">Texture packages</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mechlib-archives/">Mechlib archives</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../gamez-files/">GameZ files</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Nodes</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#node-organisationrelationships">Node organisation/relationships</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#common-data-types">Common data types</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#node-data-structures">Node data structures</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#node-parents-and-children">Node parents and children</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#node-positions-in-the-gamez-file">Node positions in the GameZ file</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../nodes-mw/">Nodes (MW3)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../nodes-pm/">Nodes (PM)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../anim-files/">Animation definition files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../events/">Sequence events</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../text-reader-files/">Text reader files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../beginner-guide/">Beginner's guide to hex viewing</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">MechWarrior 3 file format description</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Nodes</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="nodes">Nodes<a class="headerlink" href="#nodes" title="Permanent link">&para;</a></h1>
+<p>Nodes are how the world data is organised and structured. Nodes appear in GameZ files and mechlib archives. There are eight known node types in GameZ files:</p>
+<ul>
+<li>Camera</li>
+<li>Display</li>
+<li>Empty</li>
+<li>Light</li>
+<li>LOD (level of detail)</li>
+<li>Object3d</li>
+<li>Window</li>
+<li>World</li>
+</ul>
+<p>In MechWarrior 3, the only valid node type in the mechlib archive is Object3d. In Pirate's Moon, the only valid node types in the mechlib archive are Object3d and LOD.</p>
+<p>We also think there are other node types from the animations:</p>
+<ul>
+<li>Sequence</li>
+<li>Animate or Animation</li>
+<li>Sound</li>
+<li>Switch (i.e. flow control)</li>
+</ul>
+<p>Each node type has the same base structure, although some node types do not seem to use all the information in the base structure. The node types also have node-specific structures/information.</p>
+<h2 id="node-organisationrelationships">Node organisation/relationships<a class="headerlink" href="#node-organisationrelationships" title="Permanent link">&para;</a></h2>
+<p>Each node can have several parents, and several children. In fact, each node tracks both the children and the parents, and there doesn't seem to be a way of ensuring this data is consistent other than careful coding (e.g. when a child is removed, also remove it's reference to the parent).</p>
+<p>In principle, this results in a directed graph structure. Cycles are also absolutely possible. Again this was presumably carefully avoided because a cyclic graph is not useful for most processing. Let's assume therefore that a valid representation of nodes inside the engine is a directed acyclic graph (DAG) at the very least.</p>
+<p>In reality, the nodes are usually tree-like, although in a "tree" in the computer science sense, there can only be one root, and each node has exactly one parent. From what I can see, this isn't necessarily the case for MW3. Otherwise, why allow a node to have multiple parents?</p>
+<p>However, when loading nodes from the mechlib or GameZ files, the nodes indeed only have either zero (0) or one (1) parent (at load time). We'll discuss further restrictions on the different node types shortly.</p>
+<h2 id="common-data-types">Common data types<a class="headerlink" href="#common-data-types" title="Permanent link">&para;</a></h2>
+<pre><code class="language-rust">tuple Vec3(f32, f32, f32);
+tuple Color(f32, f32, f32);
+tuple Matrix(f32, f32, f32, f32, f32, f32, f32, f32, f32);
+
+const MATRIX_EMPTY: Matrix = Matrix(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+const MATRIX_IDENTITY: Matrix = Matrix(1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0);
+</code></pre>
+<h2 id="node-data-structures">Node data structures<a class="headerlink" href="#node-data-structures" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Node data structures <a href="../nodes-mw/">in the base game (MW3)</a></li>
+<li>Node data structures <a href="../nodes-pm/">in the expansion (PM)</a> (incomplete)</li>
+</ul>
+<h2 id="node-parents-and-children">Node parents and children<a class="headerlink" href="#node-parents-and-children" title="Permanent link">&para;</a></h2>
+<p>In principle, all nodes could have multiple parents, and multiple children. In practice, no nodes have multiple parents, and as described in the node organisation and in the game-specific node data structures:</p>
+<ul>
+<li>Camera nodes don't have a parent or children</li>
+<li>Display nodes don't have a parent or children</li>
+<li>Empty nodes don't have a parent or children (at least not for the purposes of this part)</li>
+<li>Light nodes don't have a parent or children</li>
+<li>LOD nodes always have a parent, and always have children</li>
+<li>Object3d nodes can have a parent and children</li>
+<li>Window nodes don't have a parent or children</li>
+<li>World nodes don't have a parent, but do have children</li>
+</ul>
+<p>The reason I describe this in such detail is that it helps understand how the game nodes are structured.</p>
+<p>In the general case, both the parent and children indices are dynamic arrays. Read parent count u32 values first for the parent index/indices, and then read child count u32 values next for the child indices. (Obviously, if the count is zero, it isn't necessary to read anything.)</p>
+<h2 id="node-positions-in-the-gamez-file">Node positions in the GameZ file<a class="headerlink" href="#node-positions-in-the-gamez-file" title="Permanent link">&para;</a></h2>
+<p>There are also restrictions on which nodes can appear where in a GameZ file. Mechlib archives can only contain certain nodes, so this does not apply.</p>
+<p>When loading a GameZ file:</p>
+<ul>
+<li>There can only be a single world node, and it must be the first node in the file (index 0)</li>
+<li>There can only be a single window node, and it must be the second node in the file (index 1)</li>
+<li>There can only be a single camera node, and it must be the third node in the file (index 2)</li>
+<li>There is at least one display node, and it must be the fourth node in the file (index 3). If there is another display node, it must be the fifth node in the file (index 4)</li>
+<li>There can only be a single light node, although its position in the file is variable</li>
+<li>Zeroed out nodes must be at the end of the array, and contiguous.</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../gamez-files/" class="btn btn-neutral float-left" title="GameZ files"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../nodes-mw/" class="btn btn-neutral float-right" title="Nodes (MW3)">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../gamez-files/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../nodes-mw/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

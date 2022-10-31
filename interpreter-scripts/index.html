@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Interpreter scripts - MechWarrior 3 file format description</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Interpreter scripts";
+        var mkdocs_page_input_path = "interpreter-scripts.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> MechWarrior 3 file format description
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../conventions/">Pseudo-code conventions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../introduction/">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../versions/">MechWarrior 3 versions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ambient-tracks/">Ambient tracks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../avi-files/">AVI files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../archive-files/">Archive files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../sound-archives/">Sound archives</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../reader-archives/">Reader archives / binary reader files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../motion-archives/">Motion archives</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Interpreter scripts</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#investigation">Investigation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#in-game-use">In-game use</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mech3msg/">Message table/translations (Mech3Msg)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../texture-packages/">Texture packages</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mechlib-archives/">Mechlib archives</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../gamez-files/">GameZ files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../nodes/">Nodes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../nodes-mw/">Nodes (MW3)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../nodes-pm/">Nodes (PM)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../anim-files/">Animation definition files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../events/">Sequence events</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../text-reader-files/">Text reader files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../beginner-guide/">Beginner's guide to hex viewing</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">MechWarrior 3 file format description</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Interpreter scripts</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="interpreter-scripts">Interpreter scripts<a class="headerlink" href="#interpreter-scripts" title="Permanent link">&para;</a></h1>
+<p>The interpreter scripts drive how the game engine loads the game data/worlds. They are all contained in a single file, <code>interp.zbd</code>.</p>
+<h2 id="investigation">Investigation<a class="headerlink" href="#investigation" title="Permanent link">&para;</a></h2>
+<p>This is a quite short file, which is good. It is not an archive file.</p>
+<pre><code class="language-rust">struct Header {
+    signature: u32, // always 0x08971119
+    version: u32, // always 7
+    count: u32,
+}
+</code></pre>
+<p>The file starts with a signature (u32, magic number <code>0x08971119</code>), a version (u32, always 7), and the number of scripts/count (u32). A table of contents (TOC) with script entries follows, which is easy to read since the count is known:</p>
+<pre><code class="language-rust">struct Entry {
+    path: [u8; 120], // zero-terminated/padded
+    last_modified: u32,
+    offset: u32,
+}
+
+type Entries = [Entry; count];
+</code></pre>
+<p>The entry path seems to be an 120 byte string, ASCII, which is zero-terminated and padded with zeros/nulls. This can contain backslashes. They have the file extensions <code>.gw</code> and <code>.gs</code>, which one could guess to be game world and game script, respectively.</p>
+<p>I have had success interpreting the last modified value as a timestamp, which gives datetimes around 1999 (for the v1.2 version). However, they may be some local timezone, and not UTC.</p>
+<p>Finally, the offset is simply where the interpreter script data starts in the file. The the script data is written in the same order as the entries in the TOC, with no padding, so for reading all the data (instead of jumping to a script), it isn't strictly necessary. The script data must also be self-terminating, since the length isn't recorded in the TOC.</p>
+<p>And indeed, immediately after the TOC the script data follows. Each script contains several lines. First, the size/length of the line (u32) is read. If it is zero (0), then the script is complete. Next, the token count of the line is read (u32). This indicates how many tokens the line contains.</p>
+<p>The line is exactly size bytes. It contains exactly token count zero/null bytes (<code>\0</code>). These deliniate the arguments, so for two arguments, there are three tokens in a line: <code>CommandName\0Argument1\0Argument2\0</code>. The line should always end with a null byte (zero-terminated). There is no extra padding.</p>
+<p>Null bytes or characters where probably chosen because they make splitting/tokenising the line trivial in C. However, since the command name and arguments don't contain spaces, it seems to be safe to convert the null bytes to spaces (if this is more convenient), and strip the final null byte.</p>
+<pre><code class="language-rust">struct Line {
+    length: u32,
+    token_count: u32,
+    line: [u8; length],
+}
+</code></pre>
+<p>Decoding the line as ASCII is safe, as is any ASCII-compatilbe encoding such as codepage 1251 or UTF-8. Encoding should probably be limited to ASCII though.</p>
+<h2 id="in-game-use">In-game use<a class="headerlink" href="#in-game-use" title="Permanent link">&para;</a></h2>
+<p>Although the workings of the interpreter are obviously game engine internals, the commands are all human readable and self-describing. Presumably, the interpreter is driven by these scripts, and so they affect how most of the data is loaded. This can be seen from e.g. <code>c1.gs</code>:</p>
+<pre><code>ifdef USEZBD
+GameZReadZBDFile %GAMEZ%
+endif
+ifndef USEZBD
+... world setup code
+endif
+</code></pre>
+<p>This looks like the interpreter scripts enabled prototyping of worlds before the assets were packed into a <code>gamez.zbd</code> file, probably for faster game development iteration. It also gives a bit of insight in how the game data is structured. There are several references to nodes, which indicates world data is maybe represented as a tree-like structure.</p>
+<p>A comprehensive study of the filepaths in the interpreter scripts could maybe reveal how the game engine loaded unpacked/loose asset files, and make modding the existing engine easier.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../motion-archives/" class="btn btn-neutral float-left" title="Motion archives"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../mech3msg/" class="btn btn-neutral float-right" title="Message table/translations (Mech3Msg)">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../motion-archives/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../mech3msg/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

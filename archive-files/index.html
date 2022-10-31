@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Archive files - MechWarrior 3 file format description</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Archive files";
+        var mkdocs_page_input_path = "archive-files.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> MechWarrior 3 file format description
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../conventions/">Pseudo-code conventions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../introduction/">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../versions/">MechWarrior 3 versions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ambient-tracks/">Ambient tracks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../avi-files/">AVI files</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Archive files</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#investigation-mw3">Investigation (MW3)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#investigation-pm">Investigation (PM)</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../sound-archives/">Sound archives</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../reader-archives/">Reader archives / binary reader files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../motion-archives/">Motion archives</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../interpreter-scripts/">Interpreter scripts</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mech3msg/">Message table/translations (Mech3Msg)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../texture-packages/">Texture packages</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mechlib-archives/">Mechlib archives</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../gamez-files/">GameZ files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../nodes/">Nodes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../nodes-mw/">Nodes (MW3)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../nodes-pm/">Nodes (PM)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../anim-files/">Animation definition files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../events/">Sequence events</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../text-reader-files/">Text reader files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../beginner-guide/">Beginner's guide to hex viewing</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">MechWarrior 3 file format description</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Archive files</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="archive-files">Archive files<a class="headerlink" href="#archive-files" title="Permanent link">&para;</a></h1>
+<p>For both the base game and expansion, archive files can be recognised by a table of contents (TOC) at the end of the <code>.zbd</code> file. This is a common strategy to be able to easily add entries to an archive without rewriting the entire archive. The new entry is written at the end, i.e. it overwrites the TOC, and then the TOC is written out fully with the new entry. This avoids having to rewrite the rest of the entries.</p>
+<p>Known archive files are <a href="../sound-archives/">sound archives</a>, <a href="../reader-archives/">reader archives</a>, <a href="../motion-archives/">motion archives</a>, <a href="../mechlib-archives/">mechlib archives</a>, and save games. Other <code>.zbd</code> files may also contain multiple files, but are not archive-based (for example interpreter scripts, texture files).</p>
+<h2 id="investigation-mw3">Investigation (MW3)<a class="headerlink" href="#investigation-mw3" title="Permanent link">&para;</a></h2>
+<p>The sound archives are good candidates to follow along, since their contents makes it obvious that the entry data is written from the start of the file (so the TOC must be at the end), and once extracted, you get <code>.wav</code> files that are easily validated to be correct (by listening to them).</p>
+<p>For the base game, there are two fields at the end of the file:</p>
+<pre><code class="language-rust">struct Footer {
+    version: u32, // always 1
+    count: u32,
+}
+</code></pre>
+<p>The version of the TOC (u32, at -8), and number of entries in the TOC (u32, at -4). The version will always be 1.</p>
+<p>Each entry in the TOC is 148 bytes long:</p>
+<pre><code class="language-rust">struct Entry {
+    start: u32,
+    length: u32,
+    name: [u8; 64], // zero-terminated/padded
+    garbage: [u8; 76],
+}
+</code></pre>
+<p>The start of the TOC is found by calculating the length of the TOC (number of entries * 148), adding the TOC "footer" (count, version) to that, and subtracting it from the length of the file, or seeking from the end of the file. Then read the entries.</p>
+<p>Each entry specifies the start of the entry's data in the file, the length of the entry's data in the file, the name of the entry (zero-terminated, and padded with null bytes), and a field I've called "garbage". This can largely be ignored. It was supposed to be flags, a comment and the file time:</p>
+<pre><code class="language-rust">struct Entry {
+    start: u32,
+    length: u32,
+    name: [u8; 64],
+    flags: u32,
+    comment: [u8; 64],
+    time: u64,
+}
+</code></pre>
+<p>Where the time is actually a <a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-dtyp/2c57429b-fdd4-488f-b5fc-9e4cf020fcdf">Windows <code>FILETIME</code> structure</a>. Ignore the low and high parts in the documentation, the easiest way to read this is as a 64-bit value, which is then "the number of 100-nanosecond intervals that have elapsed since January 1, 1601, Coordinated Universal Time (UTC)." (i.e. the Windows epoch).</p>
+<p>Unfortunately, in some files (like the mechlib), the entry data was not properly zeroed out, and so this contains random memory.</p>
+<p>Another trap is that entries are not necessarily deduplicated. There can be two or more entries with the same name. In all the files I have, entries with the same name contain the same data, but this isn't a guarantee.</p>
+<p>How the entry data is interpreted depends on the archive type.</p>
+<h2 id="investigation-pm">Investigation (PM)<a class="headerlink" href="#investigation-pm" title="Permanent link">&para;</a></h2>
+<p>The Pirate's Moon archives are similar to the base game, but there are three fields and the end of the file, and they do not have a backwards-compatible layout:</p>
+<pre><code class="language-rust">struct Footer {
+    version: u32, // always 2
+    count: u32,
+    checksum: u32,
+}
+</code></pre>
+<p>The version of the TOC (u32, at -12), the number of entries in the TOC (u32, at -8), and a checksum of the file data (u32, at -4). The version will always be 2. If they had left the version at -8, this would have made reading the file easier.</p>
+<p>The new field is the checksum. For archive types other than reader archives, it will be 0. Maybe it was too time intensive to calculate the checksum for the bigger archives, or maybe they only introduced it to prevent cheating by modifiying the reader files, which are relatively easy to understand. It's unclear why it wasn't made backwards compatible though, or why the other archives didn't keep using version 1.</p>
+<p>The checksum is an incorrectly implemented <a href="https://en.wikipedia.org/wiki/Cyclic_redundancy_check">cyclic redundancy check</a> (CRC32). It seems to be based on Ross William's <a href="http://ross.net/crc/download/crc_v3.txt">A Painless Guide To CRC Error Detection Algorithms</a>, specifically the "Roll Your Own Table-Driven Implementation" section. As noted in Michael Pohoreski (aka. Michaelangel007) excellent 
+<a href="https://github.com/Michaelangel007/crc32">CRC32 Demystified</a>, for the code given the bits in each data byte aren't reversed. Of note is additionally the initialization value of <code>0x00000000</code>, and the fact that the final value isn't inverted/xor'd with <code>0xFFFFFFFF</code>, as some other implementations do. Based on this information, I have managed to write code for calculating the Pirate's Moon checksums using a pre-calculated table. The pre-calculated table used is a standard CRC32 with the polynomial <code>0x04C11DB7</code>, roughly:</p>
+<pre><code class="language-rust">for index in 0..256u32 {
+    let mut crc = index &lt;&lt; 24;
+    for _ in (1..9).rev() {
+        if (crc &amp; 0x80000000) == 0x80000000 {
+            crc = (crc &lt;&lt; 1) ^ 0x04C11DB7;
+        } else {
+            crc = crc &lt;&lt; 1;
+        }
+    }
+    CRC32_TABLE[index] = crc;
+}
+</code></pre>
+<p>A running CRC32 can then easily be calculated for arbitrary input, starting with the initial value:</p>
+<pre><code class="language-rust">pub const CRC32_INIT: u32 = 0x00000000;
+
+fn crc32_update(crc: u32, buf: &amp;[u8]) -&gt; u32 {
+    let mut crc = crc;
+    for byte in buf {
+        let index = (crc &gt;&gt; 24) ^ (*byte as u32);
+        crc = CRC32_TABLE[index as usize] ^ (crc &lt;&lt; 8);
+    }
+    crc
+}
+</code></pre>
+<p>The CRC32 of an archive is calculated over all the entry data in the archive, in the order they are listed in the TOC, but does not include the TOC itself.</p>
+<p>There is one more oddity for motion archives in PM. For these, the entry length will always be 1. The entry length can be calculated from the previous entry starting position, so e.g. sorting the entries by start, reversing them, and using the start of the TOC for the first (reversed)/last (unreversed) entry. Or, since the motion reading code can be made self-limiting, code can simply jump to the start and read the motion data.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../avi-files/" class="btn btn-neutral float-left" title="AVI files"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../sound-archives/" class="btn btn-neutral float-right" title="Sound archives">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../avi-files/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../sound-archives/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Sequence events - MechWarrior 3 file format description</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Sequence events";
+        var mkdocs_page_input_path = "events.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> MechWarrior 3 file format description
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../conventions/">Pseudo-code conventions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../introduction/">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../versions/">MechWarrior 3 versions</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../overview/">Overview</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ambient-tracks/">Ambient tracks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../avi-files/">AVI files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../archive-files/">Archive files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../sound-archives/">Sound archives</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../reader-archives/">Reader archives / binary reader files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../motion-archives/">Motion archives</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../interpreter-scripts/">Interpreter scripts</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mech3msg/">Message table/translations (Mech3Msg)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../texture-packages/">Texture packages</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../mechlib-archives/">Mechlib archives</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../gamez-files/">GameZ files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../nodes/">Nodes</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../nodes-mw/">Nodes (MW3)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../nodes-pm/">Nodes (PM)</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../anim-files/">Animation definition files</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Sequence events</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#events-by-index">Events by index</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#events-by-name">Events by name</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sequence-events_1">Sequence events</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#index-lookups">Index lookups</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sound">Sound</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sound-node">Sound node</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#light-state">Light state</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#light-animation">Light animation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#object-active-state">Object active state</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#object-translate-state">Object translate state</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#object-scale-state">Object scale state</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#object-rotate-state">Object rotate state</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#object-motion">Object motion</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#object-motion-from-to">Object motion from to</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#object-motion-si-script">Object motion SI script</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#object-opacity-state">Object opacity state</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#object-opacity-from-to">Object opacity from to</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#object-add-child">Object add child</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#object-cycle-texture">Object cycle texture</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#object-connector">Object connector</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#call-object-connector">Call object connector</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#call-sequence">Call sequence</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#stop-sequence">Stop sequence</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#call-animation">Call animation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#stop-animation">Stop animation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#reset-animation">Reset animation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#invalidate-animation">Invalidate animation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#fog-state">Fog state</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#loop">Loop</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#if">If</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#else">Else</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#elseif">Elseif</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#endif">Endif</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#callback">Callback</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#fbfx-color-from-to">FBFX color from to</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#detonate-weapon">Detonate weapon</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#puffer-state">Puffer state</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../text-reader-files/">Text reader files</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../beginner-guide/">Beginner's guide to hex viewing</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">MechWarrior 3 file format description</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Sequence events</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="sequence-events">Sequence events<a class="headerlink" href="#sequence-events" title="Permanent link">&para;</a></h1>
+<h2 id="events-by-index">Events by index<a class="headerlink" href="#events-by-index" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th align="left">Event</th>
+<th align="right">Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><a href="#sound"><code>SOUND</code></a></td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="left"><a href="#sound-node"><code>SOUND_NODE</code></a></td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="left"><a href="#light-state"><code>LIGHT_STATE</code></a></td>
+<td align="right">4</td>
+</tr>
+<tr>
+<td align="left"><a href="#light-animation"><code>LIGHT_ANIMATION</code></a></td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-active-state"><code>OBJECT_ACTIVE_STATE</code></a></td>
+<td align="right">6</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-translate-state"><code>OBJECT_TRANSLATE_STATE</code></a></td>
+<td align="right">7</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-scale-state"><code>OBJECT_SCALE_STATE</code></a></td>
+<td align="right">8</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-rotate-state"><code>OBJECT_ROTATE_STATE</code></a></td>
+<td align="right">9</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-motion"><code>OBJECT_MOTION</code></a></td>
+<td align="right">10</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-motion-from-to"><code>OBJECT_MOTION_FROM_TO</code></a></td>
+<td align="right">11</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-motion-si-script"><code>OBJECT_MOTION_SI_SCRIPT</code></a></td>
+<td align="right">12</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-opacity-state"><code>OBJECT_OPACITY_STATE</code></a></td>
+<td align="right">13</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-opacity-from-to"><code>OBJECT_OPACITY_FROM_TO</code></a></td>
+<td align="right">14</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-add-child"><code>OBJECT_ADD_CHILD</code></a></td>
+<td align="right">15</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-cycle-texture"><code>OBJECT_CYCLE_TEXTURE</code></a></td>
+<td align="right">17</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-connector"><code>OBJECT_CONNECTOR</code></a></td>
+<td align="right">18</td>
+</tr>
+<tr>
+<td align="left"><a href="#call-object-connector"><code>CALL_OBJECT_CONNECTOR</code></a></td>
+<td align="right">19</td>
+</tr>
+<tr>
+<td align="left"><a href="#call-sequence"><code>CALL_SEQUENCE</code></a></td>
+<td align="right">22</td>
+</tr>
+<tr>
+<td align="left"><a href="#stop-sequence"><code>STOP_SEQUENCE</code></a></td>
+<td align="right">23</td>
+</tr>
+<tr>
+<td align="left"><a href="#call-animation"><code>CALL_ANIMATION</code></a></td>
+<td align="right">24</td>
+</tr>
+<tr>
+<td align="left"><a href="#stop-animation"><code>STOP_ANIMATION</code></a></td>
+<td align="right">25</td>
+</tr>
+<tr>
+<td align="left"><a href="#reset-animation"><code>RESET_ANIMATION</code></a></td>
+<td align="right">26</td>
+</tr>
+<tr>
+<td align="left"><a href="#invalidate-animation"><code>INVALIDATE_ANIMATION</code></a></td>
+<td align="right">27</td>
+</tr>
+<tr>
+<td align="left"><a href="#fog-state"><code>FOG_STATE</code></a></td>
+<td align="right">28</td>
+</tr>
+<tr>
+<td align="left"><a href="#loop"><code>LOOP</code></a></td>
+<td align="right">30</td>
+</tr>
+<tr>
+<td align="left"><a href="#if"><code>IF</code></a></td>
+<td align="right">31</td>
+</tr>
+<tr>
+<td align="left"><a href="#else"><code>ELSE</code></a></td>
+<td align="right">32</td>
+</tr>
+<tr>
+<td align="left"><a href="#elseif"><code>ELSEIF</code></a></td>
+<td align="right">33</td>
+</tr>
+<tr>
+<td align="left"><a href="#endif"><code>ENDIF</code></a></td>
+<td align="right">34</td>
+</tr>
+<tr>
+<td align="left"><a href="#callback"><code>CALLBACK</code></a></td>
+<td align="right">35</td>
+</tr>
+<tr>
+<td align="left"><a href="#fbfx-color-from-to"><code>FBFX_COLOR_FROM_TO</code></a></td>
+<td align="right">36</td>
+</tr>
+<tr>
+<td align="left"><a href="#detonate-weapon"><code>DETONATE_WEAPON</code></a></td>
+<td align="right">41</td>
+</tr>
+<tr>
+<td align="left"><a href="#puffer-state"><code>PUFFER_STATE</code></a></td>
+<td align="right">42</td>
+</tr>
+</tbody>
+</table>
+<h2 id="events-by-name">Events by name<a class="headerlink" href="#events-by-name" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th align="left">Event</th>
+<th align="right">Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><a href="#call-animation"><code>CALL_ANIMATION</code></a></td>
+<td align="right">24</td>
+</tr>
+<tr>
+<td align="left"><a href="#call-object-connector"><code>CALL_OBJECT_CONNECTOR</code></a></td>
+<td align="right">19</td>
+</tr>
+<tr>
+<td align="left"><a href="#call-sequence"><code>CALL_SEQUENCE</code></a></td>
+<td align="right">22</td>
+</tr>
+<tr>
+<td align="left"><a href="#callback"><code>CALLBACK</code></a></td>
+<td align="right">35</td>
+</tr>
+<tr>
+<td align="left"><a href="#detonate-weapon"><code>DETONATE_WEAPON</code></a></td>
+<td align="right">41</td>
+</tr>
+<tr>
+<td align="left"><a href="#else"><code>ELSE</code></a></td>
+<td align="right">32</td>
+</tr>
+<tr>
+<td align="left"><a href="#elseif"><code>ELSEIF</code></a></td>
+<td align="right">33</td>
+</tr>
+<tr>
+<td align="left"><a href="#endif"><code>ENDIF</code></a></td>
+<td align="right">34</td>
+</tr>
+<tr>
+<td align="left"><a href="#fbfx-color-from-to"><code>FBFX_COLOR_FROM_TO</code></a></td>
+<td align="right">36</td>
+</tr>
+<tr>
+<td align="left"><a href="#fog-state"><code>FOG_STATE</code></a></td>
+<td align="right">28</td>
+</tr>
+<tr>
+<td align="left"><a href="#if"><code>IF</code></a></td>
+<td align="right">31</td>
+</tr>
+<tr>
+<td align="left"><a href="#invalidate-animation"><code>INVALIDATE_ANIMATION</code></a></td>
+<td align="right">27</td>
+</tr>
+<tr>
+<td align="left"><a href="#light-animation"><code>LIGHT_ANIMATION</code></a></td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td align="left"><a href="#light-state"><code>LIGHT_STATE</code></a></td>
+<td align="right">4</td>
+</tr>
+<tr>
+<td align="left"><a href="#loop"><code>LOOP</code></a></td>
+<td align="right">30</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-active-state"><code>OBJECT_ACTIVE_STATE</code></a></td>
+<td align="right">6</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-add-child"><code>OBJECT_ADD_CHILD</code></a></td>
+<td align="right">15</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-connector"><code>OBJECT_CONNECTOR</code></a></td>
+<td align="right">18</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-cycle-texture"><code>OBJECT_CYCLE_TEXTURE</code></a></td>
+<td align="right">17</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-motion-from-to"><code>OBJECT_MOTION_FROM_TO</code></a></td>
+<td align="right">11</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-motion-si-script"><code>OBJECT_MOTION_SI_SCRIPT</code></a></td>
+<td align="right">12</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-motion"><code>OBJECT_MOTION</code></a></td>
+<td align="right">10</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-opacity-from-to"><code>OBJECT_OPACITY_FROM_TO</code></a></td>
+<td align="right">14</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-opacity-state"><code>OBJECT_OPACITY_STATE</code></a></td>
+<td align="right">13</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-rotate-state"><code>OBJECT_ROTATE_STATE</code></a></td>
+<td align="right">9</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-scale-state"><code>OBJECT_SCALE_STATE</code></a></td>
+<td align="right">8</td>
+</tr>
+<tr>
+<td align="left"><a href="#object-translate-state"><code>OBJECT_TRANSLATE_STATE</code></a></td>
+<td align="right">7</td>
+</tr>
+<tr>
+<td align="left"><a href="#puffer-state"><code>PUFFER_STATE</code></a></td>
+<td align="right">42</td>
+</tr>
+<tr>
+<td align="left"><a href="#reset-animation"><code>RESET_ANIMATION</code></a></td>
+<td align="right">26</td>
+</tr>
+<tr>
+<td align="left"><a href="#sound-node"><code>SOUND_NODE</code></a></td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="left"><a href="#sound"><code>SOUND</code></a></td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="left"><a href="#stop-animation"><code>STOP_ANIMATION</code></a></td>
+<td align="right">25</td>
+</tr>
+<tr>
+<td align="left"><a href="#stop-sequence"><code>STOP_SEQUENCE</code></a></td>
+<td align="right">23</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sequence-events_1">Sequence events<a class="headerlink" href="#sequence-events_1" title="Permanent link">&para;</a></h2>
+<pre><code class="language-rust">struct EventHeader {
+    event_type: u8, // could also be an enum
+    start_offset: StartOffset,
+    pad02: u16, // always 0
+    size: u32,
+    start_time: f32,
+}
+
+enum StartOffset: u8 {
+    Animation = 1,
+    Sequence = 2,
+    Event = 3,
+}
+</code></pre>
+<p>The event type (u8) indicates just that, the type of the event, and therefore how to interpret the data following the header. The start offset (u8) can either be animation (1), sequence (2), or event (3). The explicit padding at offset 2 is always zero (0). The size indicates the size of this event's entire data (including the header). The start time indicates the event's start time relative to the start offset/parent (probably).</p>
+<p>The event structures and their sizes specified in this document are all without the header, for convenience. Subtract 12 bytes (the size of the header) from the size in the header to get the event sizes specified.</p>
+<h2 id="index-lookups">Index lookups<a class="headerlink" href="#index-lookups" title="Permanent link">&para;</a></h2>
+<p>Sequence events can refer to information in their associated animation definition, for example:</p>
+<ul>
+<li>Object3d nodes</li>
+<li>Sound nodes (dynamic sounds)</li>
+<li>Other nodes (just called nodes)</li>
+<li>Sounds (static sounds)</li>
+<li>Lights</li>
+<li>Puffers</li>
+</ul>
+<p>Based on the packing of some structures and the general size of the arrays in GameZ, I assume node indices are 2 bytes/16 bits, so u16 or i16. We do see negative numbers, so I assume it's i16, leaving a maximum index of 32767 - still a lot larger than the usual array sizes.</p>
+<p>As mentioned, there are negative numbers that seem to have special meanings. For example, if the reader file says <code>INPUT_NODE</code>, this is translated to the index -200.</p>
+<pre><code class="language-rust">const INPUT_NODE_INDEX: i16 = -200;
+</code></pre>
+<p>It's unknown if this is allowed for all node indices, or only some.</p>
+<h2 id="sound">Sound<a class="headerlink" href="#sound" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>SOUND</code>, Type: 1, Size: 16</p>
+<p>Also called "static sound" in this project.</p>
+<pre><code class="language-rust">struct Sound {
+    sound_index: i16,
+    node_index: i16,
+    translation: Vec3,
+}
+</code></pre>
+<p>The sound index (i16) is used to look up the static sound in the animation definition. The node index (i16) is used to look up the parent/at node in the animation definition. The translation (Vec3) is presumably the sound's translation from the node.</p>
+<h2 id="sound-node">Sound node<a class="headerlink" href="#sound-node" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>SOUND_NODE</code>, Type: 2, Size: 60</p>
+<p>Also called "dynamic sound" in this project.</p>
+<pre><code class="language-rust">struct SoundNode {
+    name: [u8; 32],
+    unk32: u32, // always 1
+    flags: SoundNodeFlags,
+    active_state: u32, // always 0 or 1 (bool)
+    node_index: i16,
+    pad46: u16, // always 0
+    translation: Vec3,
+}
+
+bitflags SoundNodeFlags: u32 {
+    InheritTranslation = 1 &lt;&lt; 1; // 0x2
+}
+</code></pre>
+<p>The sound node's name (32 bytes) is zero-terminated and zero padded. It's unclear why dynamic sounds aren't looked up by index, maybe this event creates a new node? The next field (u32) is always one (1). The flags field (u32) seems to be a bit field and is either zero (0) or two (2). The active state (u32) is either zero (0, false) or one (1, true). The node index (i16) is used to look up the parent/at node in the animation definition. The next field (u16) is padding and will always be zero (0). The translation (Vec3) is presumably the sound's translation from the node. If inherit translation flag (1 &lt;&lt; 1 or 0x2) is unset, then the node index and the translation will be zero (0/0.0). </p>
+<h2 id="light-state">Light state<a class="headerlink" href="#light-state" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>LIGHT_STATE</code>, Type: 4, Size: 120</p>
+<pre><code class="language-rust">struct LightState {
+    name: [u8; 32],
+    light_index: i16,
+    pad34: u16, // always 0
+    flags: LightFlags,
+    active_state: u32, // always 0 or 1 (bool)
+    point_source: u32, // always 1
+    directional: u32, // always 0 or 1 (bool)
+    saturated: u32, // always 0 or 1 (bool)
+    subdivide: u32, // always 0 or 1 (bool)
+    static: u32, // always 0 or 1 (bool)
+    node_index: i32,
+    translation: Vec3,
+    rotation: Vec3,
+    range_near: f32,
+    range_far: f32,
+    color: Color,
+    ambient: f32,
+    diffuse: f32,
+}
+
+// Also used for light nodes in GameZ
+bitflags LightFlags: u32 {
+    // This flag never occurs in sequence events
+    TranslationAbs = 1 &lt;&lt; 0; // 0x001
+    Translation = 1 &lt;&lt; 1;    // 0x002
+    // This flag never occurs in sequence events
+    Rotation = 1 &lt;&lt; 2;       // 0x004
+    Range = 1 &lt;&lt; 3;          // 0x008
+    Color = 1 &lt;&lt; 4;          // 0x010
+    Ambient = 1 &lt;&lt; 5;        // 0x020
+    Diffuse = 1 &lt;&lt; 6;        // 0x040
+    Directional = 1 &lt;&lt; 7;    // 0x080
+    Saturated = 1 &lt;&lt; 8;      // 0x100
+    Subdivide = 1 &lt;&lt; 9;      // 0x200
+    Static = 1 &lt;&lt; 10;        // 0x400
+
+    Inactive = 0;
+    Default = TranslationAbs
+    | Translation
+    | Range
+    | Directional
+    | Saturated
+    | Subdivide;
+}
+</code></pre>
+<p>The light node's name (32 bytes) is zero-terminated and zero padded. The light node's index (i16) is used to look up the light in the animation definition. It's unclear why the light state contains both the light node's name and index. When looked up by index, that name matches the name in this structure. The next field (u16) is padding and will always be zero (0).</p>
+<p>The light flags (u32) are also used for light nodes in GameZ, and indicate which further fields/states are valid and should be set. The <code>TranslationAbs</code> flag (1 &lt;&lt; 0, 0x001) is never set in sequence events/in <code>anim.zbd</code> that we have.</p>
+<p>The active state (u32) is always zero (0, false) or one (1, true). The point source field (u32) indicates whether the light is directed (0, never occurs) or a point source (1, always). The directional field (u32) is always zero (0, false) or one (1, true). If the directional flag (1 &lt;&lt; 7, 0x080) is unset, this is always false. The saturated field (u32) is always zero (0, false) or one (1, true). If the saturated flag (1 &lt;&lt; 8, 0x100) is unset, this is always false. The subdivide field (u32) is always zero (0, false) or one (1, true). If the subdivide flag (1 &lt;&lt; 9, 0x200) is unset, this is always false. The static field (u32) is always zero (0, false) or one (1, true). If the static flag (1 &lt;&lt; 10, 0x400) is unset, this is always false.</p>
+<p>The node index (i32) is used to look up the parent/at node in the animation definition.</p>
+<p>It's unclear why dynamic sounds aren't looked up by index, maybe this event creates a new node? The next field (u32) is always one (1). Inherit translation (u32) seems to be a bit field and is either zero (0) or two (2). The active state (u32) is either zero (0, false) or one (1, true).</p>
+<p>The node index (i16) is used to look up the parent/at node in the animation definition. This is sometimes set to the special input node value. The next field (u16) is padding and will always be zero (0). The translation (Vec3) is presumably the sound's translation from the node. If the translation flag (1 &lt;&lt; 1, 0x002) is unset, then both the node index and translation will be zero (0/0.0).</p>
+<p>The rotation or direction (Vec3) is always zero (0.0), because the rotation flag (1 &lt;&lt; 2, 0x004) is never set in sequence events/in <code>anim.zbd</code> that we have.</p>
+<p>The near range (f32) and far range (f32) likely indicate the light's range. The near range is greater than or equal to zero (0.0), and the far range is greater than or equal to the near range. If the range flag (1 &lt;&lt; 3, 0x008) is unset, then both are zero (0.0).</p>
+<p>The colour (Color) is the RGB value of the light, and all values between zero (0.0) and one (1.0), inclusive of both. If the colour flag (1 &lt;&lt; 4, 0x010) is unset, all values are zero (0.0). Finally, the ambient (f32) and diffuse (f32) control two aspects of lighting used in computer graphics. Both values are between zero (0.0, inclusive) and one (1.0, inclusive). If the ambient flag (1 &lt;&lt; 5, 0x020) or diffuse flag (1 &lt;&lt; 6, 0x040) are unset, the respective value will be zero (0.0). </p>
+<h2 id="light-animation">Light animation<a class="headerlink" href="#light-animation" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>LIGHT_ANIMATION</code>, Type: 5, Size: 100</p>
+<h2 id="object-active-state">Object active state<a class="headerlink" href="#object-active-state" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>OBJECT_ACTIVE_STATE</code>, Type: 6, Size: 8</p>
+<h2 id="object-translate-state">Object translate state<a class="headerlink" href="#object-translate-state" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>OBJECT_TRANSLATE_STATE</code>, Type: 7, Size: 20</p>
+<h2 id="object-scale-state">Object scale state<a class="headerlink" href="#object-scale-state" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>OBJECT_SCALE_STATE</code>, Type: 8, Size: 16</p>
+<h2 id="object-rotate-state">Object rotate state<a class="headerlink" href="#object-rotate-state" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>OBJECT_ROTATE_STATE</code>, Type: 9, Size: 20</p>
+<h2 id="object-motion">Object motion<a class="headerlink" href="#object-motion" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>OBJECT_MOTION</code>, Type: 10, Size: 320</p>
+<h2 id="object-motion-from-to">Object motion from to<a class="headerlink" href="#object-motion-from-to" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>OBJECT_MOTION_FROM_TO</code>, Type: 11, Size: 132</p>
+<h2 id="object-motion-si-script">Object motion SI script<a class="headerlink" href="#object-motion-si-script" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>OBJECT_MOTION_SI_SCRIPT</code>, Type: 12, Size: Variable, at least 24</p>
+<h2 id="object-opacity-state">Object opacity state<a class="headerlink" href="#object-opacity-state" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>OBJECT_OPACITY_STATE</code>, Type: 13, Size: 12</p>
+<h2 id="object-opacity-from-to">Object opacity from to<a class="headerlink" href="#object-opacity-from-to" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>OBJECT_OPACITY_FROM_TO</code>, Type: 14, Size: 24</p>
+<h2 id="object-add-child">Object add child<a class="headerlink" href="#object-add-child" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>OBJECT_ADD_CHILD</code>, Type: 15, Size: 4</p>
+<h2 id="object-cycle-texture">Object cycle texture<a class="headerlink" href="#object-cycle-texture" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>OBJECT_CYCLE_TEXTURE</code>, Type: 17, Size: 8</p>
+<h2 id="object-connector">Object connector<a class="headerlink" href="#object-connector" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>OBJECT_CONNECTOR</code>, Type: 18, Size: 76</p>
+<h2 id="call-object-connector">Call object connector<a class="headerlink" href="#call-object-connector" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>CALL_OBJECT_CONNECTOR</code>, Type: 19, Size: 68</p>
+<h2 id="call-sequence">Call sequence<a class="headerlink" href="#call-sequence" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>CALL_SEQUENCE</code>, Type: 22, Size: 36</p>
+<h2 id="stop-sequence">Stop sequence<a class="headerlink" href="#stop-sequence" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>STOP_SEQUENCE</code>, Type: 23, Size: 36</p>
+<h2 id="call-animation">Call animation<a class="headerlink" href="#call-animation" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>CALL_ANIMATION</code>, Type: 24, Size: 68</p>
+<h2 id="stop-animation">Stop animation<a class="headerlink" href="#stop-animation" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>STOP_ANIMATION</code>, Type: 25, Size: 36</p>
+<h2 id="reset-animation">Reset animation<a class="headerlink" href="#reset-animation" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>RESET_ANIMATION</code>, Type: 26, Size: 36</p>
+<h2 id="invalidate-animation">Invalidate animation<a class="headerlink" href="#invalidate-animation" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>INVALIDATE_ANIMATION</code>, Type: 27, Size: 36</p>
+<h2 id="fog-state">Fog state<a class="headerlink" href="#fog-state" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>FOG_STATE</code>, Type: 28, Size: 68</p>
+<h2 id="loop">Loop<a class="headerlink" href="#loop" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>LOOP</code>, Type: 30, Size: 8</p>
+<h2 id="if">If<a class="headerlink" href="#if" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>IF</code>, Type: 31, Size: 12</p>
+<h2 id="else">Else<a class="headerlink" href="#else" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>ELSE</code>, Type: 32, Size: 0</p>
+<h2 id="elseif">Elseif<a class="headerlink" href="#elseif" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>ELSEIF</code>, Type: 33, Size: 12</p>
+<h2 id="endif">Endif<a class="headerlink" href="#endif" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>ENDIF</code>, Type: 34, Size: 0</p>
+<h2 id="callback">Callback<a class="headerlink" href="#callback" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>CALLBACK</code>, Type: 35, Size: 4</p>
+<h2 id="fbfx-color-from-to">FBFX color from to<a class="headerlink" href="#fbfx-color-from-to" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>FBFX_COLOR_FROM_TO</code>, Type: 36, Size: 52</p>
+<p>Presumably, FBFX stands for "frame buffer effect".</p>
+<h2 id="detonate-weapon">Detonate weapon<a class="headerlink" href="#detonate-weapon" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>DETONATE_WEAPON</code>, Type: 41, Size: 24</p>
+<h2 id="puffer-state">Puffer state<a class="headerlink" href="#puffer-state" title="Permanent link">&para;</a></h2>
+<p>Reader name: <code>PUFFER_STATE</code>, Type: 42, Size: 580</p>
+<pre><code class="language-rust">struct PufferState {
+    name: [u8; 32],
+    puffer_index: i16,
+    pad34: u16, // always 0
+    flags: PufferStateFlags,
+    active_state: i32,
+    node_index: u32,
+    translation: Vec3,
+    local_velocity: Vec3,
+    world_velocity: Vec3,
+    min_random_velocity: Vec3,
+    max_random_velocity: Vec3,
+    world_acceleration: Vec3,
+    interval_type: u32,
+    interval_value: f32,
+    size_range: Vec2,
+    lifetime_range: Vec2,
+    start_age_range: Vec2,
+    deviation_distance: f32,
+    unk156: f32, // always 0.0
+    unk160: f32, // always 0.0
+    fade_range: Vec2,
+    friction: f32,
+    unk176: u32, // always 0
+    unk180: u32, // always 0
+    unk184: u32, // always 0
+    unk188: u32, // always 0
+    tex192: [u8; 36],
+    tex228: [u8; 36],
+    tex264: [u8; 36],
+    tex300: [u8; 36],
+    tex336: [u8; 36],
+    tex372: [u8; 36],
+    unk408: [u8; 120], // always 0
+    unk528: u32,
+    unk532: u32, // always 0
+    unk536: f32,
+    unk540: f32,
+    growth_factor: f32,
+    unk548: [u8; 32], // always 0
+}
+
+bitflags PufferStateFlags: u32 {
+    // this might not be right?
+    Translate = 1 &lt;&lt; 0;          // 0x00001
+    GrowthFactor = 1 &lt;&lt; 1;       // 0x00002
+    // this might not be right?
+    State = 1 &lt;&lt; 2;              // 0x00004
+    LocalVelocity = 1 &lt;&lt; 3;      // 0x00008
+    WorldVelocity = 1 &lt;&lt; 4;      // 0x00010
+    MinRandomVelocity = 1 &lt;&lt; 5;  // 0x00020
+    MaxRandomVelocity = 1 &lt;&lt; 6;  // 0x00040
+    IntervalType = 1 &lt;&lt; 7;       // 0x00080
+    // this might not be right?
+    IntervalValue = 1 &lt;&lt; 8;      // 0x00100
+    SizeRange = 1 &lt;&lt; 9;          // 0x00200
+    LifetimeRange = 1 &lt;&lt; 10;     // 0x00400
+    DeviationDistance = 1 &lt;&lt; 11; // 0x00800
+    FadeRange = 1 &lt;&lt; 12;         // 0x01000
+    Active = 1 &lt;&lt; 13;            // 0x02000
+    CycleTexture = 1 &lt;&lt; 14;      // 0x04000
+    StartAgeRange = 1 &lt;&lt; 15;     // 0x08000
+    WorldAcceleration = 1 &lt;&lt; 16; // 0x10000
+    Friction = 1 &lt;&lt; 17;          // 0x20000
+
+    Inactive = 0;
+}
+</code></pre>
+<p>The puffer's name (32 bytes) is zero-terminated and zero padded. The puffer's index (i16) is used to look up the puffer in the animation definition. It's unclear why the puffer state contains both the puffer's name and index. When looked up by index, that name matches the name in this structure. The next field (u16) is padding and will always be zero (0).</p>
+<p>The puffer state's flags (u32) indicate which further fields/states are valid and should be set. If the state flag (1 &lt;&lt; 3, 0x00008) is unset, then no other flags are set in the sequence events/in <code>anim.zbd</code> that we have. This seems to indicate whether the puffer is disabled/inactive. At least, that's the best guess. However, there's also an active flag and an active state, which seems to be slightly different.</p>
+<p>The active or lifetime state (i32) seems to allow for a range of values. If the active flag is set, then the active state will be greater than or equal to one (1), and less than or equal to five (5). If the active flag (1 &lt;&lt; 13, 0x02000) is unset, then the active state is always negative one (-1).</p>
+<p>TODO</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../anim-files/" class="btn btn-neutral float-left" title="Animation definition files"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../text-reader-files/" class="btn btn-neutral float-right" title="Text reader files">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../anim-files/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../text-reader-files/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
