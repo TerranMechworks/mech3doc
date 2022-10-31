@@ -108,13 +108,7 @@ struct AnimDef {
     unk188: u32, // always 0
     unk192: u32, // always 0
     sequence_definitions_ptr: u32,
-    unk200: u32, // always 0x45534552
-    unk204: u32, // always 0x45535F54
-    unk208: u32, // always 0x4E455551
-    unk212: u32, // always 0x00004543
-    zero216: [u8; 40], // always 0
-    reset_sequence_ptr: u32,
-    reset_sequence_size: u32,
+    reset_state: SequenceDefinition,
     sequence_definition_count: u8,
     object_count: u8,
     node_count: u8,
@@ -200,9 +194,7 @@ The next four fields (u32/i32/f32) are always zero (0).
 
 I'll talk more about the sequence definition pointer value (u32) when discussing the sequence definitions. This is always non-zero/non-null, but then all animation definitions have at least one sequence definition.
 
-The next four fields (u32) are unknown. They are always 0x45534552, 0x45535F54, 0x4E455551, and 0x00004543, respectively. There are 40 zero bytes from offset 216 to 256 (exclusive).
-
-The next two fields are the reset sequence pointer (u32) and the reset sequence size (u32). If the size is greater than zero, then the pointer is non-zero/non-null; otherwise, the pointer is zero/null. They are further used in reading the animation definition's reset state.
+Next follows the reset state sequence definition (thanks Skyfaller for the analysis). This will be read later separately again (see [reset sequence](#reset_sequence)). This might seem odd, but the reset state can contain a variable number of events, and so must be read after the animation definition. Likely they just used the generic sequence definition serialisation/deserialisation functions here, so the data is duplicated.
 
 Several counts of things associated with the animation definition follow. They are all u8 values:
 
@@ -420,7 +412,7 @@ The flags can either be zero (0) or 0x0303. This corresponds to the activation o
 
 The next 20 bytes (at offset 36) are unknown and always zero (0). Finally, the pointer (u32) and size (u32). If the size is zero (0), then the pointer will be zero/null, and no further data is read. This indicates an empty reset sequence. Otherwise, size bytes of sequence event data is read. I'll describe how to read sequence event data shortly.
 
-For the reset sequence, the name will always be `RESET_SEQUENCE`. The flags will always be zero, an initial activation. The pointer will always have the same value as the reset sequence pointer from the animation definition itself, and the size will always have the same value as the reset sequence size from the animation definition itself.
+For the reset sequence, the name will always be `RESET_SEQUENCE`. The flags will always be zero, an initial activation. It will always match the reset state in the animation definition.
 
 ### Sequence definitions
 
