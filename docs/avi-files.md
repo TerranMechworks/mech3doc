@@ -51,7 +51,7 @@ For a container format with maximum compatibility, I've chosen [MPEG-4](https://
 
 ### Comparing results
 
-The [MPV](https://mpv.io/) media player [can play two (or more) videos side-by-side](https://superuser.com/a/1325668), which is great for comparing the encoded video. 
+The [MPV](https://mpv.io/) media player [can play two (or more) videos side-by-side](https://superuser.com/a/1325668), which is great for comparing the encoded video.
 
 ```bash
 mpv --lavfi-complex="[vid1][vid2]hstack[vo]" intro.avi --external-file=intro.mp4
@@ -117,7 +117,7 @@ Average reduction: 86.5%
 
 Average reduction: 88.7%
 
-## Appendix 2: English video file information 
+## Appendix 2: English video file information
 
 ```
 Input #0, avi, from 'Campaign.avi':

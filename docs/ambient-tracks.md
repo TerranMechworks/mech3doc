@@ -25,7 +25,7 @@ To my knowledge, the ambient tracks do not play in the menus, only during gamepl
 
 ## Appendix 1: Detailed version comparison
 
-Between the versions, all the tracks had different [CRC](https://en.wikipedia.org/wiki/Cyclic_redundancy_check) codes. Another oddity is the fact the tracks aren't in the same order on different versions. I'm unsure why this is. The difference in the audio data could be the result of the manufacturing process. For the German version, it could be due to the SafeDisc DRM (is 2 seconds longer). But they all sound indistinguishable for me, and the waveforms look the same, so it's probably fine. 
+Between the versions, all the tracks had different [CRC](https://en.wikipedia.org/wiki/Cyclic_redundancy_check) codes. Another oddity is the fact the tracks aren't in the same order on different versions. I'm unsure why this is. The difference in the audio data could be the result of the manufacturing process. For the German version, it could be due to the SafeDisc DRM (is 2 seconds longer). But they all sound indistinguishable for me, and the waveforms look the same, so it's probably fine.
 
 ![A waveform plot of the shorter tracks, showing virtually indistinguishable waveforms. The data was resampled to mono, but the amplitude is not re-normalised. It may appear slightly quieter than it would be in stereo.](images/audio-tracks-shorter.png)
 

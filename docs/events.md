@@ -157,7 +157,7 @@ bitflags SoundNodeFlags: u32 {
 }
 ```
 
-The sound node's name (32 bytes) is zero-terminated and zero padded. It's unclear why dynamic sounds aren't looked up by index, maybe this event creates a new node? The next field (u32) is always one (1). The flags field (u32) seems to be a bit field and is either zero (0) or two (2). The active state (u32) is either zero (0, false) or one (1, true). The node index (i16) is used to look up the parent/at node in the animation definition. The next field (u16) is padding and will always be zero (0). The translation (Vec3) is presumably the sound's translation from the node. If inherit translation flag (1 << 1 or 0x2) is unset, then the node index and the translation will be zero (0/0.0). 
+The sound node's name (32 bytes) is zero-terminated and zero padded. It's unclear why dynamic sounds aren't looked up by index, maybe this event creates a new node? The next field (u32) is always one (1). The flags field (u32) seems to be a bit field and is either zero (0) or two (2). The active state (u32) is either zero (0, false) or one (1, true). The node index (i16) is used to look up the parent/at node in the animation definition. The next field (u16) is padding and will always be zero (0). The translation (Vec3) is presumably the sound's translation from the node. If inherit translation flag (1 << 1 or 0x2) is unset, then the node index and the translation will be zero (0/0.0).
 
 ## Light state
 
@@ -200,7 +200,7 @@ bitflags LightFlags: u32 {
     Saturated = 1 << 8;      // 0x100
     Subdivide = 1 << 9;      // 0x200
     Static = 1 << 10;        // 0x400
-    
+
     Inactive = 0;
     Default = TranslationAbs
     | Translation
@@ -227,7 +227,7 @@ The rotation or direction (Vec3) is always zero (0.0), because the rotation flag
 
 The near range (f32) and far range (f32) likely indicate the light's range. The near range is greater than or equal to zero (0.0), and the far range is greater than or equal to the near range. If the range flag (1 << 3, 0x008) is unset, then both are zero (0.0).
 
-The colour (Color) is the RGB value of the light, and all values between zero (0.0) and one (1.0), inclusive of both. If the colour flag (1 << 4, 0x010) is unset, all values are zero (0.0). Finally, the ambient (f32) and diffuse (f32) control two aspects of lighting used in computer graphics. Both values are between zero (0.0, inclusive) and one (1.0, inclusive). If the ambient flag (1 << 5, 0x020) or diffuse flag (1 << 6, 0x040) are unset, the respective value will be zero (0.0). 
+The colour (Color) is the RGB value of the light, and all values between zero (0.0) and one (1.0), inclusive of both. If the colour flag (1 << 4, 0x010) is unset, all values are zero (0.0). Finally, the ambient (f32) and diffuse (f32) control two aspects of lighting used in computer graphics. Both values are between zero (0.0, inclusive) and one (1.0, inclusive). If the ambient flag (1 << 5, 0x020) or diffuse flag (1 << 6, 0x040) are unset, the respective value will be zero (0.0).
 
 ## Light animation
 

@@ -39,7 +39,7 @@ If there are any global palettes, they are read next. Global palettes are always
 
 ```rust
 struct GlobalPalette {
-    values: [u16; 256], 
+    values: [u16; 256],
 }
 // alternatively
 struct GlobalPalette {
@@ -76,7 +76,7 @@ bitflags ImageFlags: u32 {
     GlobalPalette = 1 << 4, // 0x10
     ImageLoaded = 1 << 5,   // 0x20
     AlphaLoaded = 1 << 6,   // 0x40
-    PaletteLoaded = 1 << 7, // 0x80 
+    PaletteLoaded = 1 << 7, // 0x80
 }
 ```
 
@@ -90,7 +90,7 @@ Finally, the last three flags are assumed to be some indication of what data the
 
 The width (u16) and height (u16) are obvious. The next value (u32) is unknown, but always zero (0). The palette count (u16) specifies how many colour values the palette contains. Images that aren't palette-based have this set to zero (0). Importantly, this applies to both global and local palettes. So even though global palettes have enough data for 256 colour values, fewer colours may be used when interpreting image data.
 
-Lastly, the stretch field indicates if an image should be stretched after it has been decoded/before it is displayed. This seems to be used for e.g. environment textures that require more vertical resolution than horizontal resolution, possibly to save space but still have the image be square (I think square textures used to provide a performance benefit for some graphics cards/operations). 
+Lastly, the stretch field indicates if an image should be stretched after it has been decoded/before it is displayed. This seems to be used for e.g. environment textures that require more vertical resolution than horizontal resolution, possibly to save space but still have the image be square (I think square textures used to provide a performance benefit for some graphics cards/operations).
 
 ## Image data
 
@@ -100,11 +100,11 @@ Colour images are images with a zero palette count. The colour data is read firs
 
 ```rust
 struct ColorData {
-    values: [u16; width * height], 
+    values: [u16; width * height],
 }
 // alternatively
 struct ColorData {
-    values: [u8; width * height * 2], 
+    values: [u8; width * height * 2],
 }
 ```
 
@@ -146,17 +146,17 @@ let rgb888: Vec<u32> = (u16::MIN..=u16::MAX)
         assert!(red_bits <= 31, "r5 {:#b}", red_bits);
         let red_lerp = ((red_bits as f64) * 255.0 / 31.0 + 0.5) as u32;
         assert!(red_lerp < 256, "r8 {:#b}", red_lerp);
-    
+
         let green_bits = (rgb565 >> 5) & 0b111111;
         assert!(green_bits <= 63, "g6 {:#b}", green_bits);
         let green_lerp = ((green_bits as f64) * 255.0 / 63.0 + 0.5) as u32;
         assert!(green_lerp < 256, "g8 {:#b}", green_lerp);
-    
+
         let blue_bits = (rgb565>> 0) & 0b11111;
         assert!(blue_bits <= 31, "b5 {:#b}", blue_bits);
         let blue_lerp = ((blue_bits as f64) * 255.0 / 31.0 + 0.5) as u32;
         assert!(blue_lerp < 256, "b8 {:#b}", blue_lerp);
-    
+
         (red_lerp << 16) | (green_lerp << 8) | (blue_lerp << 0)
     })
     .collect();
@@ -191,7 +191,7 @@ For an image with full alpha, the alpha channel data is read after the image dat
 
 ```rust
 struct FullAlphaData {
-    values: [u8; width * height], 
+    values: [u8; width * height],
 }
 ```
 
@@ -205,7 +205,7 @@ The palette index data is read first. It is a bitmap with one (1) byte per pixel
 
 ```rust
 struct PaletteIndexData {
-    values: [u8; width * height], 
+    values: [u8; width * height],
 }
 ```
 
@@ -225,11 +225,11 @@ If the image isn't using a global palette, the palette colour data is read after
 
 ```rust
 struct LocalPalette {
-    values: [u16; palette_count], 
+    values: [u16; palette_count],
 }
 // alternatively
 struct LocalPalette {
-    values: [u8; palette_count * 2], 
+    values: [u8; palette_count * 2],
 }
 ```
 

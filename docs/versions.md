@@ -32,7 +32,7 @@ The PC Gaming Wiki claims [MechWarrior 3 is protected by Macrovision's SafeDisc 
 
 > There is always a **GAME.EXE** and **GAME.ICD** file where the **.ICD** is the original game executable (in encrypted form) and the **.EXE** is a loader containing a parts of the **SafeDisc** protection.
 
-(Formatting edited for readability.) The [Wine mailing list agrees](https://www.winehq.org/pipermail/wine-users/2002-April/007910.html) largely, sometimes `SECDRV.SYS` and `DRVMGT.DLL` are also found. 
+(Formatting edited for readability.) The [Wine mailing list agrees](https://www.winehq.org/pipermail/wine-users/2002-April/007910.html) largely, sometimes `SECDRV.SYS` and `DRVMGT.DLL` are also found.
 
 None of the US version I own have any of these files, the German version does though. It is possible the US versions have an earlier variant of SafeDisc copy protection, based on the earlier SafeAudio copy protection It uses weak sectors to detect when a disk has been copied. (For more information, see [this CD Freaks/Myce article](https://www.myce.com/article/SafeDisc-2-Explained-and-Defeated___-181/) on SafeDisc 2.)
 

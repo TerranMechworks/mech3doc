@@ -19,7 +19,7 @@ struct Header {
 
 The version field will always be four (4). The loop time is a non-negative floating point value that describes how long the motion plays for. The frame count is the number of frames in the motion, which is inclusive. This means there are actually frame count + 1 frames of data to read. The last frame is always the same as the first frame. Apparently, this is a common technique to make looping animations easier. The part count is the number of parts of the model that will be animated. The last two fields are unknown, but are always set to negative one (-1.0) and positive one (1.0). Maybe they describe the coordinate system?
 
-Next count parts are read: 
+Next count parts are read:
 
 ```rust
 struct Part {

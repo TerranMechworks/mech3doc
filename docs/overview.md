@@ -21,7 +21,7 @@ The MW3 installer is quite flexible, allowing selection of only some features to
 
 Some files not directly installed that are discussed are ambient tracks and save games.
 
-Please note that while many files have the ending `.zbd`, this does not mean they are in any way similar. Different `.zbd` files need to be parsed differently (they aren't even all [archive files](archive-files.md)). It's possible `.zbd` stands for Zipper Binary Data. 
+Please note that while many files have the ending `.zbd`, this does not mean they are in any way similar. Different `.zbd` files need to be parsed differently (they aren't even all [archive files](archive-files.md)). It's possible `.zbd` stands for Zipper Binary Data.
 
 ## Ambient tracks
 
@@ -59,9 +59,9 @@ For 4 MB cards `c1\rtexture3.zbd`, `c2\rtexture3.zbd`, `c3\rtexture3.zbd`, `c4\r
 
 For 8 MB+ cards `c1\rtexture.zbd`, `c2\rtexture.zbd`, `c3\rtexture.zbd`, `c4\rtexture.zbd`, `c4b\rtexture.zbd`, and `t1\rtexture.zbd` are installed.
 
-In the 2 MB case, the 'mech textures `rmechtex16.zbd` are also installed; otherwise, the 'mech textures `rmechtex.zbd` are also installed. 
+In the 2 MB case, the 'mech textures `rmechtex16.zbd` are also installed; otherwise, the 'mech textures `rmechtex.zbd` are also installed.
 
-All of these files are [texture packages](texture-packages.md). The textures for 3d accelerator rendering are not palette-based, but do have a reduced bit depth. 
+All of these files are [texture packages](texture-packages.md). The textures for 3d accelerator rendering are not palette-based, but do have a reduced bit depth.
 
 ## Program files
 
