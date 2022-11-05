@@ -6,7 +6,7 @@ Texture packages hold textures or images, used throughout the game.
 
 I've had to awkwardly name the texture files "packages". They contain several textures/images, but are not [archive-based](archive-files.md). Most of them are for textures, but textures are simply images mapped to 3D surfaces. Since all textures are images, but not all images are textures, I'll call the data an image, not a texture.
 
-MW3 and PM texture packages are read in exactly the same way. The only difference is that in the base game, no package uses global palettes.
+RC, MW, PM, and CS texture packages are read in exactly the same way. The only difference is that in the base game, no package uses global palettes.
 
 ## File structure
 
@@ -66,6 +66,12 @@ enum ImageStretch: u16 {
     Vertical = 1,
     Horizontal = 2,
     Both = 3,
+    /// Crimson Skies only
+    Unk4 = 4,
+    /// Crimson Skies only
+    Unk7 = 7,
+    /// Crimson Skies only
+    Unk8 = 8,
 }
 
 bitflags ImageFlags: u32 {
