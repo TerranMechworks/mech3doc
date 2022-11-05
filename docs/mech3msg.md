@@ -1,8 +1,13 @@
 # Message table/translations (Mech3Msg)
 
-The `Mech3Msg.dll` contains localised strings that are used by the game engine for displaying either English, German, or French text. Some of these strings are referred to by message keys (`MSG_`) in e.g. reader files.
+This file is known as:
+* `messages.dll` in Recoil
+* `Mech3Msg.dll` in MechWarrior 3 and Pirate's Moon
+* `Strings.dll` in Crimson Skies (this one is different)
 
-## Investigation
+These files contain localised strings that are used by the game engine for displaying either English, German, or French text. Some of these strings are referred to by message keys (`MSG_`) in e.g. reader files.
+
+## Investigation (MW3)
 
 `Mech3Msg.dll` has a single export:
 
@@ -73,6 +78,60 @@ Bonus facts:
 1. Not all messages have corresponding values in the message table - it was probably easier to leave them in, knowing they're unused in the engine than recreate this data.
 1. Some messages are zeroed out by the patch, for example `MSG_GAME_NAME_DEBUG_VER`. Rather interesting.
 
+## Investigation (CS)
+
+Initially, it seems like `Strings.dll` is very similar to `Mech3Msg.dll`:
+
+```console
+$ rabin2 -E Strings.dll
+[Exports]
+
+nth paddr      vaddr      bind   type size lib         name
+―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+1   0x00001010 0x10001010 GLOBAL FUNC 0    Strings.dll ZLocGetStringID
+```
+
+Note the entry point is `ZLocGetStringID`, and not `ZLocGetID`. It also links to `KERNEL32.dll` instead of `MSVCRT.dll`, and references many more functions. The `.data` and `.rsrc` sections are still the biggest.
+
+The most notable change is the type of resources:
+
+```
+$ rabin2 -U Strings.dll
+Resource 0
+  name: 7
+  timestamp: Tue Jan  1 00:00:00 1980
+  vaddr: 0x100135b8
+  size: 636
+  type: STRING
+  language: LANG_ENGLISH
+<truncated>
+Resource 111
+  name: 1072
+  timestamp: Tue Jan  1 00:00:00 1980
+  vaddr: 0x1001d1d4
+  size: 238
+  type: STRING
+  language: LANG_ENGLISH
+Resource 112
+  name: 1
+  timestamp: Tue Jan  1 00:00:00 1980
+  vaddr: 0x1001d2c4
+  size: 944
+  type: VERSION
+  language: LANG_ENGLISH
+Resource 113
+  name: 1
+  timestamp: Tue Jan  1 00:00:00 1980
+  vaddr: 0x1001d674
+  size: 4
+  type: UNKNOWN (255)
+  language: LANG_ENGLISH
+```
+
+This means instead of using a [message table](https://learn.microsoft.com/en-us/windows/win32/menurc/messagetable-resource), it uses a [string table](https://learn.microsoft.com/en-us/windows/win32/menurc/stringtable-resource) to store the message texts. In practise, this is a small change, but does require the resource section to be parsed differently.
+
+As seen above, the DLL also includes a `VERSION` and `UNKNOWN` resource. It is not necessary to parse these to recover the messages.
+
 ## In-game use
 
 Some messages are looked up directly by entry ID. I found this out when I didn't preserve the entry IDs in a replacement DLL, and the "insert CD" message was incorrect. Even though new messages are added and old messages are removed in the new versions/patches, they preserve entry ID numbering between versions. A replacement DLL should also do this. A re-implementation doesn't have to.
@@ -120,14 +179,43 @@ Messages are padded to be 32-bit aligned with null bytes (`\0`). Even though the
 
 Additionally, even single line messages are terminated with the DOS/Windows line ending `\r\n` (this isn't always the case, but common and true in this case). As long as they are at the end of the message, you may wish to also strip these for convenience. Messages can also contain DOS/Windows newlines within the message, which should be preserved.
 
-It's also worth pointing out that some of the messages contain formatting placeholders, that are specific to those messages. There is no way of knowing what values were intended, other than looking for the format placeholders (e.g. `%1`, `%2`) and inferring this from the context of the message (or reverse-engineering the engine, which this project does not encourage).
+It's also worth pointing out that some of the messages contain formatting placeholders, that are specific to those messages. There is no way of knowing what values were intended, other than looking for the format placeholders (e.g. `%1`, `%2`) and inferring this
+from the context of the message (or reverse-engineering the engine, which this project does not encourage).
+
+## Reading the string table
+
+This is very analogue to message tables. It is possible to use Windows APIs, or to parse the resources using a PE library/by hand.
+
+Raymond Chen has a post about ["The format of string resources"](https://devblogs.microsoft.com/oldnewthing/20040130-00/?p=40813) on his blog "The Old New Thing". Roughly speaking, string tables are split by the resource compiler into blocks of 16 contiguous IDs. This is why the DLL contains 112 `STRING` resources (`RT_STRING = 6`). The resource name gives the block ID.
+
+Notice how similar this is to a message table, except that while the message table is a single resource that contains blocks, the string table effectively makes the blocks available to be loaded separately, without parsing the entire string table. That is the resource data entries give the data offset/size of a single block of strings. One extra complication is that a single block could have multiple resource data entries for each language, but this doesn't happen.
+
+From the block ID, the string IDs can be derived:
+
+```rust
+let block_min = (block_id - 1) * 16;
+let block_max = block_id * 16;
+```
+
+I'm sure there's a Unicode flag somewhere in the resource information; for Crimson Skies the messages are always "Unicode". This is Microsoft-speak for UTF-16 little-endian, and a whole other can of worms. I digress. The strings are not zero-terminated. Instead, first a `u16` value is read, which is the "length" of the string. To be pedantic, it is not the length, but the number of `WCHAR`/`u16` values which comprise the string. If you want to know more, see "surrogate pairs", Unicode codepoints, and the meta-question of what the length of string should be (bytes, codepoints, grapheme clusters, etc).
+
+Because the blocks are contiguous, missing entries are zero-length strings, so a zero length should be interpreted as missing.
+
+In any case, for a given length > 0:
+
+```rust
+// u16 values must be read as little endian on all systems!
+let wchars = [u16; length];
+// or using bytes, but note these also must be byte-swapped on big endian systems!
+let bytes = [u8; length * 2];
+```
 
 ## Reading the message keys
 
-Presumably, you'll be using a PE parsing library. Start from the `.data` section. The first bytes are not important to understand. They are part of [the common runtime (CRT) initialisation](https://docs.microsoft.com/en-us/cpp/c-runtime-library/crt-initialization), generally called `.CRT$XCA`/`__xc_a`, `.CRT$XCU_`, and `.CRT$XCZ`/`__xc_z`. For MechWarrior 3 or Pirate's Moon, simply skip or read these four (4) u32 values (16 bytes). They should all be zero. For Recoil, skip 48 bytes.
+Presumably, you'll be using a PE parsing library. Start from the `.data` section. The first bytes are not important to understand. They are part of [the common runtime (CRT) initialisation](https://docs.microsoft.com/en-us/cpp/c-runtime-library/crt-initialization), generally called `.CRT$XCA`/`__xc_a`, `.CRT$XCU_`, and `.CRT$XCZ`/`__xc_z`. For MechWarrior 3 or Pirate's Moon, simply skip or read these four (4) u32 values (16 bytes). They should all be zero. For Recoil or Crimson Skies, skip 48 bytes. They are not all zero.
 
 The data that follows are clearly constants defined in the original code. There is a sort of entry table for the message keys, that consists of the absolute memory offset of the message key string (u32), and the corresponding message table entry ID (u32). There is no easy way of knowing when the table has fully been read. I suggest checking if the offset is in the bounds of the `.data` section, since the string data produces values outside this range when accidentally interpreted as an integer.
 
 Given the memory offset of the start of the `.data` section, the relative offset of the message key is easy to determine by subtracting the start offset from the absolute offset read previously. Seek to that position, and read the message key until encountering a null byte (`\0`). All message keys will be ASCII.
 
-For manual verification, it's possible to use e.g. `rabin2` to extract the strings, filter only the ones beginning with `MSG_`, and compere that to the result of parsing the `.data` section.
+For manual verification, it's possible to use e.g. `rabin2` to extract the strings, filter only the ones beginning with `MSG_`, and compare that to the result of parsing the `.data` section.
