@@ -1,0 +1,48 @@
+name: Check
+
+on:
+  push:
+    branches:
+    - main
+    - workflow_check
+  pull_request:
+    branches:
+    - main
+
+env:
+  MDBOOK_URL: https://github.com/rust-lang/mdBook/releases/download/v0.4.40/mdbook-v0.4.40-x86_64-unknown-linux-gnu.tar.gz
+  HYPERLINK_URL: https://github.com/untitaker/hyperlink/releases/download/0.1.32/hyperlink-linux-x86_64
+
+jobs:
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install mdbook
+        run: |
+          mkdir bin
+          curl -sSL "$MDBOOK_URL" | tar -xz --directory=bin
+          bin/mdbook --version
+        shell: bash
+
+      - name: Install hyperlink
+        run: |
+          curl -sSL "$HYPERLINK_URL" -o "bin/hyperlink"
+          chmod +x "bin/hyperlink"
+          bin/hyperlink --version
+        shell: bash
+
+      - name: Run mdbook build
+        run: bin/mdbook build
+        shell: bash
+
+      - name: Run hyperlink check
+        run: bin/hyperlink book/
+        shell: bash

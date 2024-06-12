@@ -1,4 +1,4 @@
-# Overview
+# MechWarrior 3 files overview
 
 ## Installer
 
@@ -172,7 +172,7 @@ A single [motion archive](motion-archives.md) is installed, `motion.zbd`. This c
 
 ### Game world data
 
-The game world data is called `gamez.zbd`, and so also known as [GameZ files](gamez-files.md). Each operation/chapter has its own game world data in the sub-directory:
+The game world data is called `gamez.zbd`, and so also known as [GameZ files](gamez/). Each operation/chapter has its own game world data in the sub-directory:
 
 * `c1\gamez.zbd`
 * `c2\gamez.zbd`
@@ -183,7 +183,7 @@ The game world data is called `gamez.zbd`, and so also known as [GameZ files](ga
 
 ### Animation definition archives
 
-While animation definitions are provided in some [reader archives](#reader-archives), they are also present in a compiled form in [animation definition files](anim-files.md), called `anim.zbd`. These correspond to each game world:
+While animation definitions are provided in some [reader archives](#reader-archives), they are also present in a compiled form in [animation definition files](anim/), called `anim.zbd`. These correspond to each game world:
 
 * `c1\anim.zbd`
 * `c2\anim.zbd`

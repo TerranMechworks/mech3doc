@@ -2,7 +2,7 @@
 
 Animation definition files (anim files) hold compiled animation definitions for a game world.
 
-The initial animation definitions are in the [reader archives](reader-archives.md), but they are quite free form and so probably complicated and slow to parse. I think this proved so slow that load times were unacceptable, and the solution the development team came up with was to load the reader files into the engine, and then dump out the in-memory representations of the parsed animation definitions.
+The initial animation definitions are in the [reader archives](../reader-archives.md), but they are quite free form and so probably complicated and slow to parse. I think this proved so slow that load times were unacceptable, and the solution the development team came up with was to load the reader files into the engine, and then dump out the in-memory representations of the parsed animation definitions.
 
 It isn't known - because it hasn't been investigated - if the release version is capable of loading the animation definitions from the readers directly, or how to trigger this (for example, by removing the `anim.zbd` files).
 
@@ -20,7 +20,7 @@ struct Header {
 }
 ```
 
-The signature (u32) is the magic number `0x02971222`. The version (u32) is always 39, which is different from the [mechlib archives](mechlib-archives.md) and [GameZ files](gamez-files.md) version. The entry count (u32) indicates how many animation definitions reader files are in the TOC that follows. This basically a list of the raw animation definition file paths:
+The signature (u32) is the magic number `0x02971222`. The version (u32) is always 39, which is different from the [mechlib archives](../mechlib-archives.md) and [GameZ files](../gamez/) version. The entry count (u32) indicates how many animation definitions reader files are in the TOC that follows. This basically a list of the raw animation definition file paths:
 
 ```rust
 struct Entry {

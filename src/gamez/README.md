@@ -20,13 +20,13 @@ struct HeaderMw {
 }
 ```
 
-The signature (u32) is the magic number `0x02971222`. The version (u32) is always 27, which matches the [mechlib archives](mechlib-archives.md) version.
+The signature (u32) is the magic number `0x02971222`. The version (u32) is always 27, which matches the [mechlib archives](../mechlib-archives.md) version.
 
 The other values are used for accessing the four big blocks of information: textures, materials, meshes, and nodes. This is also not so different from the mechlib archives, although there are significant differences in the way the data is read/written. It isn't known why this is. The offsets aren't strictly necessary for parsing, since the data is written without padding, and so can be used for verifying the different parsing stages were successful/parsed all the information.
 
 ### Textures ### {: #textures_mw }
 
-Reading the textures uses the texture count from the header. Expect this to be less than 4096 textures for sanity checking (if desired). There is no header, instead simply read texture count texture information structures:
+Reading the texture infos uses the texture count from the header. Expect this to be less than 4096 textures for sanity checking (if desired). There is no header, instead simply read texture count texture information structures:
 
 ```rust
 struct TextureInfo {
@@ -81,13 +81,13 @@ Materials are read in three phases. The valid materials first, then zeroed-out m
 
 #### Materials information
 
-Next, count materials are read. Each material has a main structure, which is the same structure as the mechlib materials, but is read and interpreted slightly different. Unlike the mechlib materials, material indices are also read. First, the structures:
+Next, count materials are read. Each material has a main structure, which is the same structure as the Mechlib materials, but is read and interpreted slightly different. Unlike the Mechlib materials, material indices are also read. First, the structures:
 
 ```rust
 struct Material {
-    alpha: u8, // maybe?
+    alpha: u8,
     flags: MaterialFlags,
-    rgb: u16, // maybe?
+    rgb: u16,
     red: f32,
     green: f32,
     blue: f32,
@@ -95,7 +95,7 @@ struct Material {
     unk20: f32, // always 0.0
     unk24: f32, // always 0.5
     unk28: f32, // always 0.5
-    unk32: f32,
+    soil: u32,
     cycle_ptr: u32,
 }
 
@@ -115,21 +115,109 @@ struct MaterialIndices {
 
 First, read the material information. Then read the material indices. Repeat until count materials have been read.
 
-A lot isn't known about the material information. It seems to be dump of an in-game structure, as it contains what seem to be pointers. Some fields are always set to the same value. The always flag is always set, the never flag is never set. The most important bit of information is the textured flag. This indicates whether the material has a texture or not.
+A lot isn't known about the material information. It seems to be dump of an in-game structure, as it contains what seem to be pointers. Some fields are always set to the same value. The `unk20` field is always 0.0, the `unk24` and `unk28` fields are always 0.5.
+
+The `Always` flag (0x08) is always set, the `Never` flag (0x10) is never set. The most important flag is the `Textured` flag. This indicates whether the material has a texture or not.
+
+#### Terrain/soil type
+
+The terrain/soil index indicates how polygons with that will be classified/behave in the engine.
+
+In Recoil, the following types are hard-coded in the executable:
+
+```py
+[
+    "default",      # 0
+    "water",        # 1
+    "seafloor",     # 2
+    "quicksand",    # 3
+    "lava",         # 4
+    "fire",         # 5
+]
+```
+
+The range of values is 0..5, although 2/`seafloor` does not seem to be used.
+
+These types are also hard-coded in MechWarrior 3, but the range of values is 0..13. In the `soils.zrd` file, the following types are defined:
+
+```py
+[
+    "dirt",         # 6
+    "mud",          # 7
+    "grass",        # 8
+    "concrete",     # 9
+    "snow",         # 10
+    "mech",         # 11
+    "silt",         # 12
+    "noslip",       # 13
+]
+```
+
+As indicated, these seem to be concatenated with the hard-coded list. The value 11/`mech` does not seem to be used in GameZ (or the Mechlib).
+
+For Crimson Skies, `soils.zrd` is also different.
 
 #### Textured materials
 
-Textured materials always have alpha set to 255/0xFF, since textures can include their own alpha data. The `rgb` field set to 32767/0x7FFF, and the red, green, and blue fields set to 255.0 (which is white). The unknown flag may or may not be set, and the `unk32` field is also indeterminate. This field could be specularity or some other material property.
+```rust
+struct Material {
+    alpha: u8, // always 0xFF/255
+    // always: 0x01/Textured
+    // variable: 0x02/Unknown
+    // variable: 0x04/Cycled
+    // always: 0x08/Always (except for RC)
+    // never: 0x10/Never
+    flags: MaterialFlags,
+    rgb: u16, // always 0x7FFF/32767
+    red: f32, // always 255.0
+    green: f32, // always 255.0
+    blue: f32, // always 255.0
+    texture_ident: u32,
+    unk20: f32, // always 0.0
+    unk24: f32, // always 0.5
+    unk28: f32, // always 0.5
+    soil: u32, // 0..13
+    cycle_ptr: u32,
+}
+```
 
-Only textured materials can have the cycled flag set, which indicates that the material has multiple textures that are cycled through, creating an animated effect. Unlike mechlib materials, GameZ materials can be cycled. If this flag is set, the cycle pointer should be non-zero/non-null. If the flag is unset, the cycle pointer field is always zero (0)/null.
+Textured materials always have `alpha` set to 255/0xFF, since textures can include their own alpha data. The `rgb` field set to 32767/0x7FFF, and the `red`, `green`, and `blue` fields set to 255.0 (which is white). The unknown flag may or may not be set.
 
-In short, for textured materials in the mechlib archive, the variable information is the `unk32` field, the unknown flag, the cycled flag/cycle pointer, and the `texture_ident` field. In the GameZ file, this holds the texture index on load, which is then replaced with a pointer to the texture. In the mechlib archive, this is the raw pointer value, since the texture name is written after the structure. For the GameZ case, the texture index must be less than the texture count.
+Textured materials can have the cycled flag set, which indicates that the material has multiple textures that are cycled through, creating an animated effect. Note that Mechlib textured materials cannot be cycled. If this flag is set, the cycle pointer should be non-zero/non-null. If the flag is unset, the cycle pointer field is always zero (0)/null.
 
-Code that only wants to draw the materials can basically discard most of this information, except for if the material is textured, the texture index (via the `texture_ident` field), and if the material is cycled.
+In the GameZ file, `texture_ident` field is an index to the texture info. This index must be less than the texture count.
 
 #### Coloured materials
 
-Untextured or coloured materials always have the unknown flag and cycled flag unset. The `rgb` field is always zero (0/0x0000). This deserved a bit of discussion. Textures use a packed colour value format known as RGB565, and textured materials have their colour set to white. For textured materials, `rgb` is set to 0x7FFF, which corresponds to white in the RGB555 format. So I have assumed this field was intended to be used as a packed colour, but for some reason wasn't used. Both the material and cycle pointers are always zero (0)/null. The red, green, and blue fields indicate the colour of the material. In short, for coloured materials, the variable information is the red/green/blue fields, alpha, and `unk32` field.
+```rust
+struct Material {
+    alpha: u8,
+    // never: 0x01/Textured
+    // never: 0x02/Unknown
+    // never: 0x04/Cycled
+    // always: 0x08/Always (except for RC)
+    // never: 0x10/Never
+    flags: MaterialFlags,
+    rgb: u16, // always 0x0000/0
+    red: f32,
+    green: f32,
+    blue: f32,
+    texture_ident: u32, // always 0
+    unk20: f32, // always 0.0
+    unk24: f32, // always 0.5
+    unk28: f32, // always 0.5
+    soil: u32, // 0..13
+    cycle_ptr: u32, // always 0
+}
+```
+
+Untextured or coloured materials always have no flags set except for the "Always" flag (0x08).
+
+The `rgb` field is always zero (0/0x0000). This deserved a bit of discussion. Textures use a packed colour value format known as RGB565, and textured materials have their colour set to white. For textured materials, `rgb` is set to 0x7FFF, which corresponds to white in the RGB555 format. So I have assumed this field was intended to be used as a packed colour, but for some reason wasn't used.
+
+The `red`, `green`, and `blue` fields indicate the colour of the material, in an range of 0.0 .. 255.0.
+
+The `texture_ident` field is always 0. Since the `Cycled` flag (0x04) is never set, the cycle pointer is always zero (0)/null.
 
 #### Material indices
 

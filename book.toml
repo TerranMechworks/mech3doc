@@ -1,0 +1,20 @@
+[book]
+authors = ["Toby Fleming"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Zipper file format description"
+
+[output.html]
+additional-css = ["css/extra.css"]
+
+# Note: the linkcheck plugin is not great. It works on the Markdown level, and
+# not the HTML level. As a result, you can still end up with broken links due
+# to e.g. the index preprocessor (https://github.com/rust-lang/mdBook/issues/984).
+# Additionally, because it is published as a zip, it is a pain to install for
+# CI. TL;DR: The `hyperlink` checker is better.
+# Also, be aware it registers as a new target. So the HTML output won't be in
+# `book/`, but `book/html/`.
+# [output.linkcheck]
+# follow-web-links = false
+# traverse-parent-directories = false

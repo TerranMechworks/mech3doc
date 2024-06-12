@@ -4,9 +4,9 @@ To skip the rambling, go straight to the [overview](overview.md).
 
 ## MechWarrior 3 history
 
-If you want a more entertaining and complete history, Chase "Scharmers" Dahl has an awesome review called [Fifteen Years of Giant Robots](https://www.quartertothree.com/features/robots/robots_1.shtml#intro) (specifically [MechWarrior 3](https://www.quartertothree.com/features/robots/robots_4.shtml#mw3)).  Or if video is your thing, The Examined Life (of Gaming)'s [MechWarrior Retrospective](https://www.youtube.com/watch?list=PLzqQqTZGYi1ZqlVw-_B0mdPOMU3NffkXs&v=WuW0UCyvisM) series (specifically [MechWarrior 3](https://www.youtube.com/watch?v=f4a-6RIgVfA&index=5&list=PLzqQqTZGYi1ZqlVw-_B0mdPOMU3NffkXs)).
+If you want a more entertaining and complete history, Chase "Scharmers" Dahl has an awesome review called [Fifteen Years of Giant Robots](https://www.quartertothree.com/features/robots/robots_1.shtml#intro) (specifically [MechWarrior 3](https://www.quartertothree.com/features/robots/robots_4.shtml#mw3)). Or if video is your thing, The Examined Life (of Gaming)'s [MechWarrior Retrospective](https://www.youtube.com/watch?list=PLzqQqTZGYi1ZqlVw-_B0mdPOMU3NffkXs&v=WuW0UCyvisM) series (specifically [MechWarrior 3](https://www.youtube.com/watch?v=f4a-6RIgVfA&index=5&list=PLzqQqTZGYi1ZqlVw-_B0mdPOMU3NffkXs)) is slightly crude, but otherwise well researched.
 
-I highly recommend both, and with reason. It's helpful to understand the development history around MechWarrior 3, which is complicated. And the time-frame allows us to put an upper bound on the hardware, software, and techniques available at the time.
+I recommend both, and with reason. It's helpful to understand the development history around MechWarrior 3, which is complicated. And the time-frame allows us to put an upper bound on the hardware, software, and techniques available at the time.
 
 The short version: In what is now typical fashion, MechWarrior 3 isn't the third instalment of the MechWarrior series, but the third generation. It was published in May 1999, with a new engine. It received an expansion pack, Pirate's Moon, and a Gold Edition release in September 1999. Due to the troubled development, the fourth generation released quite quickly afterwards, with MechWarrior 4: Vengeance in late 2000 in North America.
 

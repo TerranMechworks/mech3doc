@@ -2,15 +2,28 @@
 
 ## Base game
 
-In the US, there seem to have been three releases: version 1.0, 1.1, and Gold Edition. At least I've managed to acquire those. They can all be patched to 1.2. Presumably there was also a 1.1 patch (which I have not been able to find). In a weird quirk, the Gold Edition Readme says it is version 1.2, but it is still missing two multiplayer maps, `zbd/c3/readermp3.zbd` and `zbd/c3/readermp4.zbd`. Applying the 1.2 patch will install these.
+In the US, there seem to have been a few releases: version 1.0, 1.1, 1.2, and Gold Edition. They can all be patched to 1.2. Presumably there was also a 1.1 patch (which I have not been able to find). In a weird quirk, the Gold Edition Readme says it is version 1.2, but it is still missing two multiplayer maps, `zbd/c3/readermp3.zbd` and `zbd/c3/readermp4.zbd`. Applying the 1.2 patch will install these.
 
-The game was localised for German and French. I only have the 1.0 German version, and couldn't get hold of a French version. Please do reach out if you have a version I'm missing. I would love to confirm the information holds for all versions.
+Localisations and versions:
+* English (US): 1.0, 1.1, 1.2, Gold Edition
+* German (DE): 1.0, 1.2 patch exists
+* French (FR): 1.0, 1.2 patch exists
+* Italian (IT): Unconfirmed
+* Japanese (JA): 1.2 (メックウォリア３)
+* Taiwanese (TW): An extremely believable big box edition exists on eBay, but is horrendously expensive (機甲爭霸戰3, see [BattleTech on zh.wikipedia.org](https://zh.wikipedia.org/zh-hant/BattleTech) or [chiuinan.github.io](https://chiuinan.github.io/game/game/intro/eng/e51/mech3.htm))
+* Chinese/Hong Kong: Unconfirmed (Simplified: 机甲战士3, Traditional: 機甲戰士3, see [BattleTech on zh.wikipedia.org](https://zh.wikipedia.org/zh-hant/BattleTech) or [chiuinan.github.io](https://chiuinan.github.io/game/game/intro/eng/e51/mech3.htm))
+* English (GB): Unconfirmed if this is different than US, although redumps exist
+* Russian (RU): Unconfirmed, possibly a bootleg/fan translation only
 
-For simplicity, I will refer to the Gold Edition as 1.2. I have installed all versions in a virtual machine, gathered the files, patched the versions to 1.2, and gathered the files again. This has allowed me to find differences, but also check that the structures, value-ranges, and methods should hold.
+Please do reach out if you have a version I'm missing. I would love to confirm the information holds for all versions.
+
+I have installed all versions in a virtual machine, gathered the files, patched the versions to 1.2, and gathered the files again. This has allowed me to find differences, but also check that the structures, value-ranges, and methods should hold.
 
 ## Expansion
 
-I know a lot less about the Pirate's Moon expansion. For one, I never played it. My focus has also been mainly on the base game, and there's still enough unknown information it that. I also only own a single US version of PM. Still, the code from the base game was easy enough to apply to Pirate's Moon, so some things could be discovered. When Pirate's Moon-specific information is known, it is noted in this project.
+I know a lot less about the Pirate's Moon expansion. For one, I never played it, as it was never released in German.
+
+My focus has also been mainly on the base game, and there's still enough unknown information it that. I also only own a single US version of PM. Still, the code from the base game was easy enough to apply to Pirate's Moon, so some things could be discovered. When Pirate's Moon-specific information is known, it is noted in this project.
 
 ## System requirements
 

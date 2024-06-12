@@ -1,11 +1,11 @@
-# Message table/translations (Mech3Msg)
+# String DLLs /translations
 
 This file is known as:
 * `messages.dll` in Recoil
 * `Mech3Msg.dll` in MechWarrior 3 and Pirate's Moon
 * `Strings.dll` in Crimson Skies (this one is different)
 
-These files contain localised strings that are used by the game engine for displaying either English, German, or French text. Some of these strings are referred to by message keys (`MSG_`) in e.g. reader files.
+These files contain localised strings that are used by the game engine. Some of these strings are referred to by message keys (`MSG_`) in e.g. reader files.
 
 ## Investigation (MW3)
 
